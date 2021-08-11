@@ -14,11 +14,10 @@ function CanvasBackground(props) {
     context.current.canvas.width = size.current.width;
     context.current.canvas.height = size.current.height;
   }
+
   const analyser = props.audioContext.createAnalyser();
   analyser.smoothingTimeConstant = 0.75;
   analyser.fftSize = 2048;
-  //const gainNode = new AnalyserNode(props.audioContext);
-  //gainNode.connect(analyser);
   analyser.connect(props.audioContext.destination);
 
   const animate = (time) => {

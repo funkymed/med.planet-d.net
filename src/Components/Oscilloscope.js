@@ -7,7 +7,6 @@ export default function Oscilloscope(
   analyser
 ) {
   if (!analyser) return false;
-
   var cW = ctx.canvas.width;
   var cH = ctx.canvas.height;
   if (clear) {

@@ -1,4 +1,4 @@
-import { isBest, isLove, isFirst, isSecond, isThird } from "../modules";
+import { isBest, isLove, isFirst, isSecond, isThird } from "../tools/modules";
 
 let currentBtn = null;
 
