@@ -1,4 +1,21 @@
 export const best = [
-    "Alexkidd.xm",
-    "Mouche4.xm"
+  "Batman_love_my_dog!.xm",
+  "analogik_2000.xm",
+  "analogik_DARTAGNA.XM",
+  "analogik_cho7.xm",
+  "condense_BAME1.xm",
+  "condense_BAME2.xm",
+  "med_odesay.xm",
+  "med_patate_funky.xm",
+  "analogik_3VIL.XM",
+  "med_supadupafly.mod",
+  "lgf_DEEPTHROAT.XM",
+  "lgf_INTROINV.XM",
+  "jecoute_Le_chemin_Mauve.xm",
+  "jecoute_DADDYSEX.XM",
+  "tvnet_BUBBLE.XM",
+  "tvnet_Discolor.xm",
+  "tvnet_SHOOT.XM",
+  "tvnet_SPIRAL.XM",
+  "tvnet_misc.XM",
 ];

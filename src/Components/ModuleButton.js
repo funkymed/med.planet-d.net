@@ -25,11 +25,11 @@ function ModuleButton(year, mod, i, tracker) {
   return (
     <li id={year + "-" + i}>
       <button data-filename={mod.filename} onClick={play.bind(this, tracker)}>
-        {isFirst(mod.name) ? <i className="icon first"></i> : ""}
-        {isSecond(mod.name) ? <i className="icon second"></i> : ""}
-        {isThird(mod.name) ? <i className="icon third"></i> : ""}
-        {isBest(mod.name) ? <i className="icon best"></i> : ""}
-        {isLove(mod.name) ? <i className="icon love"></i> : ""}
+        {isFirst(mod.name) ? <i title="first in demoparty" className="icon first"></i> : ""}
+        {isSecond(mod.name) ? <i title="second in demoparty" className="icon second"></i> : ""}
+        {isThird(mod.name) ? <i title="third in demoparty" className="icon third"></i> : ""}
+        {isBest(mod.name) ? <i title="technical best" className="icon best"></i> : ""}
+        {isLove(mod.name) ? <i title="personnal fav" className="icon love"></i> : ""}
         {mod.name}
       </button>
     </li>

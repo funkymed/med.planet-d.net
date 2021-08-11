@@ -186,7 +186,7 @@ export function getList() {
   const list = [];
   for (let f in modules) {
     let d = modules[f].split("/");
-    if (typeof list[d[2]] == "undefined") {
+    if (typeof list[d[2]] === "undefined") {
       list[d[2]] = [];
     }
     list[d[2]].push({
