@@ -3,6 +3,9 @@ import "./sass/theme.scss";
 import displayYear from "./Components/Year";
 import { getList } from "./tools/modules";
 import CanvasBackground from "./Components/CanvasBackground";
+import ToolBar from "./Components/ToolBar";
+import Timer from "./Timer";
+import Loader from "./Components/Loader";
 
 const tracker = new PasuunaPlayer.Tracker();
 tracker.init();
@@ -17,31 +20,9 @@ function App() {
         tracker={tracker}
         audioContext={tracker.audio.context}
       />
-      <div id="loader">
-        <div id="progress"></div>
-      </div>
+      <Loader />
       <div id="primary-block">
-        <div id="toolbar">
-          <div className="floatL">
-            <h1>Ultimate Med's MusicDisk</h1>
-            <p id="title-track">Click on a track to play it</p>
-          </div>
-          <div className="floatR" id="control">
-            <button id="pause" className="btn">
-              Pause
-            </button>
-            <button id="stop" className="btn">
-              Stop
-            </button>
-            <button id="hide" className="btn">
-              Hide
-            </button>
-            <button id="info" className="btn">
-              Info
-            </button>
-          </div>
-          <div className="clearfix"></div>
-        </div>
+        <ToolBar />
         <div id="block">
           <div id="tracks">
             {getList().map(function (year, mods) {
@@ -50,7 +31,7 @@ function App() {
           </div>
           <div id="instruments"></div>
         </div>
-        <div id="timer"></div>
+        <Timer />
       </div>
     </div>
   );
