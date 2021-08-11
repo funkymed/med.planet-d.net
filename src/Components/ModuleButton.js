@@ -3,6 +3,7 @@ import { isBest, isLove, isFirst, isSecond, isThird } from "../modules";
 let currentBtn = null;
 
 function play(tracker, evt) {
+  evt.preventDefault();
   if (currentBtn) {
     currentBtn.className = "";
   }

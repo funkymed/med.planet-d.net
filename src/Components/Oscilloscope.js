@@ -1,5 +1,13 @@
-export default function Oscilloscope(ctx, clear, oscillocolor, color, opacity, analyser) {
+export default function Oscilloscope(
+  ctx,
+  clear,
+  oscillocolor,
+  color,
+  opacity,
+  analyser
+) {
   if (!analyser) return false;
+
   var cW = ctx.canvas.width;
   var cH = ctx.canvas.height;
   if (clear) {
