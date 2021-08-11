@@ -1,0 +1,22 @@
+.icon {
+  width: 12px;
+  height: 12px;
+  float: left;
+  background-size: contain;
+  margin-right: 3px;
+  &.first {
+    background-image: url("./images/trophy-1.png");
+  }
+  &.second {
+    background-image: url("./images/trophy-2.png");
+  }
+  &.third {
+    background-image: url("./images/trophy-3.png");
+  }
+  &.best {
+    background-image: url("./images/crowns.png");
+  }
+  &.love {
+    background-image: url("./images/heart.png");
+  }
+}
