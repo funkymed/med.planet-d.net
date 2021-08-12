@@ -48,7 +48,7 @@ export default function BtnAbout() {
                 {legend.map(function (item) {
                   return (
                     <div>
-                      <i className={`icon ${item.icon}`}></i> {item.title}
+                      <i className={`icon ${item.icon} shadowed`}></i> {item.title}
                       <br />
                       <div className="clearfix"></div>
                     </div>
@@ -58,7 +58,7 @@ export default function BtnAbout() {
 
               <br />
               <p className="center">
-                If you have any request or question feel free to contact me :
+                If you have any requests or questions feel free to contact me :
                 cyril.pereira at gmail.com
               </p>
             </>

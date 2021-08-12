@@ -214,3 +214,8 @@ ul {
     }
   }
 }
+
+.shadowed {
+  -webkit-filter: drop-shadow(-1px 1px 1px #00000030);
+  filter: drop-shadow(-1px 1px 1px #00000030);
+}
