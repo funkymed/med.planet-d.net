@@ -1,5 +1,5 @@
 import * as PasuunaPlayer from "@pinkkis/pasuuna-player/dist/pasuunaplayer";
-import "./sass/theme.scss";
+import "./sass/app.scss";
 import displayYear from "./Components/Year";
 import { getList } from "./tools/modules";
 import CanvasBackground from "./Components/CanvasBackground";
