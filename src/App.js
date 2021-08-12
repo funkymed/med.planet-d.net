@@ -14,6 +14,7 @@ tracker.events.on(PasuunaPlayer.EVENT.songLoaded, (song) => {
 });
 
 function App() {
+  const listMods = getList();
   return (
     <div className="App">
       <CanvasBackground
@@ -25,8 +26,8 @@ function App() {
         <ToolBar />
         <div id="block">
           <div id="tracks">
-            {getList().map(function (year, mods) {
-              return displayYear(year, mods, tracker);
+            {listMods.map(function (item) {
+              return displayYear(item.year, item.mods, tracker);
             })}
           </div>
           <div id="instruments"></div>

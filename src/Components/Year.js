@@ -1,6 +1,6 @@
 import ModuleButton from "./ModuleButton";
 
-function displayYear(mods, year, tracker) {
+function displayYear(year,mods, tracker) {
   return (
     <div id={"year-" + year}>
       <h2>{year}</h2>

@@ -194,21 +194,29 @@ export function getList() {
       name: d[3],
     });
   }
-  return list;
+
+  const mapList = [];
+  for (let year in list) {
+    mapList.push({
+      year,
+      mods: list[year],
+    });
+  }
+  return mapList;
 }
 
 export function isFirst(name) {
-  return first.indexOf(name) != -1;
+  return first.indexOf(name) !== -1;
 }
 export function isSecond(name) {
-  return second.indexOf(name) != -1;
+  return second.indexOf(name) !== -1;
 }
 export function isThird(name) {
-  return third.indexOf(name) != -1;
+  return third.indexOf(name) !== -1;
 }
 export function isBest(name) {
-  return best.indexOf(name) != -1;
+  return best.indexOf(name) !== -1;
 }
 export function isLove(name) {
-  return love.indexOf(name) != -1;
+  return love.indexOf(name) !== -1;
 }
