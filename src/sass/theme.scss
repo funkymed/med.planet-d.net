@@ -132,7 +132,13 @@ h2 {
   margin-left: auto;
   margin-right: auto;
   padding: 15px;
-  background: rgba($color: pink, $alpha: 0.1);
+  background: linear-gradient(
+    180deg,
+    rgba(247, 255, 0, .3) 0%,
+    rgba(255, 21, 220, .3) 30%,
+    rgba(109, 240, 112, .3) 70%,
+    rgba(0, 212, 255, .3) 100%
+  );
   border-left: 2px solid rgba($color: white, $alpha: 0.2);
   border-right: 2px solid rgba($color: white, $alpha: 0.2);
 }
