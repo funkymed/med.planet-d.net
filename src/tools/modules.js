@@ -3,6 +3,7 @@ import { love } from "./love";
 import { first } from "./1st";
 import { second } from "./2nd";
 import { third } from "./3thd";
+import { chiptune } from "./chiptune";
 
 export const modules = [
   "tracks/xm/1999/Alexkidd.xm",
@@ -219,4 +220,7 @@ export function isBest(name) {
 }
 export function isLove(name) {
   return love.indexOf(name) !== -1;
+}
+export function isChiptune(name) {
+  return chiptune.indexOf(name) !== -1;
 }

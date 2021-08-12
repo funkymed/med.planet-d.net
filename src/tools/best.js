@@ -18,4 +18,5 @@ export const best = [
   "tvnet_SHOOT.XM",
   "tvnet_SPIRAL.XM",
   "tvnet_misc.XM",
+  "med_lovely2.XM",
 ];

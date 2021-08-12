@@ -16,9 +16,13 @@ function CanvasBackground(props) {
   }
 
   const analyser = props.audioContext.createAnalyser();
-  analyser.smoothingTimeConstant = 0.75;
-  analyser.fftSize = 2048;
+  //analyser.smoothingTimeConstant = 0.75;
+  analyser.minDecibels = -90;
+  analyser.maxDecibels = -10;
+  analyser.smoothingTimeConstant = 0.85;
+  analyser.fftSize = 256; //2048;
   analyser.connect(props.audioContext.destination);
+  console.log(props);
 
   const animate = (time) => {
     /*Spectrum(

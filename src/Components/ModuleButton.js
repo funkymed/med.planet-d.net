@@ -1,4 +1,4 @@
-import { isBest, isLove, isFirst, isSecond, isThird } from "../tools/modules";
+import { isBest, isLove, isFirst, isSecond, isThird, isChiptune } from "../tools/modules";
 
 let currentBtn = null;
 
@@ -10,11 +10,11 @@ function play(tracker, evt) {
   currentBtn = evt.target;
   const filename = currentBtn.attributes.getNamedItem("data-filename").value;
   currentBtn.className = "active";
-  currentBtn.scrollIntoView({
+  /*currentBtn.scrollIntoView({
     behavior: "smooth",
     block: "center",
     inline: "nearest",
-  });
+  });*/
   if (tracker.isPlaying) {
     tracker.stop();
   }
@@ -31,6 +31,7 @@ function ModuleButton(year, mod, i, tracker) {
         {isThird(mod.name) ? <i title="third in demoparty" className="icon third"></i> : ""}
         {isBest(mod.name) ? <i title="technical best" className="icon best"></i> : ""}
         {isLove(mod.name) ? <i title="personnal fav" className="icon love"></i> : ""}
+        {isChiptune(mod.name) ? <i title="chiptune" className="icon chiptune"></i> : ""}
         {mod.name}
       </button>
     </li>

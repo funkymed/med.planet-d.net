@@ -19,4 +19,8 @@ export const love = [
   "tvnet_SHOOT.XM",
   "tvnet_SPIRAL.XM",
   "tvnet_misc.XM",
+  "FLUIDE.mod",
+  "YEAH.mod",
+  "HUBERT.XM",
+  "ROOM.MOD",
 ];
