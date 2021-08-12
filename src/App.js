@@ -23,7 +23,7 @@ function App() {
       />
       <Loader />
       <div id="primary-block">
-        <ToolBar />
+        <ToolBar tracker={tracker} />
         <div id="block">
           <div id="tracks">
             {listMods.map(function (item) {

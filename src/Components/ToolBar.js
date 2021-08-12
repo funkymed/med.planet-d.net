@@ -1,22 +1,14 @@
 import Title from "./Title";
+import BtnAbout from "./ToolBar/BtnAbout";
+import BtnStop from "./ToolBar/BtnStop";
 
-export default function ToolBar() {
+export default function ToolBar(props) {
   return (
     <div id="toolbar">
       <Title />
       <div className="floatR" id="control">
-        <button id="pause" className="btn">
-          Pause
-        </button>
-        <button id="stop" className="btn">
-          Stop
-        </button>
-        <button id="hide" className="btn">
-          Hide
-        </button>
-        <button id="info" className="btn">
-          Info
-        </button>
+        <BtnAbout tracker={props.tracker} />
+        <BtnStop tracker={props.tracker} />
       </div>
       <div className="clearfix"></div>
     </div>
