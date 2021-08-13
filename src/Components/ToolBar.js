@@ -9,7 +9,7 @@ export default function ToolBar(props) {
       <div className="floatL">
         <Title title={props.title} />
       </div>
-      <div>
+      <div id="filters">
         <Filter callback={props.callbackFilter}/>
       </div>
       <div className="floatR" id="control">

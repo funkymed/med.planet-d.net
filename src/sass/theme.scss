@@ -110,11 +110,10 @@ h2 {
   &:hover {
     background: #666;
   }
-  &.selected{
+  &.selected {
     background: #959;
   }
 }
-
 
 #loader {
   position: fixed;
@@ -212,7 +211,7 @@ ul {
         z-index: 100;
         opacity: 1;
       }
-  
+
       &.active {
         color: #fff;
         display: block;
@@ -226,11 +225,25 @@ ul {
           0 0 60px rgba(242, 30, 242, 1);
       }
     }
-
   }
 }
 
 .shadowed {
   -webkit-filter: drop-shadow(-1px 1px 1px #00000030);
   filter: drop-shadow(-1px 1px 1px #00000030);
+}
+
+#filters {
+  float: left;
+  margin-left: 40px;
+  margin-top: 10px;
+  input {
+    border: 1px solid #999;
+    background: #acacac;
+    color: white;
+    padding: 5px;
+    &:focus {
+      outline: none;
+    }
+  }
 }

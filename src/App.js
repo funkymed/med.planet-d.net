@@ -34,8 +34,8 @@ function App() {
       _analyser.maxDecibels = -10;
       _analyser.fftSize = 256; //2048;
       _analyser.connect(ctx.destination);
-      clockNode.disconnect();
-      clockNode.connect(_analyser);
+      //clockNode.disconnect();     
+      //clockNode.connect(_analyser);
       setAnalyser(_analyser);
     }
   }

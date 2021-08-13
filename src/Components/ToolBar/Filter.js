@@ -3,6 +3,7 @@ import {
   TITLE_BEST,
   TITLE_CHIPTUNE,
   TITLE_FIRST,
+  TITLE_LOVE,
   TITLE_SECOND,
   TITLE_THIRD,
 } from "../../tools/const";
@@ -13,6 +14,7 @@ export default function Filter(props) {
     { icon: "first", title: TITLE_FIRST, actived: false },
     { icon: "second", title: TITLE_SECOND, actived: false },
     { icon: "third", title: TITLE_THIRD, actived: false },
+    { icon: "love", title: TITLE_LOVE, actived: false },
     { icon: "best", title: TITLE_BEST, actived: false },
     { icon: "chiptune", title: TITLE_CHIPTUNE, actived: false },
   ]);
