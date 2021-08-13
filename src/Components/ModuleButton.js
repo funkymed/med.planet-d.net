@@ -59,12 +59,7 @@ function ModuleButton(props) {
       player.play();
       console.log(player);
 
-      const analyser = player.context.createAnalyser();
-      analyser.smoothingTimeConstant = 0.75;
-      analyser.fftSize = 2048;
-      player.node.connect(analyser);
-
-      props.callbackAnalyser(analyser);
+      props.callbackAnalyser(player,filename);
     });
   }
 

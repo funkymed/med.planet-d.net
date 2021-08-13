@@ -13,9 +13,8 @@ export default function ToolBar(props) {
         <Filter callback={props.callbackFilter}/>
       </div>
       <div className="floatR" id="control">
-        <BtnAbout tracker={props.tracker} />
+        <BtnAbout />
         <BtnStop
-          tracker={props.tracker}
           setTitleCallback={props.setTitleCallback}
         />
       </div>

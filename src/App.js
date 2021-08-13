@@ -11,7 +11,6 @@ import Years from "./Components/Year";
 function App() {
   const [titleMusic, setTitleMusic] = useState(DEFAULT_TITLE);
   const [analyser, setAnalyser] = useState(null);
-  const [filename, setFilename] = useState(null);
   const [query, setQuery] = useState(null);
   const listMods = getList();
   const [first, setFirst] = useState(false);
@@ -20,6 +19,7 @@ function App() {
   const [best, setBest] = useState(false);
   const [love, setLove] = useState(false);
   const [chiptune, setChiptune] = useState(false);
+  const [player, setPlayer] = useState(false);
 
   function callbackFilter(query, filters) {
     setQuery(query);
@@ -35,20 +35,28 @@ function App() {
     setTitleMusic(str);
   }
 
-  function callbackAnalyser(newAnalyser){
-    setAnalyser(newAnalyser);
+  function callbackAnalyser(player, filename) {
+    var file = filename.split("/").pop();
+    const analyser = player.context.createAnalyser();
+    analyser.smoothingTimeConstant = 0.75;
+    analyser.fftSize = 2048;
+    player.node.connect(analyser);
+    setPlayer(player);
+    let title = file;
+    if (player.title.trim() != "") {
+      title = `${player.title} - ${file}`;
+    }
+
+    setTitleCallback(`Now Playing : ${title}`);
+    setAnalyser(analyser);
   }
 
   return (
     <div className="App">
-      <CanvasBackground
-        analyser={analyser}
-        filename={filename}
-      />
+      <CanvasBackground analyser={analyser} />
       <Loader />
       <div id="primary-block">
         <ToolBar
-          tracker={false}
           title={titleMusic}
           setTitleCallback={setTitleCallback}
           callbackFilter={callbackFilter}
