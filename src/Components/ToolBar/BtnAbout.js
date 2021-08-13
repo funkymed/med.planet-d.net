@@ -18,7 +18,7 @@ const legend = [
   { title: TITLE_BEST, icon: "best" },
 ];
 
-export default function BtnAbout() {{}
+export default function BtnAbout() {
   const [isOpen, setIsOpen] = useState(false);
 
   const togglePopup = () => {

@@ -48,19 +48,21 @@ export default function Filter(props) {
     update();
   };
 
+  //<input onChange={onChange} value={query} />
   return (
     <>
-      <input onChange={onChange} value={query} />
+      
       <div>
-        {filters.map(function (item) {
+        {filters.map(function (item, i) {
           return (
             <button
+              key={i}
               data-filter={item.icon}
               className="btn"
               onClick={toggleSelected}
               title={`Filter : ${item.title.toLowerCase()}`}
             >
-              <i className={`icon small ${item.icon}`} />
+              <i className={`icon big ${item.icon}`} />
             </button>
           );
         })}

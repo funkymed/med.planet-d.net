@@ -1496,14 +1496,6 @@
     mkdirp "^1.0.4"
     rimraf "^3.0.2"
 
-"@pinkkis/pasuuna-player@^0.5.2":
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/@pinkkis/pasuuna-player/-/pasuuna-player-0.5.2.tgz#8f75d51193258af220b8741b36e2fef759c482f3"
-  integrity sha512-1qsp5M33Nv/rKNIaA2MqndSge5rwVgNNChDuR7RHtIMREYDxD0yE2EPovbwvXH2sUZkdM3cDwXS/NvXg2YXxfw==
-  dependencies:
-    tiny-emitter "^2.1.0"
-    waaclock "^0.5.3"
-
 "@pmmmwh/react-refresh-webpack-plugin@0.4.3":
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/@pmmmwh/react-refresh-webpack-plugin/-/react-refresh-webpack-plugin-0.4.3.tgz#1eec460596d200c0236bf195b078a5d1df89b766"
@@ -10967,11 +10959,6 @@ timsort@^0.3.0:
   resolved "https://registry.yarnpkg.com/timsort/-/timsort-0.3.0.tgz#405411a8e7e6339fe64db9a234de11dc31e02bd4"
   integrity sha1-QFQRqOfmM5/mTbmiNN4R3DHgK9Q=
 
-tiny-emitter@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/tiny-emitter/-/tiny-emitter-2.1.0.tgz#1d1a56edfc51c43e863cbb5382a72330e3555423"
-  integrity sha512-NB6Dk1A9xgQPMoGqC5CVXn123gWyte215ONT5Pp5a0yt4nlEoO1ZWeCwpncaekPHXO60i47ihFnZPiRPjRMq4Q==
-
 tmpl@1.0.x:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/tmpl/-/tmpl-1.0.4.tgz#23640dd7b42d00433911140820e5cf440e521dd1"
@@ -11457,11 +11444,6 @@ w3c-xmlserializer@^2.0.0:
   integrity sha512-4tzD0mF8iSiMiNs30BiLO3EpfGLZUT2MSX/G+o7ZywDzliWQ3OPtTZ0PTC3B3ca1UAf4cJMHB+2Bf56EriJuRA==
   dependencies:
     xml-name-validator "^3.0.0"
-
-waaclock@^0.5.3:
-  version "0.5.3"
-  resolved "https://registry.yarnpkg.com/waaclock/-/waaclock-0.5.3.tgz#4d3dff1b83eb439fb7235df8271b891e2fc5a2db"
-  integrity sha1-TT3/G4PrQ5+3I134JxuJHi/Fots=
 
 walker@^1.0.7, walker@~1.0.5:
   version "1.0.7"

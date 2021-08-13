@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import * as PasuunaPlayer from "@pinkkis/pasuuna-player/dist/pasuunaplayer";
 import "./sass/app.scss";
 import { getList } from "./tools/modules";
 import CanvasBackground from "./Components/CanvasBackground";
@@ -9,66 +8,47 @@ import Loader from "./Components/Loader";
 import { DEFAULT_TITLE } from "./tools/const";
 import Years from "./Components/Year";
 
-const tracker = new PasuunaPlayer.Tracker();
-tracker.init();
-
 function App() {
   const [titleMusic, setTitleMusic] = useState(DEFAULT_TITLE);
   const [analyser, setAnalyser] = useState(null);
   const [filename, setFilename] = useState(null);
   const [query, setQuery] = useState(null);
-  const [filters, setFilters] = useState(null);
   const listMods = getList();
+  const [first, setFirst] = useState(false);
+  const [second, setSecond] = useState(false);
+  const [third, setThird] = useState(false);
+  const [best, setBest] = useState(false);
+  const [love, setLove] = useState(false);
+  const [chiptune, setChiptune] = useState(false);
 
   function callbackFilter(query, filters) {
     setQuery(query);
-    setFilters(filters);
-  }
-  function updateAnalyser() {
-    if (tracker.clock) {
-      const ctx = tracker.audio.context;
-      const clockNode = tracker.clock._clockNode;
-      const _analyser = ctx.createAnalyser();
-      _analyser.smoothingTimeConstant = 0.75; // 0.85;
-      _analyser.minDecibels = -90;
-      _analyser.maxDecibels = -10;
-      _analyser.fftSize = 256; //2048;
-      _analyser.connect(ctx.destination);
-      //clockNode.disconnect();     
-      //clockNode.connect(_analyser);
-      setAnalyser(_analyser);
-    }
+    setFirst(filters ? filters[0].actived : false);
+    setSecond(filters ? filters[1].actived : false);
+    setThird(filters ? filters[2].actived : false);
+    setLove(filters ? filters[3].actived : false);
+    setBest(filters ? filters[4].actived : false);
+    setChiptune(filters ? filters[5].actived : false);
   }
 
   function setTitleCallback(str) {
     setTitleMusic(str);
   }
 
-  useEffect(() => {
-    tracker.events.on(PasuunaPlayer.EVENT.songLoading, (song) => {
-      setTitleCallback(`Loading : ${song}`);
-    });
-
-    tracker.events.on(PasuunaPlayer.EVENT.songLoaded, (song) => {
-      const title = song.title.trim() !== "" ? song.title : song.filename;
-      setFilename(song.filename);
-      tracker.playSong();
-      setTitleCallback(`Playing : ${title}`);
-      updateAnalyser();
-    });
-  }, []); // Make sure the effect runs only once
+  function callbackAnalyser(newAnalyser){
+    setAnalyser(newAnalyser);
+  }
 
   return (
     <div className="App">
       <CanvasBackground
-        tracker={tracker}
         analyser={analyser}
         filename={filename}
       />
       <Loader />
       <div id="primary-block">
         <ToolBar
-          tracker={tracker}
+          tracker={false}
           title={titleMusic}
           setTitleCallback={setTitleCallback}
           callbackFilter={callbackFilter}
@@ -81,9 +61,15 @@ function App() {
                   key={i}
                   year={item.year}
                   mods={item.mods}
-                  tracker={tracker}
+                  tracker={false}
                   query={query}
-                  filters={filters}
+                  love={love}
+                  first={first}
+                  second={second}
+                  third={third}
+                  best={best}
+                  chiptune={chiptune}
+                  callbackAnalyser={callbackAnalyser}
                 />
               );
             })}

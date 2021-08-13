@@ -9,7 +9,7 @@ function CanvasBackground(props) {
   const context = useRef();
   const canvasBG = useRef(null);
   const size = useRef(getInnerSize());
-  const analyser = useRef(null);
+  const analyser = useRef(props.analyser);
 
   function resizeCanvas() {
     size.current = getInnerSize();
@@ -17,27 +17,35 @@ function CanvasBackground(props) {
     context.current.canvas.height = size.current.height;
   }
 
-  const animate = (time) => {
-    /*Spectrum(
-      context,
-      false,
-      hextoRGB("#222222"),
-      hextoRGB("#333333"),
-      1,
-      (size.current.width / 256) * 16,
-      analyser.current
-    );*/
-
-    Oscilloscope(context.current, false, "#cccccc", false, 1, analyser.current);
-
-    requestRef.current = requestAnimationFrame(animate);
-  };
-
   useEffect(() => {
     analyser.current = props.analyser;
-  }, [props.analyser]); // Make sure the effect runs only once
+  }, [props.analyser]);
 
   useEffect(() => {
+    const animate = (time) => {
+      var cW = context.current.canvas.width;
+      var cH = context.current.canvas.height;
+      context.current.clearRect(0, 0, cW, cH);
+      Spectrum(
+        context.current,
+        false,
+        hextoRGB("#222222"),
+        hextoRGB("#333333"),
+        1,
+        (size.current.width / 256) * 16,
+        analyser.current
+      );
+      Oscilloscope(
+        context.current,
+        false,
+        "#cccccc",
+        false,
+        1,
+        analyser.current
+      );
+
+      requestRef.current = requestAnimationFrame(animate);
+    };
     context.current = canvasBG.current.getContext("2d");
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);

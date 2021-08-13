@@ -15,18 +15,23 @@ import {
   isThird,
   isChiptune,
 } from "../tools/modules";
+import { streamXhr } from "../tools/tools";
+import FileLoader from "../lib/Player/includes/FileLoader.js";
 
 let currentBtn = null;
+let player = null;
 function ModuleButton(props) {
-  const [show, setShow] = useState(true);
-  const [first, setFirst] = useState(false);
-  const [second, setSecond] = useState(false);
-  const [third, setThird] = useState(false);
-  const [best, setBest] = useState(false);
-  const [love, setLove] = useState(false);
-  const [chiptune, setChiptune] = useState(false);
+  const { first, second, third, love, best, chiptune, query, mod } = props;
 
-  function play(tracker, evt) {
+  const [show, setShow] = useState(true);
+  const [firstIcon, setFirstIcon] = useState(false);
+  const [secondIcon, setSecondIcon] = useState(false);
+  const [thirdIcon, setThirdIcon] = useState(false);
+  const [bestIcon, setBestIcon] = useState(false);
+  const [loveIcon, setLoveIcon] = useState(false);
+  const [chiptuneIcon, setChiptuneIcon] = useState(false);
+
+  function play(evt) {
     evt.preventDefault();
     if (currentBtn) {
       currentBtn.className = "";
@@ -42,78 +47,110 @@ function ModuleButton(props) {
       inline: "nearest",
     });*/
 
-    if (tracker.isPlaying) {
-      tracker.stop();
-    }
+    //props.tracker.load(filename);
 
-    tracker.load(filename);
+    streamXhr(filename, function (bytes) {
+      if (player) {
+        player.stop();
+      }
+      player = FileLoader.load(bytes);
+      console.log(player);
+      player.loopSong = true;
+      player.play();
+      console.log(player);
+
+      const analyser = player.context.createAnalyser();
+      analyser.smoothingTimeConstant = 0.75;
+      analyser.fftSize = 2048;
+      player.node.connect(analyser);
+
+      props.callbackAnalyser(analyser);
+    });
+  }
+
+  function updateFilter(_props) {
+    if (
+      !_props.first &&
+      !_props.second &&
+      !_props.third &&
+      !_props.best &&
+      !_props.love &&
+      !_props.chiptune
+    ) {
+      setShow(true);
+    } else {
+      setShow(false);
+      if (firstIcon && _props.first) {
+        setShow(true);
+      }
+      if (secondIcon && _props.second) {
+        setShow(true);
+      }
+      if (thirdIcon && _props.third) {
+        setShow(true);
+      }
+      if (loveIcon && _props.love) {
+        setShow(true);
+      }
+      if (bestIcon && _props.best) {
+        setShow(true);
+      }
+      if (chiptuneIcon && _props.chiptune) {
+        setShow(true);
+      }
+    }
   }
 
   useEffect(() => {
-    if (props.filters) {
-      console.log('filter');
-      setShow(false);
-      /*for (let filter of props.filters) {
-        //console.log(filter);
-        if (filter.icon == "best" && filter.actived && best) {
-          setShow(true);
-        }
-        if (filter.icon == "love" && filter.actived && love) {
-          console.log("love");
-          setShow(true);
-        }
-        if (filter.icon == "chiptune" && filter.actived && chiptune) {
-          setShow(true);
-        }
-      }*/
-    }
-  }, [props.filters]);
+    updateFilter({
+      first,
+      second,
+      third,
+      love,
+      best,
+      chiptune,
+    });
+  }, [first, second, third, love, best, chiptune]);
 
   useEffect(() => {
-    const { mod } = props;
-    if (props.query && props.query.trim() != "") {
-      setShow(mod.name.toLowerCase().includes(props.query));
+    if (query && query.trim() !== "") {
+      setShow(mod.name.toLowerCase().includes(query));
     } else {
       setShow(true);
     }
-  }, [props.query]);
+  }, [query]);
 
+  // Display icons
   useEffect(() => {
-    const { mod } = props;
     if (isFirst(mod.name)) {
-      setFirst(true);
+      setFirstIcon(true);
     }
     if (isSecond(mod.name)) {
-      setSecond(true);
+      setSecondIcon(true);
     }
     if (isThird(mod.name)) {
-      setThird(true);
+      setThirdIcon(true);
     }
     if (isBest(mod.name)) {
-      setBest(true);
+      setBestIcon(true);
     }
     if (isLove(mod.name)) {
-      setLove(true);
+      setLoveIcon(true);
     }
     if (isChiptune(mod.name)) {
-      setChiptune(true);
+      setChiptuneIcon(true);
     }
   }, []);
 
-  const { mod } = props;
-
   return show ? (
     <li>
-      <button
-        data-filename={mod.filename}
-        onClick={play.bind(this, props.tracker)}
-      >
-        {first ? <i title={TITLE_FIRST} className="icon first"></i> : ""}
-        {second ? <i title={TITLE_SECOND} className="icon second"></i> : ""}
-        {third ? <i title={TITLE_THIRD} className="icon third"></i> : ""}
-        {best ? <i title={TITLE_BEST} className="icon best"></i> : ""}
-        {love ? <i title={TITLE_LOVE} className="icon love"></i> : ""}
-        {chiptune ? (
+      <button data-filename={mod.filename} onClick={play}>
+        {firstIcon ? <i title={TITLE_FIRST} className="icon first"></i> : ""}
+        {secondIcon ? <i title={TITLE_SECOND} className="icon second"></i> : ""}
+        {thirdIcon ? <i title={TITLE_THIRD} className="icon third"></i> : ""}
+        {bestIcon ? <i title={TITLE_BEST} className="icon best"></i> : ""}
+        {loveIcon ? <i title={TITLE_LOVE} className="icon love"></i> : ""}
+        {chiptuneIcon ? (
           <i title={TITLE_CHIPTUNE} className="icon chiptune"></i>
         ) : (
           ""
