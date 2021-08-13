@@ -1,8 +1,9 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState} from "react";
 import Oscilloscope from "./Oscilloscope";
 import Spectrum from "./Spectrum";
 import { getInnerSize, hextoRGB } from "../tools/tools";
 
+let clock = null;
 function CanvasBackground(props) {
   const requestRef = useRef();
   const context = useRef();
@@ -15,17 +16,10 @@ function CanvasBackground(props) {
     context.current.canvas.height = size.current.height;
   }
 
-  const analyser = props.audioContext.createAnalyser();
-  //analyser.smoothingTimeConstant = 0.75;
-  analyser.minDecibels = -90;
-  analyser.maxDecibels = -10;
-  analyser.smoothingTimeConstant = 0.85;
-  analyser.fftSize = 256; //2048;
-  analyser.connect(props.audioContext.destination);
-  console.log(props);
-
   const animate = (time) => {
-    /*Spectrum(
+    console.log(props.analyser)
+    if (props.analyser) {
+      /*Spectrum(
       context,
       false,
       hextoRGB("#222222"),
@@ -33,11 +27,13 @@ function CanvasBackground(props) {
       1,
       (size.current.width / 256) * 16
     );*/
-    Oscilloscope(context.current, false, "#cccccc", false, 1, analyser);
+
+      Oscilloscope(context.current, false, "#cccccc", false, 1, props.analyser);
+    }
+
     requestRef.current = requestAnimationFrame(animate);
   };
-
-  size.current = getInnerSize();
+  
   useEffect(() => {
     context.current = canvasBG.current.getContext("2d");
     resizeCanvas();

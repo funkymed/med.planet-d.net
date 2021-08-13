@@ -1,8 +1,10 @@
+import { DEFAULT_TITLE } from "../../tools/const";
+
 export default function BtnStop(props) {
   function stop() {
-    console.log(props)
     if (props.tracker.isPlaying) {
       props.tracker.stop();
+      props.setTitleCallback(DEFAULT_TITLE);
     }
   }
   return (

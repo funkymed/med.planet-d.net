@@ -1,16 +1,24 @@
 import React, { useState } from "react";
+import {
+  TITLE_BEST,
+  TITLE_CHIPTUNE,
+  TITLE_FIRST,
+  TITLE_LOVE,
+  TITLE_SECOND,
+  TITLE_THIRD,
+} from "../../tools/const";
 import Popup from "../Popup";
 
 const legend = [
-  { title: "First place at a Demoparty", icon: "first" },
-  { title: "Second place at a Demoparty", icon: "second" },
-  { title: "Third place at Demoparty", icon: "third" },
-  { title: "Chiptune track", icon: "chiptune" },
-  { title: "Personnal favorite track", icon: "love" },
-  { title: "Technical track", icon: "best" },
+  { title: TITLE_FIRST, icon: "first" },
+  { title: TITLE_SECOND, icon: "second" },
+  { title: TITLE_THIRD, icon: "third" },
+  { title: TITLE_CHIPTUNE, icon: "chiptune" },
+  { title: TITLE_LOVE, icon: "love" },
+  { title: TITLE_BEST, icon: "best" },
 ];
 
-export default function BtnAbout() {
+export default function BtnAbout() {{}
   const [isOpen, setIsOpen] = useState(false);
 
   const togglePopup = () => {
@@ -39,7 +47,7 @@ export default function BtnAbout() {
               </p>
               <br />
               <p>Stay here all the time you want, enjoy and relax.</p>
-              
+
               <br />
               <b>Legend</b>
               <br />
@@ -48,7 +56,8 @@ export default function BtnAbout() {
                 {legend.map(function (item) {
                   return (
                     <div>
-                      <i className={`icon ${item.icon} shadowed`}></i> {item.title}
+                      <i className={`icon ${item.icon} shadowed`}></i>{" "}
+                      {item.title}
                       <br />
                       <div className="clearfix"></div>
                     </div>
