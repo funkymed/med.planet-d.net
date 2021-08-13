@@ -16,6 +16,7 @@ export default function ToolBar(props) {
         <BtnAbout />
         <BtnStop
           setTitleCallback={props.setTitleCallback}
+          player={props.player}
         />
       </div>
       <div className="clearfix"></div>

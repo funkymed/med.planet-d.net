@@ -60,6 +60,7 @@ function App() {
           title={titleMusic}
           setTitleCallback={setTitleCallback}
           callbackFilter={callbackFilter}
+          player={player}
         />
         <div id="block">
           <div id="tracks">
