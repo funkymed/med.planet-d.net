@@ -1,16 +1,25 @@
 import ModuleButton from "./ModuleButton";
 
-function displayYear(year,mods, tracker) {
+function Years(props) {
   return (
-    <div id={"year-" + year}>
-      <h2>{year}</h2>
+    <div id={"year-" + props.year}>
+      <h2>{props.year}</h2>
       <ul>
-        {mods.map(function (mod, i) {
-          return ModuleButton(year, mod, i, tracker);
+        {props.mods.map(function (mod, i) {
+          return (
+            <ModuleButton
+              key={i}
+              year={props.year}
+              mod={mod}
+              tracker={props.tracker}
+              query={props.query}
+              filters={props.filters}
+            />
+          );
         })}
       </ul>
     </div>
   );
 }
 
-export default displayYear;
+export default Years;

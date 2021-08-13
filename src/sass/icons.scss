@@ -4,6 +4,7 @@
   float: left;
   background-size: contain;
   margin-right: 3px;
+  pointer-events: none;
   &.first {
     background-image: url("./images/trophy-1.png");
   }
@@ -21,5 +22,13 @@
   }
   &.chiptune {
     background-image: url("./images/robot.png");
+  }
+  &.small {
+    width: 16px;
+    height: 16px;
+  }
+  &.big {
+    width: 48px;
+    height: 48px;
   }
 }

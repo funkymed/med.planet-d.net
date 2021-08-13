@@ -96,8 +96,7 @@ h2 {
   margin-right: 10px;
 }
 
-.btn,
-.btn:active {
+.btn {
   margin-top: 10px;
   padding: 5px;
   font-size: 0.8em;
@@ -105,7 +104,17 @@ h2 {
   background: #555;
   color: #999;
   border-radius: 5px;
+  &:active {
+    background: #222;
+  }
+  &:hover {
+    background: #666;
+  }
+  &.selected{
+    background: #959;
+  }
 }
+
 
 #loader {
   position: fixed;
@@ -134,10 +143,10 @@ h2 {
   padding: 15px;
   background: linear-gradient(
     180deg,
-    rgba(247, 255, 0, .3) 0%,
-    rgba(255, 21, 220, .3) 30%,
-    rgba(109, 240, 112, .3) 70%,
-    rgba(0, 212, 255, .3) 100%
+    rgba(247, 255, 0, 0.3) 0%,
+    rgba(255, 21, 220, 0.3) 30%,
+    rgba(109, 240, 112, 0.3) 70%,
+    rgba(0, 212, 255, 0.3) 100%
   );
   border-left: 2px solid rgba($color: white, $alpha: 0.2);
   border-right: 2px solid rgba($color: white, $alpha: 0.2);
@@ -197,27 +206,27 @@ ul {
       width: 100%;
 
       text-align: left;
+      &:hover {
+        color: white;
+        background: rgb(255, 77, 106);
+        z-index: 100;
+        opacity: 1;
+      }
+  
+      &.active {
+        color: #fff;
+        display: block;
+        background: none;
+        font-weight: bold;
+        opacity: 1;
+        z-index: 100;
+        text-shadow: 0 0 6px rgba(202, 228, 225, 0.98),
+          0 0 30px rgba(202, 228, 225, 0.42), 0 0 12px rgba(30, 132, 242, 0.58),
+          0 0 22px rgba(242, 30, 242, 0.84), 0 0 38px rgba(30, 132, 242, 0.88),
+          0 0 60px rgba(242, 30, 242, 1);
+      }
     }
 
-    button:hover {
-      color: white;
-      background: rgb(255, 77, 106);
-      z-index: 100;
-      opacity: 1;
-    }
-
-    button.active {
-      color: #fff;
-      display: block;
-      background: none;
-      font-weight: bold;
-      opacity: 1;
-      z-index: 100;
-      text-shadow: 0 0 6px rgba(202, 228, 225, 0.98),
-        0 0 30px rgba(202, 228, 225, 0.42), 0 0 12px rgba(30, 132, 242, 0.58),
-        0 0 22px rgba(242, 30, 242, 0.84), 0 0 38px rgba(30, 132, 242, 0.88),
-        0 0 60px rgba(242, 30, 242, 1);
-    }
   }
 }
 

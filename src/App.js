@@ -1,13 +1,13 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import * as PasuunaPlayer from "@pinkkis/pasuuna-player/dist/pasuunaplayer";
 import "./sass/app.scss";
-import displayYear from "./Components/Year";
 import { getList } from "./tools/modules";
 import CanvasBackground from "./Components/CanvasBackground";
 import ToolBar from "./Components/ToolBar";
 import Timer from "./Timer";
 import Loader from "./Components/Loader";
 import { DEFAULT_TITLE } from "./tools/const";
+import Years from "./Components/Year";
 
 const tracker = new PasuunaPlayer.Tracker();
 tracker.init();
@@ -16,8 +16,14 @@ function App() {
   const [titleMusic, setTitleMusic] = useState(DEFAULT_TITLE);
   const [analyser, setAnalyser] = useState(null);
   const [filename, setFilename] = useState(null);
+  const [query, setQuery] = useState(null);
+  const [filters, setFilters] = useState(null);
   const listMods = getList();
 
+  function callbackFilter(query, filters) {
+    setQuery(query);
+    setFilters(filters);
+  }
   function updateAnalyser() {
     if (tracker.clock) {
       const ctx = tracker.audio.context;
@@ -65,11 +71,21 @@ function App() {
           tracker={tracker}
           title={titleMusic}
           setTitleCallback={setTitleCallback}
+          callbackFilter={callbackFilter}
         />
         <div id="block">
           <div id="tracks">
-            {listMods.map(function (item) {
-              return displayYear(item.year, item.mods, tracker);
+            {listMods.map(function (item, i) {
+              return (
+                <Years
+                  key={i}
+                  year={item.year}
+                  mods={item.mods}
+                  tracker={tracker}
+                  query={query}
+                  filters={filters}
+                />
+              );
             })}
           </div>
           <div id="instruments"></div>
