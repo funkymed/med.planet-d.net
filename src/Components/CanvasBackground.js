@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState} from "react";
+import { useEffect, useRef, useState } from "react";
 import Oscilloscope from "./Oscilloscope";
 import Spectrum from "./Spectrum";
 import { getInnerSize, hextoRGB } from "../tools/tools";
@@ -9,6 +9,7 @@ function CanvasBackground(props) {
   const context = useRef();
   const canvasBG = useRef(null);
   const size = useRef(getInnerSize());
+  const analyser = useRef(null);
 
   function resizeCanvas() {
     size.current = getInnerSize();
@@ -17,23 +18,25 @@ function CanvasBackground(props) {
   }
 
   const animate = (time) => {
-    console.log(props.analyser)
-    if (props.analyser) {
-      /*Spectrum(
+    /*Spectrum(
       context,
       false,
       hextoRGB("#222222"),
       hextoRGB("#333333"),
       1,
-      (size.current.width / 256) * 16
+      (size.current.width / 256) * 16,
+      analyser.current
     );*/
 
-      Oscilloscope(context.current, false, "#cccccc", false, 1, props.analyser);
-    }
+    Oscilloscope(context.current, false, "#cccccc", false, 1, analyser.current);
 
     requestRef.current = requestAnimationFrame(animate);
   };
-  
+
+  useEffect(() => {
+    analyser.current = props.analyser;
+  }, [props.analyser]); // Make sure the effect runs only once
+
   useEffect(() => {
     context.current = canvasBG.current.getContext("2d");
     resizeCanvas();

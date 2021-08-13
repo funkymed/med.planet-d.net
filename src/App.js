@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import * as PasuunaPlayer from "@pinkkis/pasuuna-player/dist/pasuunaplayer";
 import "./sass/app.scss";
 import displayYear from "./Components/Year";
@@ -15,9 +15,10 @@ tracker.init();
 function App() {
   const [titleMusic, setTitleMusic] = useState(DEFAULT_TITLE);
   const [analyser, setAnalyser] = useState(null);
+  const [filename, setFilename] = useState(null);
   const listMods = getList();
 
-  function getAnalyser() {
+  function updateAnalyser() {
     if (tracker.clock) {
       const ctx = tracker.audio.context;
       const clockNode = tracker.clock._clockNode;
@@ -29,7 +30,7 @@ function App() {
       _analyser.connect(ctx.destination);
       clockNode.disconnect();
       clockNode.connect(_analyser);
-      return _analyser;
+      setAnalyser(_analyser);
     }
   }
 
@@ -44,15 +45,20 @@ function App() {
 
     tracker.events.on(PasuunaPlayer.EVENT.songLoaded, (song) => {
       const title = song.title.trim() !== "" ? song.title : song.filename;
+      setFilename(song.filename);
       tracker.playSong();
       setTitleCallback(`Playing : ${title}`);
-      setAnalyser(getAnalyser());
+      updateAnalyser();
     });
   }, []); // Make sure the effect runs only once
 
   return (
     <div className="App">
-      <CanvasBackground tracker={tracker} analyser={analyser} />
+      <CanvasBackground
+        tracker={tracker}
+        analyser={analyser}
+        filename={filename}
+      />
       <Loader />
       <div id="primary-block">
         <ToolBar
