@@ -39,7 +39,9 @@ function App() {
     var file = filename.split("/").pop();
     const analyser = player.context.createAnalyser();
     analyser.smoothingTimeConstant = 0.75;
-    analyser.fftSize = 2048;
+    analyser.fftSize = 2048 * 2;
+    analyser.minDecibels = -90;
+    analyser.maxDecibels = -10;
     player.node.connect(analyser);
     setPlayer(player);
     let title = file;

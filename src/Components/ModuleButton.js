@@ -54,10 +54,8 @@ function ModuleButton(props) {
         player.stop();
       }
       player = FileLoader.load(bytes);
-      console.log(player);
       player.loopSong = true;
       player.play();
-      console.log(player);
 
       props.callbackAnalyser(player,filename);
     });
