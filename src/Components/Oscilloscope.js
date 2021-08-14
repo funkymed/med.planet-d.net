@@ -22,7 +22,7 @@ export default function Oscilloscope(
   analyser.getByteTimeDomainData(freqByteData);
   ctx.fillStyle = oscillocolor;
   ctx.lineWidth = 2;
-  ctx.strokeStyle = "white";
+  ctx.strokeStyle = "#FFFFFF50";
   for (i = 0; i < fb; i++) {
     var value_old = freqByteData[i - 1];
 
