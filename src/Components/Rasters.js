@@ -54,10 +54,12 @@ export default class Rasters {
       const raster = this.rasters[x];
 
       const posY =
-        this.cnv.height / 2 + Math.sin(this.phase + raster.order * this.rasters.length * 2) * 30;
-      if (posY <= 351) {
+        this.cnv.height / 2 +
+        Math.sin(this.phase + raster.order * this.rasters.length * 2) * 30;
+
+      if (Math.floor(posY) <= 352) {
         raster.zindex = 2;
-      } else if (posY >= 401) {
+      } else if (Math.ceil(posY) >= 410) {
         raster.zindex = 1;
       }
       this.TMPrasterCTX.drawImage(
