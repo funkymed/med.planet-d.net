@@ -108,10 +108,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-16.6.1.tgz#aee62c7b966f55fc66c7b6dfa1d58db2a616da61"
   integrity sha512-Sr7BhXEAer9xyGuCN3Ek9eg9xPviCF2gfu9kTfuU2HkTVAMYSDeX40fvpmo72n5nansg3nsBjuQBrsS28r+NUw==
 
-"@types/node@^12.0.12":
-  version "12.20.19"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.20.19.tgz#538e61fc220f77ae4a4663c3d8c3cb391365c209"
-  integrity sha512-niAuZrwrjKck4+XhoCw6AAVQBENHftpXw9F4ryk66fTgYaKQ53R4FI7c9vUGGw5vQis1HKBHDR1gcYI/Bq1xvw==
+"@types/node@^14.6.2":
+  version "14.17.9"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.17.9.tgz#b97c057e6138adb7b720df2bd0264b03c9f504fd"
+  integrity sha512-CMjgRNsks27IDwI785YMY0KLt3co/c0cQ5foxHYv/shC2w8oOnVwz5Ubq1QG5KzrcW+AXk6gzdnxIkDnTvzu3g==
 
 "@types/plist@^3.0.1":
   version "3.0.2"
@@ -716,7 +716,7 @@ ejs@^3.1.6:
   dependencies:
     jake "^10.6.1"
 
-electron-builder@^22.10.5:
+electron-builder@^22.11.7:
   version "22.11.7"
   resolved "https://registry.yarnpkg.com/electron-builder/-/electron-builder-22.11.7.tgz#cd97a0d9f6e6d388112e66b4376de431cca4d596"
   integrity sha512-yQExSLt7Hbz/P8lLkZDdE/OnJJ7NCX+uiQcV+XIH0TeEZcD87ZnSqBBzGUN5akySU4BXXlrVZKeUsXACWrm5Kw==
@@ -754,7 +754,7 @@ electron-osx-sign@^0.5.0:
     minimist "^1.2.0"
     plist "^3.0.1"
 
-electron-packager@^15.2.0:
+electron-packager@^15.3.0:
   version "15.3.0"
   resolved "https://registry.yarnpkg.com/electron-packager/-/electron-packager-15.3.0.tgz#10f51960d518e4c35b760c10d1392c7ebea24c8b"
   integrity sha512-PHcykXinmjPyJcYoNGbOWNsOU25nIbMLHBAfg4caazWzYELFL14FshDZEqqrvVOMEUnqjx/Ktc1NmMIN5ZRomQ==
@@ -791,13 +791,13 @@ electron-publish@22.11.7:
     lazy-val "^1.0.5"
     mime "^2.5.2"
 
-electron@^11.3.0:
-  version "11.4.11"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-11.4.11.tgz#27091dcd54d28539b492d011b0ed3aef7d69cb60"
-  integrity sha512-DyarEH2IJpx5KfE42vF+uq7jyfHDrDRUsXXZyc69tR/GOO0DGuFE6/BHlTaywgPbCS4Sa5/ffEGlG6xq9+eRAQ==
+electron@^13.1.9:
+  version "13.1.9"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-13.1.9.tgz#668e2632b81e9fa21edfd32876282d3e2ff7fd76"
+  integrity sha512-By4Zb72XNQLrPb70BXdIW3NtEHFwybP5DIQjohnCxOYONq5vojuHjNcTuWnBgMvwQ2qwykk6Tw5EwF2Pt0CWjA==
   dependencies:
     "@electron/get" "^1.0.1"
-    "@types/node" "^12.0.12"
+    "@types/node" "^14.6.2"
     extract-zip "^1.0.3"
 
 emoji-regex@^7.0.1:
