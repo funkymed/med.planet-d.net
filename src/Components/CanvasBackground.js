@@ -41,9 +41,6 @@ function CanvasBackground(props) {
         (size.current.width / 256) * 32,
         analyser.current
       );
-      if (rasts.current) {
-        rasts.current.animate(time);
-      }
       Oscilloscope(
         context.current,
         false,
@@ -53,6 +50,9 @@ function CanvasBackground(props) {
         analyser.current
       );
 
+      if (rasts.current) {
+        rasts.current.animate(time);
+      }
       requestRef.current = requestAnimationFrame(animate);
     };
     context.current = canvasBG.current.getContext("2d");
