@@ -57,7 +57,7 @@ function ModuleButton(props) {
       player.loopSong = true;
       player.play();
 
-      props.callbackAnalyser(player,filename);
+      props.callbackAnalyser(player, filename);
     });
   }
 

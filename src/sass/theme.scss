@@ -172,7 +172,7 @@ h2 {
     background-position: 0 0;
   }
   to {
-    background-position: 100% 200%;
+    background-position: 200% 400%;
   }
 }
 
@@ -182,7 +182,7 @@ canvas {
   top: 0;
   z-index: 1;
   opacity: 1;
-  background: url("./images/cutepoop.png");
+  background: url("./images/test4.png");
   animation: animatedBackground 120s linear infinite;
 }
 
