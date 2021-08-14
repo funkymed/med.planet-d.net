@@ -23,3 +23,10 @@ yarn-debug.log*
 yarn-error.log*
 
 .vscode
+
+# electron
+electron/*
+!electron/main.js
+!electron/package.json
+!electron/yarn.lock
+!electron/logo512.png

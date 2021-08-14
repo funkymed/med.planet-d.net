@@ -1,0 +1,50 @@
+{
+    "name": "med-umd",
+    "author": {
+      "name": "med/mandarine",
+      "email": "cyril.pereira@gmail.com"
+    },
+    "homepage": "https://mandarine.planet-d.net",
+    "description": "Med's Ultimate Music Disk",
+    "license": "UNLICENSED",
+    "version": "1.0.1",
+    "main": "main.js",
+    "devDependencies": {
+      "electron": "^11.3.0",
+      "electron-builder": "^22.10.5",
+      "electron-packager": "^15.2.0"
+    },
+    "scripts": {
+      "postinstall": "./node_modules/.bin/electron-builder install-app-deps",
+      "start": "./node_modules/.bin/electron .",
+      "build": "./node_modules/.bin/electron-builder build",
+      "build-mac": "./node_modules/.bin/electron-builder build --mac",
+      "build-win": "./node_modules/.bin/electron-builder build --win",
+      "build-linux": "./node_modules/.bin/electron-builder build --linux",
+      "pack-mac": "./node_modules/.bin/electron-packager . --platform=darwin",
+      "pack-win": "./node_modules/.bin/electron-packager . med-umd --platform=win32",
+      "pack-linux": "./node_modules/.bin/electron-packager . med-umd --platform=linux"
+    },
+    "build": {
+      "appId": "com.mandarine.umd",
+      "productName": "med-umd",
+      "mac": {
+        "icon": "logo512.png"
+      },
+      "dmg": {},
+      "mas": {},
+      "win": {
+        "icon": "logo512.png",
+        "publisherName": "Mandarine"
+      },
+      "appx": {},
+      "portable": {},
+      "linux": {}
+    },
+    "files": [
+      "static/**/*",
+      "tracks/**/*",
+      "*"
+    ]
+  }
+  
