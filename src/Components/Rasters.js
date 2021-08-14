@@ -4,16 +4,17 @@ export default class Rasters {
   TMPrasterCTX;
   ctx;
   colorRaster = [
-    "#DD5555",
-    "#5555FF",
-    "#55AA55",
+    "#FF5500",
     "#FF55FF",
+    "#00BBFF",
+    "#00BB00",
+    /*"#FF55FF",
     "#FF9955",
-    "#5599FF",
+    "#5599FF",*/
   ];
   rasters = [];
   order = 0;
-  rH = 20;
+  rH = 10;
   constructor(ctx) {
     this.ctx = ctx;
     this.cnv = ctx.canvas;
@@ -53,7 +54,7 @@ export default class Rasters {
       const raster = this.rasters[x];
 
       const posY =
-        this.cnv.height / 2 + Math.sin(this.phase + raster.order * this.rasters.length * 4) * 60;
+        this.cnv.height / 2 + Math.sin(this.phase + raster.order * this.rasters.length * 2) * 30;
       if (posY <= 351) {
         raster.zindex = 2;
       } else if (posY >= 401) {
@@ -67,7 +68,7 @@ export default class Rasters {
         this.cnv.height
       );
     }
-    this.ctx.drawImage(this.TMPrasterCTX.canvas, 0, center);
+    this.ctx.drawImage(this.TMPrasterCTX.canvas, 0, 320);
 
     this.rasters.sort(function (a, b) {
       return a.zindex - b.zindex;
