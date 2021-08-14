@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import Oscilloscope from "./Oscilloscope";
 import Spectrum from "./Spectrum";
 import { getInnerSize, hextoRGB } from "../tools/tools";
+import Rasters from "./Rasters";
 
 function CanvasBackground(props) {
   const requestRef = useRef();
@@ -9,11 +10,15 @@ function CanvasBackground(props) {
   const canvasBG = useRef(null);
   const size = useRef(getInnerSize());
   const analyser = useRef(props.analyser);
+  const rasts = useRef();
 
   function resizeCanvas() {
     size.current = getInnerSize();
     context.current.canvas.width = size.current.width;
     context.current.canvas.height = size.current.height;
+    if (rasts.current) {
+      rasts.current.updateSize(context.current);
+    }
   }
 
   useEffect(() => {
@@ -25,6 +30,10 @@ function CanvasBackground(props) {
       var cW = context.current.canvas.width;
       var cH = context.current.canvas.height;
       context.current.clearRect(0, 0, cW, cH);
+      
+      if (rasts.current) {
+        rasts.current.animate(time);
+      }
       Spectrum(
         context.current,
         false,
@@ -49,7 +58,7 @@ function CanvasBackground(props) {
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
     requestRef.current = requestAnimationFrame(animate);
-
+    rasts.current = new Rasters(context.current);
     return () => cancelAnimationFrame(requestRef.current);
   }, []); // Make sure the effect runs only once
 
