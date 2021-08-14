@@ -4,9 +4,9 @@ export default class Rasters {
   TMPrasterCTX;
   ctx;
   colorRaster = [
-    "#0000FF10",
-    "#FF000010",
-    "#00FF0010",
+    "#5555FF",
+    "#DD5555",
+    "#55AA55",
     /*"violet",
     "orange",
     "lime",
@@ -16,7 +16,7 @@ export default class Rasters {
   ];
   rasters = [];
   order = 0;
-  rH = 30;
+  rH = 20;
   constructor(ctx) {
     this.ctx = ctx;
     this.cnv = ctx.canvas;

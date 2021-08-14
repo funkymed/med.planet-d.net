@@ -31,9 +31,7 @@ function CanvasBackground(props) {
       var cH = context.current.canvas.height;
       context.current.clearRect(0, 0, cW, cH);
       
-      if (rasts.current) {
-        rasts.current.animate(time);
-      }
+      
       Spectrum(
         context.current,
         false,
@@ -43,6 +41,9 @@ function CanvasBackground(props) {
         (size.current.width / 256) * 32,
         analyser.current
       );
+      if (rasts.current) {
+        rasts.current.animate(time);
+      }
       Oscilloscope(
         context.current,
         false,
