@@ -106,6 +106,8 @@ function F2Voice(idx) {
           case 3:
             delta = ((64 - (this.autoVibratoPos >> 1)) & 127) - 64;
             break;
+          default:
+            break;
         }
 
         delta *= this.playing.vibratoDepth;
@@ -169,6 +171,8 @@ function F2Voice(idx) {
           case 1:
             delta = position << 3;
             break;
+          default:
+            break;
         }
 
         this.volDelta = (delta * this.tremoloDepth) >> 6;
@@ -180,7 +184,7 @@ function F2Voice(idx) {
     },
     tremor: {
       value: function () {
-        if (this.tremorPos == this.tremorOn) {
+        if (this.tremorPos === this.tremorOn) {
           this.tremorVolume = this.volume;
           this.volume = 0;
           this.flags |= UPDATE_VOLUME;
@@ -205,6 +209,8 @@ function F2Voice(idx) {
           case 1:
             delta = position << 3;
             if (this.vibratoPos > 31) delta = 255 - delta;
+            break;
+          default:
             break;
         }
 
@@ -387,18 +393,18 @@ function F2Player(mixer) {
         stream.position++;
         id = stream.readString(20);
 
-        if (id == "FastTracker v2.00   " || id == "FastTracker v 2.00  ") {
+        if (id === "FastTracker v2.00   " || id === "FastTracker v 2.00  ") {
           this.version = 1;
-        } else if (id == "Sk@le Tracker") {
+        } else if (id === "Sk@le Tracker") {
           reserved = 2;
           this.version = 2;
-        } else if (id == "MadTracker 2.0") {
+        } else if (id === "MadTracker 2.0") {
           this.version = 3;
-        } else if (id == "MilkyTracker        ") {
+        } else if (id === "MilkyTracker        ") {
           this.version = 4;
-        } else if (id == "DigiBooster Pro 2.18") {
+        } else if (id === "DigiBooster Pro 2.18") {
           this.version = 5;
-        } else if (id.indexOf("OpenMPT") != -1) {
+        } else if (id.indexOf("OpenMPT") !== -1) {
           this.version = 6;
         } else return;
 
@@ -428,7 +434,7 @@ function F2Player(mixer) {
         this.patterns = [];
         this.patterns.length = rows;
 
-        if (rows != value) {
+        if (rows !== value) {
           pattern = F2Pattern(64, this.channels);
           j = pattern.size;
           for (i = 0; i < j; ++i) pattern.rows[i] = F2Row();
@@ -468,7 +474,7 @@ function F2Player(mixer) {
                 row.param = stream.readUbyte();
               }
 
-              if (row.note != KEYOFF_NOTE) if (row.note > 96) row.note = 0;
+              if (row.note !== KEYOFF_NOTE) if (row.note > 96) row.note = 0;
               pattern.rows[j] = row;
             }
           } else {
@@ -477,7 +483,7 @@ function F2Player(mixer) {
 
           this.patterns[i] = pattern;
           pos = stream.position;
-          if (pos != ipos) pos = stream.position = ipos;
+          if (pos !== ipos) pos = stream.position = ipos;
         }
 
         ipos = stream.position;
@@ -494,7 +500,7 @@ function F2Player(mixer) {
           value = stream.readUshort();
           if (value > 16) value = 16;
           header = stream.readUint();
-          if (reserved == 2 && header != 64) header = 64;
+          if (reserved === 2 && header !== 64) header = 64;
 
           if (value) {
             instr.samples = [];
@@ -654,7 +660,7 @@ function F2Player(mixer) {
               voice.keyoff = 1;
             }
 
-            if (row.note && row.note != KEYOFF_NOTE) {
+            if (row.note && row.note !== KEYOFF_NOTE) {
               if (voice.instrument) {
                 instr = voice.instrument;
                 value = row.note - 1;
@@ -682,7 +688,7 @@ function F2Player(mixer) {
                     voice.finetune = (sample.finetune >> 3) << 2;
                   }
 
-                  if (row.effect == 14 && paramx == 5)
+                  if (row.effect === 14 && paramx === 5)
                     voice.finetune = ((row.param & 15) - 8) << 3;
 
                   if (this.linear) {
@@ -703,7 +709,7 @@ function F2Player(mixer) {
                 voice.flags = UPDATE_VOLUME | SHORT_RAMP;
               }
             } else if (voice.vibratoReset) {
-              if (row.effect != 4 && row.effect != 6) {
+              if (row.effect !== 4 && row.effect !== 6) {
                 voice.vibDelta = 0;
                 voice.vibratoReset = 0;
                 voice.flags |= UPDATE_PERIOD;
@@ -741,6 +747,8 @@ function F2Player(mixer) {
                   case 15: //vx tone portamento
                     if (paramy) voice.portaSpeed = paramy << 4;
                     break;
+                  default:
+                    break;
                 }
               }
             }
@@ -756,7 +764,7 @@ function F2Player(mixer) {
                   if (row.param) voice.portaD = row.param << 2;
                   break;
                 case 3: //fx tone portamento
-                  if (row.param && com != 15) voice.portaSpeed = row.param;
+                  if (row.param && com !== 15) voice.portaSpeed = row.param;
                   break;
                 case 4: //fx vibrato
                   voice.vibratoReset = 1;
@@ -869,6 +877,8 @@ function F2Player(mixer) {
                     case 14: //ex pattern delay
                       this.patternDelay = paramy * this.timer;
                       break;
+                    default:
+                      break;
                   }
 
                   break;
@@ -901,7 +911,7 @@ function F2Player(mixer) {
 
                   if (
                     instr.volData.flags & ENVELOPE_LOOP &&
-                    i == instr.volData.loopEnd
+                    i === instr.volData.loopEnd
                   ) {
                     i = voice.volEnvelope.position = instr.volData.loopStart;
                     value = instr.volData.points[i].frame;
@@ -949,15 +959,17 @@ function F2Player(mixer) {
                   }
                   break;
                 case 33: //fx extra fine portamento
-                  if (paramx == 1) {
+                  if (paramx === 1) {
                     if (paramy) voice.xtraPortaU = paramy;
                     voice.period -= voice.xtraPortaU;
                     voice.flags |= UPDATE_PERIOD;
-                  } else if (paramx == 2) {
+                  } else if (paramx === 2) {
                     if (paramy) voice.xtraPortaD = paramy;
                     voice.period += voice.xtraPortaD;
                     voice.flags |= UPDATE_PERIOD;
                   }
+                  break;
+                default:
                   break;
               }
             }
@@ -968,7 +980,7 @@ function F2Player(mixer) {
             row = this.pattern.rows[this.position + voice.index];
 
             if (voice.delay) {
-              if ((row.param & 15) == this.tick) {
+              if ((row.param & 15) === this.tick) {
                 voice.flags = voice.delay;
                 voice.delay = 0;
               } else {
@@ -1008,6 +1020,8 @@ function F2Player(mixer) {
                 case 15: //vx tone portamento
                   if (voice.portaPeriod) voice.tonePortamento();
                   break;
+                default:
+                  break;
               }
             }
 
@@ -1019,11 +1033,11 @@ function F2Player(mixer) {
                 if (!row.param) break;
                 value = (this.tick - this.timer) % 3;
                 if (value < 0) value += 3;
-                if (this.tick == 2 && this.timer == 18) value = 0;
+                if (this.tick === 2 && this.timer === 18) value = 0;
 
                 if (!value) {
                   voice.arpDelta = 0;
-                } else if (value == 1) {
+                } else if (value === 1) {
                   if (this.linear) {
                     voice.arpDelta = -(paramy << 6);
                   } else {
@@ -1076,7 +1090,7 @@ function F2Player(mixer) {
               case 14: //fx extended effects
                 switch (paramx) {
                   case 9: //ex retrig note
-                    if (this.tick % paramy == 0) {
+                    if (this.tick % paramy === 0) {
                       voice.volEnvelope.reset();
                       voice.panEnvelope.reset();
                       voice.flags |=
@@ -1084,10 +1098,12 @@ function F2Player(mixer) {
                     }
                     break;
                   case 12: //ex note cut
-                    if (this.tick == paramy) {
+                    if (this.tick === paramy) {
                       voice.volume = 0;
                       voice.flags |= UPDATE_VOLUME;
                     }
+                    break;
+                  default:
                     break;
                 }
 
@@ -1107,7 +1123,7 @@ function F2Player(mixer) {
                 }
                 break;
               case 20: //fx keyoff
-                if (this.tick == row.param) {
+                if (this.tick === row.param) {
                   voice.fadeEnabled = 1;
                   voice.keyoff = 1;
                 }
@@ -1137,6 +1153,8 @@ function F2Player(mixer) {
                 break;
               case 29: //fx tremor
                 voice.tremor();
+                break;
+              default:
                 break;
             }
 
@@ -1402,7 +1420,7 @@ function F2Player(mixer) {
             lvol = volume * PANNING[256 - panning];
             rvol = volume * PANNING[panning];
 
-            if (volume != chan.volume && !chan.mixCounter) {
+            if (volume !== chan.volume && !chan.mixCounter) {
               chan.volCounter =
                 flags & SHORT_RAMP ? 220 : this.mixer.samplesTick;
 
@@ -1420,7 +1438,7 @@ function F2Player(mixer) {
             rpan = PANNING[panning];
 
             if (
-              panning != chan.panning &&
+              panning !== chan.panning &&
               !chan.mixCounter &&
               !chan.volCounter
             ) {
@@ -1466,14 +1484,14 @@ function F2Player(mixer) {
           curr = data.points[pos],
           next;
 
-        if (envelope.frame == curr.frame) {
-          if (data.flags & ENVELOPE_LOOP && pos == data.loopEnd) {
+        if (envelope.frame === curr.frame) {
+          if (data.flags & ENVELOPE_LOOP && pos === data.loopEnd) {
             pos = envelope.position = data.loopStart;
             curr = data.points[pos];
             envelope.frame = curr.frame;
           }
 
-          if (pos == data.total - 1) {
+          if (pos === data.total - 1) {
             envelope.value = curr.value;
             envelope.stopped = 1;
             return;
@@ -1481,7 +1499,7 @@ function F2Player(mixer) {
 
           if (
             data.flags & ENVELOPE_SUSTAIN &&
-            pos == data.sustain &&
+            pos === data.sustain &&
             !voice.fadeEnabled
           ) {
             envelope.value = curr.value;
@@ -1564,6 +1582,8 @@ function F2Player(mixer) {
             break;
           case 15:
             voice.volume <<= 1;
+            break;
+          default:
             break;
         }
 

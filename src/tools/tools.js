@@ -60,7 +60,7 @@ export function streamXhr(url, callback) {
     }
   };
   xhr.onreadystatechange = function () {
-    if (xhr.readyState == 4) {
+    if (xhr.readyState === 4) {
       var stream = xhr.response;
       callback(stream);
       document.getElementById("progress").style.width = "100%";

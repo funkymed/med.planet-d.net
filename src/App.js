@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./sass/app.scss";
 import { getList } from "./tools/modules";
 import CanvasBackground from "./Components/CanvasBackground";
@@ -39,13 +39,13 @@ function App() {
     var file = filename.split("/").pop();
     const analyser = player.context.createAnalyser();
     analyser.smoothingTimeConstant = 0.75;
-    analyser.fftSize = 2048 * 2;
+    analyser.fftSize = 2048;
     analyser.minDecibels = -90;
     analyser.maxDecibels = -10;
     player.node.connect(analyser);
     setPlayer(player);
     let title = file;
-    if (player.title.trim() != "") {
+    if (player.title.trim() !== "") {
       title = `${player.title} - ${file}`;
     }
 

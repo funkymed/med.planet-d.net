@@ -76,10 +76,10 @@ function MKPlayer(mixer) {
 
         this.version = value;
 
-        if (value == NOISETRACKER_20) this.vibratoDepth = 6;
+        if (value === NOISETRACKER_20) this.vibratoDepth = 6;
         else this.vibratoDepth = 7;
 
-        if (value == NOISETRACKER_10) {
+        if (value === NOISETRACKER_10) {
           this.restartSave = this.restart;
           this.restart = 0;
         } else {
@@ -122,7 +122,7 @@ function MKPlayer(mixer) {
 
         stream.position = 1080;
         id = stream.readString(4);
-        if (id != "M.K." && id != "FLT4") return;
+        if (id !== "M.K." && id !== "FLT4") return;
 
         stream.position = 0;
         this.title = stream.readString(20);
@@ -185,10 +185,10 @@ function MKPlayer(mixer) {
 
           if (row.sample > 31 || !this.samples[row.sample]) row.sample = 0;
 
-          if (row.effect == 3 || row.effect == 4)
+          if (row.effect === 3 || row.effect === 4)
             this.version = NOISETRACKER_10;
 
-          if (row.effect == 5 || row.effect == 6)
+          if (row.effect === 5 || row.effect === 6)
             this.version = NOISETRACKER_20;
 
           if (row.effect > 6 && row.effect < 10) {
@@ -221,7 +221,7 @@ function MKPlayer(mixer) {
         sample.length = sample.repeat = 2;
         this.samples[0] = sample;
 
-        if (this.version < NOISETRACKER_20 && this.restart != 127)
+        if (this.version < NOISETRACKER_20 && this.restart !== 127)
           this.version = NOISETRACKER_11;
       },
     },
@@ -257,7 +257,7 @@ function MKPlayer(mixer) {
             }
 
             if (row.note) {
-              if (voice.effect == 3 || voice.effect == 5) {
+              if (voice.effect === 3 || voice.effect === 5) {
                 if (row.note < voice.period) {
                   voice.portaDir = 1;
                   voice.portaPeriod = row.note;
@@ -286,7 +286,8 @@ function MKPlayer(mixer) {
               case 12: //set volume
                 chan.volume = voice.param;
 
-                if (this.version == NOISETRACKER_20) voice.volume = voice.param;
+                if (this.version === NOISETRACKER_20)
+                  voice.volume = voice.param;
                 break;
               case 13: //pattern break
                 this.jumpFlag ^= 1;
@@ -302,6 +303,8 @@ function MKPlayer(mixer) {
 
                 this.speed = value;
                 this.tick = 0;
+                break;
+              default:
                 break;
             }
 
@@ -331,7 +334,7 @@ function MKPlayer(mixer) {
                   continue;
                 }
 
-                if (value == 1) value = voice.param >> 4;
+                if (value === 1) value = voice.param >> 4;
                 else value = voice.param & 0x0f;
 
                 period = voice.period & 0x0fff;
@@ -356,7 +359,7 @@ function MKPlayer(mixer) {
                 break;
               case 3: //tone portamento
               case 5: //tone portamento + volume slide
-                if (voice.effect == 5) {
+                if (voice.effect === 5) {
                   slide = 1;
                 } else if (voice.param) {
                   voice.portaSpeed = voice.param;
@@ -384,7 +387,7 @@ function MKPlayer(mixer) {
                 break;
               case 4: //vibrato
               case 6: //vibrato + volume slide
-                if (voice.effect == 6) {
+                if (voice.effect === 6) {
                   slide = 1;
                 } else if (voice.param) {
                   voice.vibratoSpeed = voice.param;
@@ -404,6 +407,8 @@ function MKPlayer(mixer) {
               case 10: //volume slide
                 slide = 1;
                 break;
+              default:
+                break;
             }
 
             if (slide) {
@@ -422,15 +427,15 @@ function MKPlayer(mixer) {
           }
         }
 
-        if (++this.tick == this.speed) {
+        if (++this.tick === this.speed) {
           this.tick = 0;
           this.patternPos += 4;
 
-          if (this.patternPos == 256 || this.jumpFlag) {
+          if (this.patternPos === 256 || this.jumpFlag) {
             this.patternPos = this.jumpFlag = 0;
             this.trackPos = ++this.trackPos & 127;
 
-            if (this.trackPos == this.length) {
+            if (this.trackPos === this.length) {
               this.trackPos = this.restart;
               this.mixer.complete = 1;
             }

@@ -22,12 +22,12 @@ export default function Filter(props) {
   function update() {
     props.callback(query, filters);
   }
-
+/*
   function onChange(e) {
     setQuery(e.target.value);
     update();
   }
-
+*/
   function togglerFilter(icon, activated) {
     const filtR = filters;
     for (let filter in filtR) {

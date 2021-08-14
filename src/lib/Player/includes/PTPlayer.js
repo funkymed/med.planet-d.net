@@ -567,6 +567,8 @@ function PTPlayer(mixer) {
             case 14: //extended effects
               this.extended(voice);
               break;
+            default:
+              break;
           }
 
           if (slide) {
@@ -633,6 +635,8 @@ function PTPlayer(mixer) {
                 ((this.sampleRate * 2.5) / voice.param) >> 0;
 
             this.tick = 0;
+            break;
+          default:
             break;
         }
       },
@@ -748,6 +752,8 @@ function PTPlayer(mixer) {
             if (this.tick) return;
             voice.funkSpeed = param;
             if (param) this.updateFunk(voice);
+            break;
+          default:
             break;
         }
       },

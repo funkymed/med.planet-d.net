@@ -22,7 +22,7 @@ import F2Player from "./F2Player";
 import MKPlayer from "./MKPlayer";
 import PTPlayer from "./PTPlayer";
 
-function FileLoader() {
+function _FileLoader() {
   var o = Object.create(null, {
     player: { value: null, writable: true },
     index: { value: 0, writable: true },
@@ -44,18 +44,18 @@ function FileLoader() {
         stream.endian = 1;
         stream.position = 0;
 
-        if (stream.readUint() == 67324752) {
+        if (stream.readUint() === 67324752) {
           if (window.neoart.Unzip) {
             //archive = ZipFile(stream);
             //stream = archive.uncompress(archive.entries[0]);
           } else {
-            throw "Unzip support is not available.";
+            //throw "Unzip support is not available.";
           }
         }
 
         if (!stream) return null;
 
-        if (this.player && this.player.id != "STPlayer") {
+        if (this.player && this.player.id !== "STPlayer") {
           this.player.load(stream);
           if (this.player.version) return this.player;
         }
@@ -65,13 +65,13 @@ function FileLoader() {
           id = stream.readString(20);
 
           if (
-            id == "FastTracker v2.00   " ||
-            id == "FastTracker v 2.00  " ||
-            id == "Sk@le Tracker" ||
-            id == "MadTracker 2.0" ||
-            id == "MilkyTracker        " ||
-            id == "DigiBooster Pro 2.18" ||
-            id.indexOf("OpenMPT") != -1
+            id === "FastTracker v2.00   " ||
+            id === "FastTracker v 2.00  " ||
+            id === "Sk@le Tracker" ||
+            id === "MadTracker 2.0" ||
+            id === "MilkyTracker        " ||
+            id === "DigiBooster Pro 2.18" ||
+            id.indexOf("OpenMPT") !== -1
           ) {
             this.player = F2Player(this.mixer);
             this.player.load(stream);
@@ -88,7 +88,7 @@ function FileLoader() {
           stream.position = 1080;
           id = stream.readString(4);
 
-          if (id == "M.K." || id == "FLT4") {
+          if (id === "M.K." || id === "FLT4") {
             this.player = MKPlayer(this.amiga);
             this.player.load(stream);
 
@@ -96,7 +96,7 @@ function FileLoader() {
               this.index = NOISETRACKER;
               return this.player;
             }
-          } else if (id == "FEST") {
+          } else if (id === "FEST") {
             this.player = window.neoart.HMPlayer(this.amiga);
             this.player.load(stream);
 
@@ -111,7 +111,7 @@ function FileLoader() {
           stream.position = 1080;
           id = stream.readString(4);
 
-          if (id == "M.K." || id == "M!K!") {
+          if (id === "M.K." || id === "M!K!") {
             this.player = PTPlayer(this.amiga);
             this.player.load(stream);
 
@@ -120,131 +120,6 @@ function FileLoader() {
               return this.player;
             }
           }
-        }
-
-        if (stream.length > 1685) {
-          stream.position = 60;
-          id = stream.readString(4);
-
-          if (id != "SONG") {
-            stream.position = 124;
-            id = stream.readString(4);
-          }
-
-          /*if (id == "SONG" || id == "SO31") {
-            this.player = FXPlayer(this.amiga);
-            this.player.load(stream);
-
-            if (this.player.version) {
-              this.index = SOUNDFX;
-              return this.player;
-            }
-          }*/
-        }
-
-        if (stream.length > 4) {
-          stream.position = 0;
-          id = stream.readString(4);
-
-          /*if (id == "ALL ") {
-            this.player = D1Player(this.amiga);
-            this.player.load(stream);
-
-            if (this.player.version) {
-              this.index = DELTAMUSIC;
-              return this.player;
-            }
-          }*/
-        }
-
-        if (stream.length > 3018) {
-          stream.position = 3014;
-          id = stream.readString(4);
-
-          /*if (id == ".FNL") {
-            this.player = D2Player(this.amiga);
-            this.player.load(stream);
-
-            if (this.player.version) {
-              this.index = DELTAMUSIC;
-              return this.player;
-            }
-          }*/
-        }
-
-        if (stream.length > 30) {
-          stream.position = 26;
-          id = stream.readString(3);
-
-          /*if (id == "BPS" || id == "V.2" || id == "V.3") {
-            this.player = BPPlayer(this.amiga);
-            this.player.load(stream);
-
-            if (this.player.version) {
-              this.index = BPSOUNDMON;
-              return this.player;
-            }
-          }*/
-        }
-
-        if (stream.length > 4) {
-          stream.position = 0;
-          id = stream.readString(4);
-
-          /*if (id == "SMOD" || id == "FC14") {
-            this.player = FCPlayer(this.amiga);
-            this.player.load(stream);
-
-            if (this.player.version) {
-              this.index = FUTURECOMP;
-              return this.player;
-            }
-          }*/
-        }
-
-        if (stream.length > 10) {
-          stream.position = 0;
-          id = stream.readString(9);
-
-          /*if (id == " MUGICIAN") {
-            this.player = DMPlayer(this.amiga);
-            this.player.load(stream);
-
-            if (this.player.version) {
-              this.index = DIGITALMUG;
-              return this.player;
-            }
-          }*/
-        }
-
-        if (stream.length > 86) {
-          stream.position = 58;
-          id = stream.readString(28);
-
-          /*if (id == "SIDMON II - THE MIDI VERSION") {
-            this.player = S2Player(this.amiga);
-            this.player.load(stream);
-
-            if (this.player.version) {
-              this.index = SIDMON;
-              return this.player;
-            }
-          }*/
-        }
-
-        if (stream.length > 2830) {
-          stream.position = 0;
-          value = stream.readUshort();
-
-          /*if (value == 0x4efa) {
-            this.player = FEPlayer(this.amiga);
-            this.player.load(stream);
-
-            if (this.player.version) {
-              this.index = FREDED;
-              return this.player;
-            }
-          }*/
         }
 
         if (stream.length > 5220) {
@@ -263,11 +138,11 @@ function FileLoader() {
         id = stream.readString(4);
 
         if (
-          id == "COSO" ||
-          value == 0x6000 ||
-          value == 0x6002 ||
-          value == 0x600e ||
-          value == 0x6016
+          id === "COSO" ||
+          value === 0x6000 ||
+          value === 0x6002 ||
+          value === 0x600e ||
+          value === 0x6016
         ) {
           this.player = window.neoart.JHPlayer(this.amiga);
           this.player.load(stream);
@@ -292,7 +167,7 @@ function FileLoader() {
         stream.position = 0;
         value = stream.readUshort();
 
-        if (value == 0x6000) {
+        if (value === 0x6000) {
           this.player = window.neoart.RHPlayer(this.amiga);
           this.player.load(stream);
 
@@ -375,4 +250,5 @@ var SOUNDTRACKER = 0,
     "OpenMPT",
   ];
 
-export default FileLoader = FileLoader();
+const FileLoader = _FileLoader();
+export default FileLoader;

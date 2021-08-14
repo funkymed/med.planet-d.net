@@ -1,11 +1,11 @@
 {
-    "name": "med-umd",
+    "name": "med-ummd",
     "author": {
       "name": "med/mandarine",
       "email": "cyril.pereira@gmail.com"
     },
     "homepage": "https://mandarine.planet-d.net",
-    "description": "Med's Ultimate Music Disk",
+    "description": "Ultimate Med's MusicDisk",
     "license": "UNLICENSED",
     "version": "1.0.1",
     "main": "main.js",
@@ -26,8 +26,8 @@
       "pack-linux": "./node_modules/.bin/electron-packager . med-umd --platform=linux"
     },
     "build": {
-      "appId": "com.mandarine.umd",
-      "productName": "med-umd",
+      "appId": "com.mandarine.medummd",
+      "productName": "med-ummd",
       "mac": {
         "icon": "logo512.png"
       },

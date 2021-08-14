@@ -1,9 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Oscilloscope from "./Oscilloscope";
 import Spectrum from "./Spectrum";
 import { getInnerSize, hextoRGB } from "../tools/tools";
 
-let clock = null;
 function CanvasBackground(props) {
   const requestRef = useRef();
   const context = useRef();
@@ -32,7 +31,7 @@ function CanvasBackground(props) {
         hextoRGB("#222222"),
         hextoRGB("#333333"),
         1,
-        (size.current.width / 256) * 16,
+        (size.current.width / 256) * 32,
         analyser.current
       );
       Oscilloscope(

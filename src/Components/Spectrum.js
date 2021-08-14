@@ -38,7 +38,12 @@ export default function Spectrum(
     const v = 64;
     const b = Math.round(256 - (count / nbBar) * 256);
     ctx.fillStyle = "rgba(" + r + "," + v + "," + b + ", .5)";
-    ctx.fillRect(i, cH, BAR_WIDTH, -magnitude);
+    ctx.fillRect(
+      count * SPACER_WIDTH,
+      cH / 2 + magnitude / 2,
+      BAR_WIDTH,
+      -magnitude
+    );
     count++;
   }
 }
