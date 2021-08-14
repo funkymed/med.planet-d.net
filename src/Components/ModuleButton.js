@@ -111,6 +111,7 @@ function ModuleButton(props) {
     } else {
       setShow(true);
     }
+    updateFilter(props);
   }, [query]);
 
   // Display icons

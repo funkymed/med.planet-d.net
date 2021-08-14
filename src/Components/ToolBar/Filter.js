@@ -51,7 +51,6 @@ export default function Filter(props) {
   //<input onChange={onChange} value={query} />
   return (
     <>
-      
       <div>
         {filters.map(function (item, i) {
           return (
