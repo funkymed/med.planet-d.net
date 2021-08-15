@@ -15,8 +15,8 @@ import {
   isThird,
   isChiptune,
 } from "../tools/modules";
-import { streamXhr } from "../tools/tools";
-import FileLoader from "../lib/Player/includes/FileLoader.js";
+import FlodPlayer from "funkymed-flod-module-player/src/FlodPlayer";
+import ajaxLoader from "funkymed-flod-module-player/src/ajaxLoader";
 
 let currentBtn = null;
 let player = null;
@@ -49,16 +49,22 @@ function ModuleButton(props) {
 
     //props.tracker.load(filename);
 
-    streamXhr(filename, function (bytes) {
-      if (player) {
-        player.stop();
-      }
-      player = FileLoader.load(bytes);
-      player.loopSong = true;
-      player.play();
+    ajaxLoader(
+      filename,
+      function (bytes) {
+        if (player) {
+          player.stop();
+        }
+        player = FlodPlayer.load(bytes);
+        player.loopSong = true;
+        player.play();
 
-      props.callbackAnalyser(player, filename);
-    });
+        props.callbackAnalyser(player, filename);
+      },
+      function (percentage) {
+        document.getElementById("progress").style.width = `${percentage}%`;
+      }
+    );
   }
 
   function updateFilter(_props) {

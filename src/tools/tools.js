@@ -49,23 +49,3 @@ export function hextoRGB(h) {
   return [hexToR(h), hexToG(h), hexToB(h)].join(",");
 }
 
-export function streamXhr(url, callback) {
-  var xhr = new XMLHttpRequest();
-  xhr.open("GET", url, true);
-  xhr.responseType = "arraybuffer";
-  xhr.onprogress = function (e) {
-    if (e.lengthComputable) {
-      var percentage = Math.round((e.loaded / e.total) * 100);
-      document.getElementById("progress").style.width = `${percentage}%`;
-    }
-  };
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4) {
-      var stream = xhr.response;
-      callback(stream);
-      document.getElementById("progress").style.width = "100%";
-      document.getElementById("progress").style.width = 0;
-    }
-  };
-  xhr.send();
-}

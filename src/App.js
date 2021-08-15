@@ -37,12 +37,11 @@ function App() {
 
   function callbackAnalyser(player, filename) {
     var file = filename.split("/").pop();
-    const analyser = player.context.createAnalyser();
-    analyser.smoothingTimeConstant = 0.75;
-    analyser.fftSize = 2048;
-    analyser.minDecibels = -90;
-    analyser.maxDecibels = -10;
-    player.node.connect(analyser);
+
+    player.analyser.smoothingTimeConstant = 0.75;
+    player.analyser.fftSize = 2048;
+    player.analyser.minDecibels = -90;
+
     setPlayer(player);
     let title = file;
     if (player.title.trim() !== "") {
@@ -50,7 +49,7 @@ function App() {
     }
 
     setTitleCallback(`Now Playing : ${title}`);
-    setAnalyser(analyser);
+    setAnalyser(player.analyser);
   }
 
   return (
