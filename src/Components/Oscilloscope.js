@@ -1,45 +1,53 @@
-export default function Oscilloscope(
-  ctx,
-  clear,
-  oscillocolor,
-  color,
-  opacity,
-  analyser
-) {
-  if (!analyser) return false;
-  var cW = ctx.canvas.width;
-  var cH = ctx.canvas.height;
-  if (clear) {
-    ctx.clearRect(0, 0, cW, cH);
+export default class Oscilloscope {
+  ctx;
+  oscillocolor;
+  color;
+  opacity;
+  analyser;
+  constructor(ctx, oscillocolor, color, opacity, analyser) {
+    this.ctx = ctx;
+    this.oscillocolor = oscillocolor;
+    this.color = color;
+    this.opacity = opacity;
+    this.analyser = analyser;
   }
-  if (color) {
-    ctx.fillStyle = "rgba(" + color + ", " + (opacity ? opacity : 1) + ")";
-    ctx.fillRect(0, 0, cW, cH);
-  }
-  var i,
-    fb = analyser.frequencyBinCount;
-  var freqByteData = new Uint8Array(fb);
-  analyser.getByteTimeDomainData(freqByteData);
-  ctx.fillStyle = oscillocolor;
-  ctx.lineWidth = 2;
-  ctx.strokeStyle = "#FFFFFF30";
-  for (i = 0; i < fb; i++) {
-    var value_old = freqByteData[i - 1];
+  animate(clear) {
+    if (!this.analyser) return false;
+    var cW = this.ctx.canvas.width;
+    var cH = this.ctx.canvas.height;
+    if (clear) {
+      this.ctx.clearRect(0, 0, cW, cH);
+    }
+    if (this.color) {
+      this.ctx.fillStyle =
+        "rgba(" + this.color + ", " + (this.opacity ? this.opacity : 1) + ")";
+      this.ctx.fillRect(0, 0, cW, cH);
+    }
+    var i,
+      fb = this.analyser.frequencyBinCount;
+    var freqByteData = new Uint8Array(fb);
+    this.analyser.getByteTimeDomainData(freqByteData);
+    this.ctx.fillStyle = this.oscillocolor;
+    this.ctx.lineWidth = 2;
+    this.ctx.strokeStyle = "#FFFFFF30";
+    for (i = 0; i < fb; i++) {
+      var value_old = freqByteData[i - 1];
 
-    var percent_old = value_old / 256;
-    var height_old = cH * percent_old;
-    var offset_old = cH - height_old - 1;
-    var barWidth_old = cW / analyser.frequencyBinCount;
+      var percent_old = value_old / 256;
+      var height_old = cH * percent_old;
+      var offset_old = cH - height_old - 1;
+      var barWidth_old = cW / this.analyser.frequencyBinCount;
 
-    var value = freqByteData[i];
-    var percent = value / 256;
-    var height = cH * percent;
-    var offset = cH - height - 1;
-    var barWidth = cW / analyser.frequencyBinCount;
+      var value = freqByteData[i];
+      var percent = value / 256;
+      var height = cH * percent;
+      var offset = cH - height - 1;
+      var barWidth = cW / this.analyser.frequencyBinCount;
 
-    ctx.beginPath();
-    ctx.moveTo((i - 1) * barWidth_old, offset_old);
-    ctx.lineTo(i * barWidth, offset);
-    ctx.stroke();
+      this.ctx.beginPath();
+      this.ctx.moveTo((i - 1) * barWidth_old, offset_old);
+      this.ctx.lineTo(i * barWidth, offset);
+      this.ctx.stroke();
+    }
   }
 }

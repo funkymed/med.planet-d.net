@@ -11,6 +11,8 @@ function CanvasBackground(props) {
   const size = useRef(getInnerSize());
   const analyser = useRef(props.analyser);
   const rasts = useRef();
+  const oscilo = useRef();
+  const spectr = useRef();
 
   function resizeCanvas() {
     size.current = getInnerSize();
@@ -23,6 +25,22 @@ function CanvasBackground(props) {
 
   useEffect(() => {
     analyser.current = props.analyser;
+    oscilo.current = new Oscilloscope(
+      context.current,
+      "#cccccc",
+      false,
+      1,
+      analyser.current
+    );
+
+    spectr.current = new Spectrum(
+      context.current,
+      hextoRGB("#222222"),
+      hextoRGB("#333333"),
+      1,
+      (size.current.width / 256) * 32,
+      analyser.current
+    );
   }, [props.analyser]);
 
   useEffect(() => {
@@ -30,25 +48,13 @@ function CanvasBackground(props) {
       var cW = context.current.canvas.width;
       var cH = context.current.canvas.height;
       context.current.clearRect(0, 0, cW, cH);
-      
-      
-      Spectrum(
-        context.current,
-        false,
-        hextoRGB("#222222"),
-        hextoRGB("#333333"),
-        1,
-        (size.current.width / 256) * 32,
-        analyser.current
-      );
-      Oscilloscope(
-        context.current,
-        false,
-        "#cccccc",
-        false,
-        1,
-        analyser.current
-      );
+
+      if (spectr.current) {
+        spectr.current.animate();
+      }
+      if (oscilo.current) {
+        oscilo.current.animate();
+      }
 
       if (rasts.current) {
         rasts.current.animate(time);
@@ -60,6 +66,7 @@ function CanvasBackground(props) {
     window.addEventListener("resize", resizeCanvas);
     requestRef.current = requestAnimationFrame(animate);
     rasts.current = new Rasters(context.current);
+
     return () => cancelAnimationFrame(requestRef.current);
   }, []); // Make sure the effect runs only once
 
