@@ -18,11 +18,7 @@ export default class Rasters {
   constructor(ctx) {
     this.ctx = ctx;
     this.cnv = ctx.canvas;
-
-    const TMPrasterCanvas = document.createElement("canvas");
-    TMPrasterCanvas.width = ctx.canvas.width;
-    TMPrasterCanvas.height = ctx.canvas.height;
-    this.TMPrasterCTX = TMPrasterCanvas.getContext("2d");
+    this.createCanvasTmp();
 
     this.colorRaster.forEach(this.createRaster.bind(this));
   }
@@ -46,38 +42,49 @@ export default class Rasters {
   }
 
   animate(time) {
-    this.phase = time / 500;
-    this.TMPrasterCTX.clearRect(0, 0, this.cnv.width, this.cnv.height);
-    const center = (Math.sin(this.phase / 2) * this.cnv.height) / 4;
+    if (this.TMPrasterCTX) {
+      this.phase = time / 500;
+      this.TMPrasterCTX.clearRect(0, 0, this.cnv.width, this.cnv.height);
+      const center = (Math.sin(this.phase / 2) * this.cnv.height) / 4;
 
-    for (let x = 0; x < this.rasters.length; x++) {
-      const raster = this.rasters[x];
+      for (let x = 0; x < this.rasters.length; x++) {
+        const raster = this.rasters[x];
 
-      const posY =
-        this.cnv.height / 2 +
-        Math.sin(this.phase + raster.order * this.rasters.length * 2) * 30;
+        const posY =
+          this.cnv.height / 2 +
+          Math.sin(this.phase + raster.order * this.rasters.length * 2) * 30;
 
-      if (Math.floor(posY) <= 352) {
-        raster.zindex = 2;
-      } else if (Math.ceil(posY) >= 410) {
-        raster.zindex = 1;
+        if (Math.floor(posY) <= 352) {
+          raster.zindex = 2;
+        } else if (Math.ceil(posY) >= 410) {
+          raster.zindex = 1;
+        }
+        this.TMPrasterCTX.drawImage(
+          raster.canvas,
+          0,
+          posY,
+          this.cnv.width,
+          this.cnv.height
+        );
       }
-      this.TMPrasterCTX.drawImage(
-        raster.canvas,
-        0,
-        posY,
-        this.cnv.width,
-        this.cnv.height
-      );
-    }
-    this.ctx.drawImage(this.TMPrasterCTX.canvas, 0, 320);
+      this.ctx.drawImage(this.TMPrasterCTX.canvas, 0, 320);
 
-    this.rasters.sort(function (a, b) {
-      return a.zindex - b.zindex;
-    });
+      this.rasters.sort(function (a, b) {
+        return a.zindex - b.zindex;
+      });
+    }
   }
+
+  createCanvasTmp() {
+    const TMPrasterCanvas = document.createElement("canvas");
+    TMPrasterCanvas.width = this.cnv.width;
+    TMPrasterCanvas.height = this.cnv.height;
+    this.TMPrasterCTX = TMPrasterCanvas.getContext("2d");
+  }
+
   updateSize(ctx) {
     this.ctx = ctx;
     this.cnv = ctx.canvas;
+    this.createCanvasTmp();
   }
 }
