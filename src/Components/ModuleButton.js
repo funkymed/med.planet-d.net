@@ -156,6 +156,7 @@ function ModuleButton(props) {
           ""
         )}
         {mod.name}
+        <div className="floatR">{mod.size}</div>
       </button>
     </li>
   ) : (
