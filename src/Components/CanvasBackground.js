@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Oscilloscope from "./Oscilloscope";
 import Spectrum from "./Spectrum";
 import { getInnerSize, hextoRGB } from "../tools/tools";
@@ -13,6 +13,8 @@ function CanvasBackground(props) {
   const rasts = useRef();
   const oscilo = useRef();
   const spectr = useRef();
+
+  const [visible, setVisible] = useState(true);
 
   function resizeCanvas() {
     size.current = getInnerSize();
@@ -45,29 +47,48 @@ function CanvasBackground(props) {
 
   useEffect(() => {
     const animate = (time) => {
-      var cW = context.current.canvas.width;
-      var cH = context.current.canvas.height;
-      context.current.clearRect(0, 0, cW, cH);
+      if (visible) {
+        var cW = context.current.canvas.width;
+        var cH = context.current.canvas.height;
+        context.current.clearRect(0, 0, cW, cH);
 
-      if (spectr.current) {
-        spectr.current.animate();
-      }
-      if (oscilo.current) {
-        oscilo.current.animate();
+        if (spectr.current) {
+          spectr.current.animate();
+        }
+        if (oscilo.current) {
+          oscilo.current.animate();
+        }
+
+        if (rasts.current) {
+          rasts.current.animate(time);
+        }
       }
 
-      if (rasts.current) {
-        rasts.current.animate(time);
-      }
       requestRef.current = requestAnimationFrame(animate);
     };
     context.current = canvasBG.current.getContext("2d");
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
+    // save cpu
+    document.addEventListener(
+      "visibilitychange",
+      function () {
+        if (document.hidden) {
+          setVisible(false);
+        } else {
+          setVisible(true);
+        }
+      },
+      false
+    );
     requestRef.current = requestAnimationFrame(animate);
     rasts.current = new Rasters(context.current);
 
-    return () => cancelAnimationFrame(requestRef.current);
+    return function cleanup() {
+      cancelAnimationFrame(requestRef.current);
+      document.removeEventListener("visibilitychange");
+      window.removeEventListener("resize");
+    };
   }, []); // Make sure the effect runs only once
 
   return <canvas ref={canvasBG} width={size.width} height={size.height} />;
