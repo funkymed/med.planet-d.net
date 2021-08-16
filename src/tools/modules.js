@@ -70,6 +70,7 @@ export const modules = [
   "tracks/xm/2001/jecoute_back2lyon.xm",
   "tracks/xm/2001/jecoute_daddyremix2001.xm",
   "tracks/xm/2001/mutantInc_upermarch.xm",
+  "tracks/xm/2001/razor_raz2.xm",
   "tracks/xm/2001/tvnet_ADVERTIS.XM",
   "tracks/xm/2001/tvnet_ART.XM",
   "tracks/xm/2001/tvnet_BUBBLE.XM",
