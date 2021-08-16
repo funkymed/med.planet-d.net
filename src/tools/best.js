@@ -19,4 +19,5 @@ export const best = [
   "tvnet_SPIRAL.XM",
   "tvnet_misc.XM",
   "med_lovely2.XM",
+  "vitaminic_FIGHT22.XM",
 ];

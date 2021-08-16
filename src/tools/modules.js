@@ -57,6 +57,7 @@ export const modules = [
   "tracks/xm/2000/med_soulg.XM",
   "tracks/xm/2000/med_winner.XM",
   "tracks/xm/2000/med_zen2K.XM",
+  "tracks/xm/2000/vitaminic_FIGHT22.XM",
   "tracks/xm/2001/analogik_2VOICES.XM",
   "tracks/xm/2001/analogik_2VOICES2.XM",
   "tracks/xm/2001/analogik_3VIL.XM",
