@@ -35,10 +35,14 @@ function ModuleButton(props) {
     evt.preventDefault();
     if (currentBtn) {
       currentBtn.className = "";
+      currentBtn.closest("li").className = "";
     }
     currentBtn = evt.target;
     const filename = currentBtn.attributes.getNamedItem("data-filename").value;
     currentBtn.className = "active";
+
+    const li = currentBtn.closest("li");
+    li.className = "active";
 
     /*
     currentBtn.scrollIntoView({

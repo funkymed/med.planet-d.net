@@ -205,6 +205,9 @@ ul {
   margin-top: 0;
 
   li {
+    &.active{
+      border-bottom:2px dashed white;
+    }
     button {
       color: #ddd;
       background: none;
