@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./sass/app.scss";
 import { getList } from "./tools/modules";
 import CanvasBackground from "./Components/CanvasBackground";
@@ -19,7 +19,9 @@ function App() {
   const [best, setBest] = useState(false);
   const [love, setLove] = useState(false);
   const [chiptune, setChiptune] = useState(false);
-  const [player, setPlayer] = useState(false);
+  const requestRef = useRef();
+  const player = useRef();
+  const currentBtn = useRef();
 
   function callbackFilter(query, filters) {
     setQuery(query);
@@ -35,22 +37,41 @@ function App() {
     setTitleMusic(str);
   }
 
-  function callbackAnalyser(player, filename) {
+  function callbackAnalyser(_player, filename, _currentBtn) {
     var file = filename.split("/").pop();
 
-    player.analyser.smoothingTimeConstant = 0.75;
-    player.analyser.fftSize = 2048;
-    player.analyser.minDecibels = -90;
+    _player.analyser.smoothingTimeConstant = 0.75;
+    _player.analyser.fftSize = 2048;
+    _player.analyser.minDecibels = -90;
 
-    setPlayer(player);
     let title = file;
-    if (player.title.trim() !== "") {
-      title = `${player.title} - ${file}`;
+    if (_player.title.trim() !== "") {
+      title = `${_player.title} - ${file}`;
     }
 
     setTitleCallback(`Now Playing : ${title}`);
-    setAnalyser(player.analyser);
+    setAnalyser(_player.analyser);
+    player.current = _player;
+    currentBtn.current = _currentBtn;
   }
+
+  useEffect(() => {
+    const animate = (time) => {
+      if (player.current && currentBtn.current) {
+        const percent = Math.round(
+          ((player.current.order + 1) / player.current.length) * 100
+        );
+        currentBtn.current.style.backgroundSize = `${percent}% auto`;
+      }
+      requestRef.current = requestAnimationFrame(animate);
+    };
+
+    requestRef.current = requestAnimationFrame(animate);
+
+    return function cleanup() {
+      cancelAnimationFrame(requestRef.current);
+    };
+  }, []);
 
   return (
     <div className="App">
@@ -61,7 +82,7 @@ function App() {
           title={titleMusic}
           setTitleCallback={setTitleCallback}
           callbackFilter={callbackFilter}
-          player={player}
+          player={player.current}
         />
         <div id="block">
           <div id="tracks">
@@ -79,7 +100,7 @@ function App() {
                   third={third}
                   best={best}
                   chiptune={chiptune}
-                  callbackAnalyser={callbackAnalyser}
+                  callbackAnalyser={callbackAnalyser.bind(this)}
                 />
               );
             })}

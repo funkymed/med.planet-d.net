@@ -207,6 +207,9 @@ ul {
   li {
     &.active{
       border-bottom:2px dashed white;
+      background-image: url('./images/progress.png');
+      background-repeat: repeat-y;
+      background-size: 50% auto;
     }
     button {
       color: #ddd;

@@ -236,7 +236,6 @@ export function getList() {
       mods: list[year],
     });
   }
-  console.log(mapList)
   return mapList;
 }
 

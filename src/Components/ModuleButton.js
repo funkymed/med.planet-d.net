@@ -63,7 +63,7 @@ function ModuleButton(props) {
         player.loopSong = true;
         player.play();
 
-        props.callbackAnalyser(player, filename);
+        props.callbackAnalyser(player, filename, li);
       },
       function (percentage) {
         document.getElementById("progress").style.width = `${percentage}%`;
@@ -114,6 +114,7 @@ function ModuleButton(props) {
       chiptune,
     });
   }, [first, second, third, love, best, chiptune]);
+
 
   useEffect(() => {
     if (query && query.trim() !== "") {
