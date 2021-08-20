@@ -59,7 +59,7 @@ function App() {
     const animate = (time) => {
       if (player.current && currentBtn.current) {
         const percent = Math.round(
-          ((player.current.order + 1) / player.current.length) * 100
+          (player.current.order / (player.current.length-1)) * 100
         );
         currentBtn.current.style.backgroundSize = `${percent}% auto`;
       }
