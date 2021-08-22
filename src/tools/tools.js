@@ -49,3 +49,29 @@ export function hextoRGB(h) {
   return [hexToR(h), hexToG(h), hexToB(h)].join(",");
 }
 
+export function getList(modules) {
+  const list = [];
+  for (let f in modules) {
+    let d = modules[f].filename.split("/");
+
+    if (typeof list[d[1]] === "undefined") {
+      list[d[1]] = [];
+    }
+    list[d[1]].push({
+      filename: modules[f].filename,
+      size: modules[f].size,
+      name: d[2],
+      filters: modules[f]?.filters,
+    });
+  }
+
+  console.log(list);
+  const mapList = [];
+  for (let year in list) {
+    mapList.push({
+      year,
+      mods: list[year],
+    });
+  }
+  return mapList;
+}

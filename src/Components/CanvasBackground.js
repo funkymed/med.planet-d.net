@@ -45,27 +45,28 @@ function CanvasBackground(props) {
     );
   }, [props.analyser]);
 
-  useEffect(() => {
-    const animate = (time) => {
-      if (visible) {
-        var cW = context.current.canvas.width;
-        var cH = context.current.canvas.height;
-        context.current.clearRect(0, 0, cW, cH);
+  const animate = (time) => {
+    if (visible) {
+      var cW = context.current.canvas.width;
+      var cH = context.current.canvas.height;
+      context.current.clearRect(0, 0, cW, cH);
 
-        if (spectr.current) {
-          spectr.current.animate();
-        }
-        if (oscilo.current) {
-          oscilo.current.animate();
-        }
-
-        if (rasts.current) {
-          rasts.current.animate(time);
-        }
+      if (spectr.current) {
+        spectr.current.animate();
+      }
+      if (oscilo.current) {
+        oscilo.current.animate();
       }
 
-      requestRef.current = requestAnimationFrame(animate);
-    };
+      if (rasts.current) {
+        rasts.current.animate(time);
+      }
+    }
+
+    requestRef.current = requestAnimationFrame(animate);
+  };
+
+  useEffect(() => {
     context.current = canvasBG.current.getContext("2d");
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
@@ -89,7 +90,8 @@ function CanvasBackground(props) {
       document.removeEventListener("visibilitychange");
       window.removeEventListener("resize");
     };
-  }, []); // Make sure the effect runs only once
+    // eslint-disable-next-line
+  }, []);
 
   return <canvas ref={canvasBG} width={size.width} height={size.height} />;
 }

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import "./sass/app.scss";
-import { getList } from "./tools/modules";
+import { getList } from "./tools/tools";
 import CanvasBackground from "./Components/CanvasBackground";
 import ToolBar from "./Components/ToolBar";
 import Timer from "./Timer";

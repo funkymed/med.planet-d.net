@@ -45,7 +45,7 @@ export default class Rasters {
     if (this.TMPrasterCTX) {
       this.phase = time / 500;
       this.TMPrasterCTX.clearRect(0, 0, this.cnv.width, this.cnv.height);
-      const center = (Math.sin(this.phase / 2) * this.cnv.height) / 4;
+      //const center = (Math.sin(this.phase / 2) * this.cnv.height) / 4;
 
       for (let x = 0; x < this.rasters.length; x++) {
         const raster = this.rasters[x];

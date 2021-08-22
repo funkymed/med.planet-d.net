@@ -9,7 +9,7 @@ import {
 } from "../../tools/const";
 
 export default function Filter(props) {
-  const [query, setQuery] = useState();
+  //const [query, setQuery] = useState();
   const [filters, setFilters] = useState([
     { icon: "first", title: TITLE_FIRST, actived: false },
     { icon: "second", title: TITLE_SECOND, actived: false },
@@ -20,7 +20,7 @@ export default function Filter(props) {
   ]);
 
   function update() {
-    props.callback(query, filters);
+    props.callback(null, filters); // props.callback(query, filters);
   }
 /*
   function onChange(e) {

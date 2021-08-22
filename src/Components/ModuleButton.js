@@ -109,6 +109,7 @@ function ModuleButton(props) {
       best,
       chiptune,
     });
+    // eslint-disable-next-line
   }, [first, second, third, love, best, chiptune]);
 
   useEffect(() => {
@@ -118,10 +119,10 @@ function ModuleButton(props) {
       setShow(true);
     }
     updateFilter(props);
+    // eslint-disable-next-line
   }, [query]);
 
-  // Display icons
-  useEffect(() => {
+  function updateMod(mod) {
     if (mod?.filters?.first) {
       setFirstIcon(true);
     }
@@ -140,7 +141,11 @@ function ModuleButton(props) {
     if (mod?.filters?.chiptune) {
       setChiptuneIcon(true);
     }
-  }, []);
+  }
+  // Display icons
+  useEffect(() => {
+    updateMod(mod);
+  }, [mod]);
 
   return show ? (
     <li>
