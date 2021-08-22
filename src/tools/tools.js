@@ -65,7 +65,6 @@ export function getList(modules) {
     });
   }
 
-  console.log(list);
   const mapList = [];
   for (let year in list) {
     mapList.push({
