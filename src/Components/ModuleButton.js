@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import FlodPlayer from "funkymed-flod-module-player/src/FlodPlayer";
+import ajaxLoader from "funkymed-flod-module-player/src/ajaxLoader";
 import {
   TITLE_BEST,
   TITLE_CHIPTUNE,
@@ -7,16 +9,6 @@ import {
   TITLE_SECOND,
   TITLE_THIRD,
 } from "../tools/const";
-import {
-  isBest,
-  isLove,
-  isFirst,
-  isSecond,
-  isThird,
-  isChiptune,
-} from "../tools/modules";
-import FlodPlayer from "funkymed-flod-module-player/src/FlodPlayer";
-import ajaxLoader from "funkymed-flod-module-player/src/ajaxLoader";
 
 let currentBtn = null;
 let player = null;
@@ -130,35 +122,55 @@ function ModuleButton(props) {
 
   // Display icons
   useEffect(() => {
-    if (isFirst(mod.name)) {
+    if (mod?.filters?.first) {
       setFirstIcon(true);
     }
-    if (isSecond(mod.name)) {
+    if (mod?.filters?.second) {
       setSecondIcon(true);
     }
-    if (isThird(mod.name)) {
+    if (mod?.filters?.third) {
       setThirdIcon(true);
     }
-    if (isBest(mod.name)) {
+    if (mod?.filters?.best) {
       setBestIcon(true);
     }
-    if (isLove(mod.name)) {
+    if (mod?.filters?.love) {
       setLoveIcon(true);
     }
-    if (isChiptune(mod.name)) {
+    if (mod?.filters?.chiptune) {
       setChiptuneIcon(true);
     }
   }, []);
 
   return show ? (
     <li>
-      <button data-filename={mod.filename} onClick={play}>
-        {firstIcon ? <i title={TITLE_FIRST} className="icon first"></i> : ""}
-        {secondIcon ? <i title={TITLE_SECOND} className="icon second"></i> : ""}
-        {thirdIcon ? <i title={TITLE_THIRD} className="icon third"></i> : ""}
-        {bestIcon ? <i title={TITLE_BEST} className="icon best"></i> : ""}
-        {loveIcon ? <i title={TITLE_LOVE} className="icon love"></i> : ""}
-        {chiptuneIcon ? (
+      <button data-filename={mod?.filename} onClick={play}>
+        {mod?.filters?.first ? (
+          <i title={TITLE_FIRST} className="icon first"></i>
+        ) : (
+          ""
+        )}
+        {mod?.filters?.second ? (
+          <i title={TITLE_SECOND} className="icon second"></i>
+        ) : (
+          ""
+        )}
+        {mod?.filters?.third ? (
+          <i title={TITLE_THIRD} className="icon third"></i>
+        ) : (
+          ""
+        )}
+        {mod?.filters?.best ? (
+          <i title={TITLE_BEST} className="icon best"></i>
+        ) : (
+          ""
+        )}
+        {mod?.filters?.love ? (
+          <i title={TITLE_LOVE} className="icon love"></i>
+        ) : (
+          ""
+        )}
+        {mod?.filters?.chiptune ? (
           <i title={TITLE_CHIPTUNE} className="icon chiptune"></i>
         ) : (
           ""

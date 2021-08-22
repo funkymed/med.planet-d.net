@@ -1,0 +1,26 @@
+const modules_rr = [
+  { filename: "tracks/xm/early-age-1996/STYLE.MOD", size: "634,594 bytes" },
+  { filename: "tracks/xm/early-age-1996/Violon.xm", size: "616,753 bytes" },
+  { filename: "tracks/xm/early-age-1997/ACIDJA97.MOD", size: "218,240 bytes" },
+  { filename: "tracks/xm/early-age-1997/CAPTIV97.MOD", size: "130,440 bytes" },
+  { filename: "tracks/xm/early-age-1997/DECISI97.XM", size: "822,216 bytes" },
+  { filename: "tracks/xm/early-age-1997/FULL97.MOD", size: "147,026 bytes" },
+  { filename: "tracks/xm/early-age-1997/LEGACY.MOD", size: "577,936 bytes" },
+  { filename: "tracks/xm/early-age-1997/SACRIF.XM", size: "1.06MB" },
+  { filename: "tracks/xm/early-age-1997/WHITE.XM", size: "523,065 bytes" },
+  { filename: "tracks/xm/early-age-1997/violin.mod", size: "409,474 bytes" },
+  { filename: "tracks/xm/early-age-1998/ACT3.XM", size: "3.53MB" },
+  { filename: "tracks/xm/early-age-1998/ACT4.XM", size: "1,014,379 bytes" },
+  { filename: "tracks/xm/early-age-1998/COMA.XM", size: "1.79MB" },
+  { filename: "tracks/xm/early-age-1998/CONTRA.XM", size: "2.09MB" },
+  { filename: "tracks/xm/early-age-1998/FOUND.XM", size: "1.58MB" },
+  { filename: "tracks/xm/early-age-1998/GROOVE00.XM", size: "1.20MB" },
+  { filename: "tracks/xm/early-age-1998/IMPACT.XM", size: "1.47MB" },
+  { filename: "tracks/xm/early-age-1998/INSPECTE.XM", size: "2.75MB" },
+  { filename: "tracks/xm/early-age-1998/MAITRISE.XM", size: "1.57MB" },
+  { filename: "tracks/xm/early-age-1998/PARIS.XM", size: "1.27MB" },
+  { filename: "tracks/xm/early-age-1998/SOUL.XM", size: "713,813 bytes" },
+  { filename: "tracks/xm/early-age-1998/TOMB.XM", size: "2.03MB" },
+];
+
+export default modules_rr;

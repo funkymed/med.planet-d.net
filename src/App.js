@@ -7,21 +7,26 @@ import Timer from "./Timer";
 import Loader from "./Components/Loader";
 import { DEFAULT_TITLE } from "./tools/const";
 import Years from "./Components/Year";
+import modules_med from "./tools/modules_med";
 
 function App() {
   const [titleMusic, setTitleMusic] = useState(DEFAULT_TITLE);
   const [analyser, setAnalyser] = useState(null);
   const [query, setQuery] = useState(null);
-  const listMods = getList();
   const [first, setFirst] = useState(false);
   const [second, setSecond] = useState(false);
   const [third, setThird] = useState(false);
   const [best, setBest] = useState(false);
   const [love, setLove] = useState(false);
+  const [listMods, setListMods] = useState([]);
   const [chiptune, setChiptune] = useState(false);
   const requestRef = useRef();
   const player = useRef();
   const currentBtn = useRef();
+
+  function loadList() {
+    setListMods(getList(modules_med));
+  }
 
   function callbackFilter(query, filters) {
     setQuery(query);
@@ -59,13 +64,14 @@ function App() {
     const animate = (time) => {
       if (player.current && currentBtn.current) {
         const percent = Math.round(
-          (player.current.order / (player.current.length-1)) * 100
+          (player.current.order / (player.current.length - 1)) * 100
         );
         currentBtn.current.style.backgroundSize = `${percent}% auto`;
       }
       requestRef.current = requestAnimationFrame(animate);
     };
 
+    loadList();
     requestRef.current = requestAnimationFrame(animate);
 
     return function cleanup() {
