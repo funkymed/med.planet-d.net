@@ -16,6 +16,11 @@ const modules_med = [
     size: "396,613 bytes",
   },
   {
+    filename: "tracks/1999/cornflakes_2.xm",
+    size: "11,600 bytes",
+    filters: { chiptune: true },
+  },
+  {
     filename: "tracks/1999/Couille2.xm",
     size: "5,238 bytes",
     filters: { chiptune: true },
@@ -382,6 +387,11 @@ const modules_med = [
     filename: "tracks/2002/med_where_is_my_poney.xm",
     size: "1,000,000 bytes",
     filters: { first: true },
+  },
+  {
+    filename: "tracks/2002/radio_caca.xm",
+    size: "16,105 bytes",
+    filters: { chiptune: true },
   },
   {
     filename: "tracks/2002/scenemusic_intro.xm",
