@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import FlodPlayer from "funkymed-flod-module-player/src/FlodPlayer";
-import ajaxLoader from "funkymed-flod-module-player/src/ajaxLoader";
+import { useHistory } from "react-router-dom";
 import {
   TITLE_BEST,
   TITLE_CHIPTUNE,
@@ -10,8 +9,6 @@ import {
   TITLE_THIRD,
 } from "../tools/const";
 
-let currentBtn = null;
-let player = null;
 function ModuleButton(props) {
   const { first, second, third, love, best, chiptune, query, mod } = props;
 
@@ -22,49 +19,12 @@ function ModuleButton(props) {
   const [bestIcon, setBestIcon] = useState(false);
   const [loveIcon, setLoveIcon] = useState(false);
   const [chiptuneIcon, setChiptuneIcon] = useState(false);
+  let history = useHistory();
 
   function play(evt) {
     evt.preventDefault();
-    if (currentBtn) {
-      currentBtn.className = "";
-      currentBtn.closest("li").className = "";
-    }
-    currentBtn = evt.target;
-    const filename = currentBtn.attributes.getNamedItem("data-filename").value;
-    currentBtn.className = "active";
-
-    const li = currentBtn.closest("li");
-    li.className = "active";
-
-    /*
-    currentBtn.scrollIntoView({
-      behavior: "smooth",
-      block: "center",
-      inline: "nearest",
-    });*/
-
-    //props.tracker.load(filename);
-
-    ajaxLoader(
-      filename,
-      function (bytes) {
-        if (player) {
-          player.stop();
-        }
-        player = FlodPlayer.load(bytes);
-        player.loopSong = true;
-        player.play();
-
-        props.callbackAnalyser(player, filename, li);
-        document.getElementById("progress").style.width = "100%";
-        setTimeout(() => {
-          document.getElementById("progress").style.width = 0;
-        }, 200);
-      },
-      function (percentage) {
-        document.getElementById("progress").style.width = `${percentage}%`;
-      }
-    );
+    const filename = evt.target.attributes.getNamedItem("data-filename").value;
+    history.push(`/${filename}`);
   }
 
   function updateFilter(_props) {

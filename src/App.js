@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { HashRouter as Router, Switch, Route } from "react-router-dom";
 import "./sass/app.scss";
 import { getList } from "./tools/tools";
 import CanvasBackground from "./Components/CanvasBackground";
@@ -20,8 +21,8 @@ function App() {
   const [love, setLove] = useState(false);
   const [listMods, setListMods] = useState([]);
   const [chiptune, setChiptune] = useState(false);
+  const [player, setPlayer] = useState(false);
   const requestRef = useRef();
-  const player = useRef();
   const currentBtn = useRef();
 
   function loadList() {
@@ -56,16 +57,16 @@ function App() {
 
     setTitleCallback(`Now Playing : ${title}`);
     setAnalyser(_player.analyser);
-    player.current = _player;
-    currentBtn.current = _currentBtn;
+    setPlayer(_player);
+    if (_currentBtn) {
+      currentBtn.current = _currentBtn;
+    }
   }
 
   useEffect(() => {
     const animate = (time) => {
-      if (player.current && currentBtn.current) {
-        const percent = Math.round(
-          (player.current.order / (player.current.length - 1)) * 100
-        );
+      if (player && currentBtn.current) {
+        const percent = Math.round((player.order / (player.length - 1)) * 100);
         currentBtn.current.style.backgroundSize = `${percent}% auto`;
       }
       requestRef.current = requestAnimationFrame(animate);
@@ -77,45 +78,51 @@ function App() {
     return function cleanup() {
       cancelAnimationFrame(requestRef.current);
     };
-  }, []);
+  }, [player]);
 
   return (
-    <div className="App">
-      <CanvasBackground analyser={analyser} />
-      <Loader />
-      <div id="primary-block">
-        <ToolBar
-          title={titleMusic}
-          setTitleCallback={setTitleCallback}
-          callbackFilter={callbackFilter}
-          player={player.current}
-        />
-        <div id="block">
-          <div id="tracks">
-            {listMods.map(function (item, i) {
-              return (
-                <Years
-                  key={i}
-                  year={item.year}
-                  mods={item.mods}
-                  tracker={false}
-                  query={query}
-                  love={love}
-                  first={first}
-                  second={second}
-                  third={third}
-                  best={best}
-                  chiptune={chiptune}
-                  callbackAnalyser={callbackAnalyser.bind(this)}
-                />
-              );
-            })}
+    <Router>
+      <div className="App">
+        <CanvasBackground analyser={analyser} />
+        <Switch>
+          <Route path="/:track">
+            <Loader player={player} callbackAnalyser={callbackAnalyser} />
+          </Route>
+        </Switch>
+        <div id="primary-block">
+          <ToolBar
+            title={titleMusic}
+            setTitleCallback={setTitleCallback}
+            callbackFilter={callbackFilter}
+            player={player}
+          />
+          <div id="block">
+            <div id="tracks">
+              {listMods.map(function (item, i) {
+                return (
+                  <Years
+                    key={i}
+                    year={item.year}
+                    mods={item.mods}
+                    tracker={false}
+                    query={query}
+                    love={love}
+                    first={first}
+                    second={second}
+                    third={third}
+                    best={best}
+                    chiptune={chiptune}
+                    callbackAnalyser={callbackAnalyser.bind(this)}
+                  />
+                );
+              })}
+            </div>
+            <div id="instruments"></div>
           </div>
-          <div id="instruments"></div>
+          <Timer />
         </div>
-        <Timer />
       </div>
-    </div>
+    </Router>
   );
 }
 
