@@ -1,10 +1,9 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import FlodPlayer from "funkymed-flod-module-player/src/FlodPlayer";
 import ajaxLoader from "funkymed-flod-module-player/src/ajaxLoader";
 let player = null;
 export default function Loader(props) {
-  const progress = useRef();
   let location = useLocation();
 
   function load(filename) {
@@ -44,13 +43,13 @@ export default function Loader(props) {
         player.play();
 
         props.callbackAnalyser(player, filename, li);
-        progress.current.style.width = "100%";
+        document.getElementById("progress").style.width = "100%";
         setTimeout(() => {
-          progress.current.style.width = 0;
+          document.getElementById("progress").style.width = 0;
         }, 200);
       },
       function (percentage) {
-        progress.current.style.width = `${percentage}%`;
+        document.getElementById("progress").style.width = `${percentage}%`;
       }
     );
   }
@@ -63,7 +62,7 @@ export default function Loader(props) {
 
   return (
     <div id="loader">
-      <div ref={progress}></div>
+      <div id="progress"></div>
     </div>
   );
 }
