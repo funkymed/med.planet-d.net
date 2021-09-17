@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import Oscilloscope from "./Oscilloscope";
-import Spectrum from "./Spectrum";
+import Spectrum from "./Spectrum2";
 import { getInnerSize, hextoRGB } from "../tools/tools";
 import Rasters from "./Rasters";
 
@@ -65,30 +65,27 @@ function CanvasBackground(props) {
 
     requestRef.current = requestAnimationFrame(animate);
   };
+  function cleanUpVisible() {
+    if (document.hidden) {
+      setVisible(false);
+    } else {
+      setVisible(true);
+    }
+  }
 
   useEffect(() => {
     context.current = canvasBG.current.getContext("2d");
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
     // save cpu
-    document.addEventListener(
-      "visibilitychange",
-      function () {
-        if (document.hidden) {
-          setVisible(false);
-        } else {
-          setVisible(true);
-        }
-      },
-      false
-    );
+    document.addEventListener("visibilitychange", cleanUpVisible, false);
     requestRef.current = requestAnimationFrame(animate);
     rasts.current = new Rasters(context.current);
 
     return function cleanup() {
       cancelAnimationFrame(requestRef.current);
-      document.removeEventListener("visibilitychange");
-      window.removeEventListener("resize");
+      document.removeEventListener("visibilitychange", cleanUpVisible);
+      window.removeEventListener("resize", resizeCanvas);
     };
     // eslint-disable-next-line
   }, []);

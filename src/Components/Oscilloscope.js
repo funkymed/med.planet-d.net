@@ -29,7 +29,7 @@ export default class Oscilloscope {
     this.analyser.getByteTimeDomainData(freqByteData);
     this.ctx.fillStyle = this.oscillocolor;
     this.ctx.lineWidth = 2;
-    this.ctx.strokeStyle = "#FFFFFF30";
+    this.ctx.strokeStyle = "#FFFFFF50";
     for (i = 0; i < fb; i++) {
       var value_old = freqByteData[i - 1];
 

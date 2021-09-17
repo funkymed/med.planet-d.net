@@ -33,7 +33,7 @@ export default function Loader(props) {
     }
 
     ajaxLoader(
-      filename,
+      `./${filename}`,
       function (bytes) {
         if (player) {
           player.stop();
@@ -56,6 +56,7 @@ export default function Loader(props) {
 
   useEffect(() => {
     setTimeout(function () {
+      console.log("loading : ", location.pathname);
       load(location.pathname);
     }, 300);
   }, [location.pathname]);
