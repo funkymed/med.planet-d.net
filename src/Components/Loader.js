@@ -1,10 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import FlodPlayer from "funkymed-flod-module-player/src/FlodPlayer";
 import ajaxLoader from "funkymed-flod-module-player/src/ajaxLoader";
 let player = null;
 export default function Loader(props) {
   let location = useLocation();
+  const progress = useRef(null);
 
   function load(filename) {
     let currentBtn;
@@ -32,38 +33,46 @@ export default function Loader(props) {
       });
     }
 
+    progress.current.style.width = 0;
+    progress.current.style.opacity = 1;
+
     ajaxLoader(
       `./${filename}`,
       function (bytes) {
         if (player) {
           player.stop();
         }
+
         player = FlodPlayer.load(bytes);
         player.loopSong = true;
         player.play();
 
         props.callbackAnalyser(player, filename, li);
-        document.getElementById("progress").style.width = "100%";
-        setTimeout(() => {
-          document.getElementById("progress").style.width = 0;
-        }, 200);
+        progress.current.style.width = "100%";
+
+        setTimeout(
+          (progress) => {
+            progress.current.style.opacity = 0;
+          },
+          200,
+          progress
+        );
       },
       function (percentage) {
-        document.getElementById("progress").style.width = `${percentage}%`;
+        progress.current.style.width = `${percentage}%`;
       }
     );
   }
 
   useEffect(() => {
     setTimeout(function () {
-      console.log("loading : ", location.pathname);
       load(location.pathname);
     }, 300);
   }, [location.pathname]);
 
   return (
     <div id="loader">
-      <div id="progress"></div>
+      <div id="progress" ref={progress} />
     </div>
   );
 }

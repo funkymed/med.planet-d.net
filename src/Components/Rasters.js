@@ -67,7 +67,11 @@ export default class Rasters {
           this.cnv.height
         );
       }
-      this.ctx.drawImage(this.TMPrasterCTX.canvas, 0, 320);
+      this.ctx.drawImage(
+        this.TMPrasterCTX.canvas,
+        0,//-this.ctx.canvas.width / 2,
+        320 //- this.ctx.canvas.height / 2
+      );
 
       this.rasters.sort(function (a, b) {
         return a.zindex - b.zindex;

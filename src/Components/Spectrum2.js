@@ -23,9 +23,10 @@ export default class Spectrum2 {
     const size = getInnerSize();
     var gradient = ctx.createLinearGradient(0, 0, size.width, size.height);
 
-    gradient.addColorStop(0, "#FFBB00A0");
-    gradient.addColorStop(0.5, "#00BBFFA0");
-    gradient.addColorStop(1, "#FF5555A0");
+    const opacity = "FF";
+    gradient.addColorStop(0, `#0022FF${opacity}`);
+    gradient.addColorStop(0.5, `#33AA33${opacity}`);
+    gradient.addColorStop(1, `#AA3300${opacity}`);
 
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, size.width, size.height);
@@ -58,13 +59,13 @@ export default class Spectrum2 {
     }
 
     this.nbBar = this.nbBar ? this.nbBar : 256;
-    var SPACER_WIDTH = Math.round(cW / this.nbBar),
+    let SPACER_WIDTH = Math.round(cW / this.nbBar) + 1,
       BAR_WIDTH = SPACER_WIDTH,
       count = 0,
       fb = this.analyser.frequencyBinCount;
 
     BAR_WIDTH = BAR_WIDTH < 1 ? 1 : BAR_WIDTH;
-    var freqByteData = new Uint8Array(fb);
+    const freqByteData = new Uint8Array(fb);
 
     this.analyser.getByteFrequencyData(freqByteData);
 
@@ -83,22 +84,26 @@ export default class Spectrum2 {
         -magnitude
       );*/
 
-      const sourceX = count * SPACER_WIDTH;
+      const sourceX = count * (SPACER_WIDTH + 1);
       const sourceY = cH / 2 + magnitude / 2;
-      const destX = BAR_WIDTH;
-      const destY = -magnitude;
+      const sourceW = BAR_WIDTH ? BAR_WIDTH : SPACER_WIDTH;
+      const sourceH = magnitude ? -magnitude : 0.00001;
+
+      const destX = sourceX;// - this.ctx.canvas.width / 2;
+      const destY = sourceY;// - this.ctx.canvas.height / 2;
 
       this.ctx.drawImage(
         this.linesCanvas,
         sourceX,
         sourceY,
+        sourceW,
+        sourceH,
         destX,
         destY,
-        sourceX,
-        sourceY,
-        destX,
-        destY
+        sourceW,
+        sourceH
       );
+
       count++;
     }
   }

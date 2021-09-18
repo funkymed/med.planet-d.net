@@ -130,6 +130,7 @@ h2 {
   width: 0;
   display: block;
   height: 4px;
+  transition: opacity 0.3s ease-out;
 }
 
 @keyframes gradient {
@@ -161,7 +162,7 @@ h2 {
     rgba(255, 0, 255, 0.3) 75%,
     rgba(255, 192, 92, 0.3) 100%
   );
-    border-left: 4px solid rgba($color: white, $alpha: 0.1);
+  border-left: 4px solid rgba($color: white, $alpha: 0.1);
   border-right: 4px solid rgba($color: white, $alpha: 0.1);
 }
 
@@ -197,6 +198,7 @@ canvas {
   opacity: 1;
   background: url("./images/test4.png");
   animation: animatedBackground 120s linear infinite;
+  //background:#112;
 }
 
 ul {
@@ -206,9 +208,9 @@ ul {
   margin-top: 0;
 
   li {
-    &.active{
-      border-bottom:2px dashed white;
-      background-image: url('./images/progress.png');
+    &.active {
+      border-bottom: 2px dashed white;
+      background-image: url("./images/progress.png");
       background-repeat: repeat-y;
       background-size: 50% auto;
     }
@@ -226,7 +228,7 @@ ul {
       background: rgba(255, 77, 106, 0);
       transition: background-color 0.5s ease-out;
       text-align: left;
-      
+
       &:hover {
         color: white;
         background: rgba(255, 77, 106, 1);

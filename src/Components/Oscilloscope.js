@@ -45,8 +45,14 @@ export default class Oscilloscope {
       var barWidth = cW / this.analyser.frequencyBinCount;
 
       this.ctx.beginPath();
-      this.ctx.moveTo((i - 1) * barWidth_old, offset_old);
-      this.ctx.lineTo(i * barWidth, offset);
+      this.ctx.moveTo(
+        (i - 1) * barWidth_old, //- this.ctx.canvas.width / 2,
+        offset_old //- this.ctx.canvas.height / 2
+      );
+      this.ctx.lineTo(
+        i * barWidth, //- this.ctx.canvas.width / 2,
+        offset //- this.ctx.canvas.height / 2
+      );
       this.ctx.stroke();
     }
   }

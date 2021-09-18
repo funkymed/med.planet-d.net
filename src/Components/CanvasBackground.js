@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import Oscilloscope from "./Oscilloscope";
 import Spectrum from "./Spectrum2";
+import Starfield from "./Starfield";
 import { getInnerSize, hextoRGB } from "../tools/tools";
 import Rasters from "./Rasters";
 
@@ -13,6 +14,7 @@ function CanvasBackground(props) {
   const rasts = useRef();
   const oscilo = useRef();
   const spectr = useRef();
+  const stars = useRef();
 
   const [visible, setVisible] = useState(true);
 
@@ -40,7 +42,7 @@ function CanvasBackground(props) {
       hextoRGB("#222222"),
       hextoRGB("#333333"),
       1,
-      (size.current.width / 256) * 32,
+      (size.current.width / 256) * 92,
       analyser.current
     );
   }, [props.analyser]);
@@ -50,7 +52,9 @@ function CanvasBackground(props) {
       var cW = context.current.canvas.width;
       var cH = context.current.canvas.height;
       context.current.clearRect(0, 0, cW, cH);
-
+      /*if (stars.current) {
+        stars.current.animate();
+      }*/
       if (spectr.current) {
         spectr.current.animate();
       }
@@ -81,7 +85,7 @@ function CanvasBackground(props) {
     document.addEventListener("visibilitychange", cleanUpVisible, false);
     requestRef.current = requestAnimationFrame(animate);
     rasts.current = new Rasters(context.current);
-
+    //stars.current = new Starfield(context.current);
     return function cleanup() {
       cancelAnimationFrame(requestRef.current);
       document.removeEventListener("visibilitychange", cleanUpVisible);
