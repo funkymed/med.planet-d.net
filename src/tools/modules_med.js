@@ -221,7 +221,7 @@ const modules_med = [
   {
     filename: "tracks/2001/jecoute_DADDYSEX.XM",
     size: "1,024,000 bytes",
-    filters: { third: true },
+    filters: { third: true, best: true },
   },
   {
     filename: "tracks/2001/jecoute_DOUBOOM.XM",
@@ -240,6 +240,11 @@ const modules_med = [
     filters: { first: true },
   },
   { filename: "tracks/2001/razor_raz2.xm", size: "37,741 bytes" },
+  {
+    filename: "tracks/2001/sucky-boy.xm",
+    size: "833,000 bytes",
+    filters: { best: true },
+  },
   { filename: "tracks/2001/tvnet_ADVERTIS.XM", size: "21,500 bytes" },
   { filename: "tracks/2001/tvnet_ART.XM", size: "27,800 bytes" },
   {
