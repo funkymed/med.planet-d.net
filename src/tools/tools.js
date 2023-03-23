@@ -60,7 +60,7 @@ export function getList(modules) {
     list[d[1]].push({
       filename: modules[f].filename,
       size: modules[f].size,
-      name: d[2],
+      name: d[2].toLowerCase(),
       filters: modules[f]?.filters,
     });
   }
@@ -69,9 +69,9 @@ export function getList(modules) {
   for (let year in list) {
     mapList.push({
       year,
-      mods: list[year],
+      mods: list[year].sort((a, b) => (a.name < b.name ? -1 : 1)),
     });
   }
-  mapList.reverse()
+  mapList.reverse();
   return mapList;
 }

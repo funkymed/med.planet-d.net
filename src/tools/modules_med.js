@@ -476,6 +476,18 @@ const modules_med = [
   { filename: "tracks/1998/PARIS.XM", size: "1.27MB" },
   { filename: "tracks/1998/SOUL.XM", size: "713,813 bytes" },
   { filename: "tracks/1998/TOMB.XM", size: "2.03MB" },
+
+  { filename: "tracks/1996/newjacko-room.mod", size: "230KB" },
+  {
+    filename: "tracks/1999/COOLMAX.XM",
+    size: "4.2MB",
+    filters: { love: true },
+  },
+  { filename: "tracks/1999/GROSSEF.XM", size: "225KB" },
+  { filename: "tracks/1997/non-reglo97.mod", size: "311KB" },
+  // { filename: "tracks/1996/travailler-med-v2.0.mod", size: "285KB" },
+  // { filename: "tracks/1996/non-reglo-mix-funky.mod", size: "180KB" },
+  { filename: "tracks/1999/RAISON.XM", size: "8.4MB", filters: { love: true } },
 ];
 
 export default modules_med;
