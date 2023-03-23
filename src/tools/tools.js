@@ -72,5 +72,6 @@ export function getList(modules) {
       mods: list[year],
     });
   }
+  mapList.reverse()
   return mapList;
 }

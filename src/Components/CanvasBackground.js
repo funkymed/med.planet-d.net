@@ -94,7 +94,14 @@ function CanvasBackground(props) {
     // eslint-disable-next-line
   }, []);
 
-  return <canvas ref={canvasBG} width={size.width} height={size.height} />;
+  return (
+    <canvas
+      // style={{ border: "5px red solid" }}
+      ref={canvasBG}
+      width={size.width}
+      height={size.height}
+    />
+  );
 }
 
 export default CanvasBackground;
