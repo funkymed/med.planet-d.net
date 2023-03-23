@@ -67,7 +67,8 @@ export default function Loader(props) {
   useEffect(() => {
     setTimeout(function () {
       load(location.pathname);
-    }, 300);
+    }, 300); 
+    // eslint-disable-next-line
   }, [location.pathname]);
 
   return (

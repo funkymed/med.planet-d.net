@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import Oscilloscope from "./Oscilloscope";
 import Spectrum from "./Spectrum2";
-import Starfield from "./Starfield";
+// import Starfield from "./Starfield";
 import { getInnerSize, hextoRGB } from "../tools/tools";
 import Rasters from "./Rasters";
 
@@ -14,7 +14,7 @@ function CanvasBackground(props) {
   const rasts = useRef();
   const oscilo = useRef();
   const spectr = useRef();
-  const stars = useRef();
+  // const stars = useRef();
 
   const [visible, setVisible] = useState(true);
 

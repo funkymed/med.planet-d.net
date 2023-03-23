@@ -28,8 +28,8 @@ export default class Star {
   }
 
   update() {
-    const sourceX = this.canvas.width / 2;
-    const sourceY = this.canvas.height / 2;
+    // const sourceX = this.canvas.width / 2;
+    // const sourceY = this.canvas.height / 2;
     this.origX = this.x;
     this.origY = this.y;
     this.z += this.starsSpeed;

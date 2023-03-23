@@ -14,7 +14,7 @@ export default class Rasters {
   ];
   rasters = [];
   order = 0;
-  rH = 10;
+  rH = 20;
   constructor(ctx) {
     this.ctx = ctx;
     this.cnv = ctx.canvas;
@@ -45,18 +45,19 @@ export default class Rasters {
     if (this.TMPrasterCTX) {
       this.phase = time / 500;
       this.TMPrasterCTX.clearRect(0, 0, this.cnv.width, this.cnv.height);
-      //const center = (Math.sin(this.phase / 2) * this.cnv.height) / 4;
+      const minY = this.cnv.height / 2;
+      const maxY = this.cnv.height / 2 + this.rasters.length * 40;
 
       for (let x = 0; x < this.rasters.length; x++) {
         const raster = this.rasters[x];
 
         const posY =
           this.cnv.height / 2 +
-          Math.sin(this.phase + raster.order * this.rasters.length * 2) * 30;
+          Math.sin(this.phase + raster.order * this.rasters.length * 2) * 40;
 
-        if (Math.floor(posY) <= 352) {
+        if (Math.floor(posY) <= minY) {
           raster.zindex = 2;
-        } else if (Math.ceil(posY) >= 410) {
+        } else if (Math.ceil(posY) >= maxY) {
           raster.zindex = 1;
         }
         this.TMPrasterCTX.drawImage(
@@ -69,7 +70,7 @@ export default class Rasters {
       }
       this.ctx.drawImage(
         this.TMPrasterCTX.canvas,
-        0,//-this.ctx.canvas.width / 2,
+        0, //-this.ctx.canvas.width / 2,
         320 //- this.ctx.canvas.height / 2
       );
 

@@ -15,8 +15,8 @@ app.on('ready', () => {
   });
 
   mainWindow = new BrowserWindow({
-    frame: true,
-    resizable: false,
+    frame: false,
+    resizable: true,
     transparent: false,
     width: 1920,
     height: 1080,
@@ -27,8 +27,8 @@ app.on('ready', () => {
 
   mainWindow.center();
   mainWindow.setMenu(null);
-  mainWindow.setFullScreen(false);
-  mainWindow.loadURL('file://' + __dirname + '/index.html');
+  mainWindow.setFullScreen(true);
+  mainWindow.loadURL('file://' + __dirname + '/build/index.html');
 });
 
 app.on('will-quit', function(){
