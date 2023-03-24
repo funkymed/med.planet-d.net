@@ -10546,6 +10546,11 @@ sha.js@^2.4.0, sha.js@^2.4.8:
     inherits "^2.0.1"
     safe-buffer "^5.0.1"
 
+shader@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/shader/-/shader-1.0.0.tgz#4b34ec7de8eb40f511eea34542c304428006032a"
+  integrity sha512-pLEmWev8RJE3aoUSjiIMhut8+2Tf34TTR8ukquZAPLiW3HfqE+94huu728144dbrDQVtP1RtHFHNkYT7azEovg==
+
 shebang-command@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/shebang-command/-/shebang-command-1.2.0.tgz#44aac65b695b03398968c39f363fee5deafdf1ea"

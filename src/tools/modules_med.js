@@ -3,22 +3,30 @@ const modules_med = [
     filename: "tracks/1999/Alexkidd.xm",
     size: "27,000 bytes",
     filters: { love: true },
+    text: "composed for alexkidd we founded mandarine then i stupidly leaved to joined condense     but life is full of surprised and i returned to this group later          check out our demo     and say hello on pouet for us",
   },
   { filename: "tracks/1999/BRAZIL.XM", size: "1.84MB" },
   {
     filename: "tracks/1999/Batman_love_my_dog!.xm",
     size: "1.39MB",
     filters: { second: true, best: true, love: true },
+    text: "second place at the ltp three       at this time i was doing my army time         i wasn t expected this result and i was really happy",
   },
-  { filename: "tracks/1999/CHEWIE.XM", size: "706,276 bytes" },
+  {
+    filename: "tracks/1999/CHEWIE.XM",
+    size: "706,276 bytes",
+    text: "composed for the mega chevelu chewie from demofr",
+  },
   {
     filename: "tracks/1999/Catgroove.xm",
     size: "396,613 bytes",
+    text: "track from a traxfr competition",
   },
   {
     filename: "tracks/1999/cornflakes_2.xm",
     size: "11,600 bytes",
     filters: { chiptune: true },
+    text: "hidden part of the bame demo by condense",
   },
   {
     filename: "tracks/1999/Couille2.xm",
@@ -30,13 +38,18 @@ const modules_med = [
     size: "5,700 bytes",
     filters: { chiptune: true },
   },
-  { filename: "tracks/1999/FOLIE.XM", size: "1.03MB" },
+  {
+    filename: "tracks/1999/FOLIE.XM",
+    size: "1.03MB",
+    text: "presented at the track compo at the takeover 1999",
+  },
   { filename: "tracks/1999/JAMI.XM", size: "1.33MB" },
   { filename: "tracks/1999/JazzOnTheMoOn!.xm", size: "201,173 bytes" },
   {
     filename: "tracks/1999/Mouche4.xm",
     size: "29,300 bytes",
     filters: { love: true },
+    text: "the name of this track came from a joke i did to one of my old friend alcapone          i told him there was a great movie with jean claude van damme called scarabe mouche quatre      he really believed me       what a really fun old memory",
   },
   { filename: "tracks/1999/Ninja.xm", size: "930,586 bytes" },
   {
@@ -56,6 +69,7 @@ const modules_med = [
     filename: "tracks/2000/analogik_Boite.xm",
     size: "29,641 bytes",
     filters: { chiptune: true },
+    text: "that track was a remake from an old mod        i thinked i created a boite a musique melodie       what a joke",
   },
   {
     filename: "tracks/2000/analogik_DARTAGNA.XM",
@@ -66,16 +80,19 @@ const modules_med = [
     filename: "tracks/2000/analogik_Jibe-theme.xm",
     size: "25,400 bytes",
     filters: { chiptune: true },
+    text: "well     jibe was the gfx of the demo group condense       we worked together in the same company     and he loved some plant",
   },
   {
     filename: "tracks/2000/analogik_La_crotte_qui_parle.xm",
     size: "11,500 bytes",
     filters: { chiptune: true },
+    text: "special greets to arthur",
   },
   {
     filename: "tracks/2000/analogik_Le_pied_gauche.xm",
     size: "13,000 bytes",
     filters: { chiptune: true },
+    text: "the main theme of jylam     our linux hero in condense and also great coder in the alambik team",
   },
   {
     filename: "tracks/2000/analogik_Le_poulet_est_cuit.xm",
@@ -86,11 +103,13 @@ const modules_med = [
     filename: "tracks/2000/analogik_Oiseau_qui_pete.xm",
     size: "15,000 bytes",
     filters: { chiptune: true },
+    text: "coop with kenet",
   },
   {
     filename: "tracks/2000/analogik_Potager.xm",
     size: "8,169 bytes",
     filters: { chiptune: true },
+    text: "sorry for you ears           lol",
   },
   {
     filename: "tracks/2000/analogik_cho7.xm",
@@ -111,26 +130,31 @@ const modules_med = [
     filename: "tracks/2000/analogik_nopseeking_med_and_kenet.xm",
     size: "15,000 bytes",
     filters: { chiptune: true },
+    text: "coop with kenet",
   },
   {
     filename: "tracks/2000/analogik_poisson.xm",
     size: "9,673 bytes",
     filters: { chiptune: true },
+    text: "presented at the ltp four",
   },
   {
     filename: "tracks/2000/analogik_zougi.mod",
     size: "11,264 bytes",
     filters: { chiptune: true },
+    text: "coop with kenet",
   },
   {
     filename: "tracks/2000/condense_BAME1.xm",
     size: "668,000 bytes",
     filters: { best: true },
+    text: "i was really proud of this track and this demo       we wanted to do a huge hommage to our favorite demo the arte      moby was my main influence in the demoscene music",
   },
   {
     filename: "tracks/2000/condense_BAME2.xm",
     size: "760,000 bytes",
     filters: { best: true },
+    text: "in that one i tryed to do some chick corea style",
   },
   { filename: "tracks/2000/condense_CONCEPT.XM", size: "634,000 bytes" },
   {
@@ -142,6 +166,7 @@ const modules_med = [
     filename: "tracks/2000/echellon_Dream.xm",
     size: "13,506 bytes",
     filters: { chiptune: true },
+    text: "maybe you know the dreamcast           maybe you know echellon         maybe you know what i mean",
   },
   { filename: "tracks/2000/jecoute_FEUILLE2.XM", size: "1.22MB" },
   { filename: "tracks/2000/med_canelle.xm", size: "216,487 bytes" },
@@ -150,16 +175,19 @@ const modules_med = [
     filename: "tracks/2000/med_houche_les_galouix.xm",
     size: "244,000 bytes",
     filters: { second: true },
+    text: "presented at the ltp four"
   },
   {
     filename: "tracks/2000/med_inMyHouse.xm",
     size: "1.72MB",
     filters: { first: true },
+    text: "presented at the buenzli in two thousand          win the first place       what a surprised for me"
   },
   {
     filename: "tracks/2000/med_jeanrenedisco.XM",
     size: "1.13MB",
     filters: { third: true },
+    text: "third at the vip two thousand      i loved to go to this party      and i was always welcome by everybody"
   },
   {
     filename: "tracks/2000/med_lovecow.xm",
@@ -407,8 +435,13 @@ const modules_med = [
     filename: "tracks/2003/jecoute_Le_chemin_Mauve.xm",
     size: "1.94MB",
     filters: { second: true, best: true, love: true },
+    text: "this track was composed for my first wedding",
   },
-  { filename: "tracks/2003/med_sexy_potatoes_2.xm", size: "1.06MB" },
+  {
+    filename: "tracks/2003/med_sexy_potatoes_2.xm",
+    size: "1.06MB",
+    text: "this is a joke track      the idea came from loftstory a french tv reality show       i am not realy proud of that today but back in the day it was really fun    shake out the kenza lol track from redribbon",
+  },
   { filename: "tracks/1993/CAPONE.MOD", size: "33,244 bytes" },
   { filename: "tracks/1993/DREAM.MOD", size: "64,984 bytes" },
   {
@@ -476,8 +509,6 @@ const modules_med = [
   { filename: "tracks/1998/PARIS.XM", size: "1.27MB" },
   { filename: "tracks/1998/SOUL.XM", size: "713,813 bytes" },
   { filename: "tracks/1998/TOMB.XM", size: "2.03MB" },
-
-  { filename: "tracks/1996/newjacko-room.mod", size: "230KB" },
   {
     filename: "tracks/1999/COOLMAX.XM",
     size: "4.2MB",

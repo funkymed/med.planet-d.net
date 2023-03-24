@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import Oscilloscope from "./Oscilloscope";
 import Spectrum from "./Spectrum2";
+import ScrollText from "./ScrollText";
 // import Starfield from "./Starfield";
 import { getInnerSize, hextoRGB } from "../tools/tools";
 import Rasters from "./Rasters";
@@ -12,6 +13,7 @@ function CanvasBackground(props) {
   const size = useRef(getInnerSize());
   const analyser = useRef(props.analyser);
   const rasts = useRef();
+  const scroller = useRef();
   const oscilo = useRef();
   const spectr = useRef();
   // const stars = useRef();
@@ -29,6 +31,9 @@ function CanvasBackground(props) {
 
   useEffect(() => {
     analyser.current = props.analyser;
+
+    
+
     oscilo.current = new Oscilloscope(
       context.current,
       "#cccccc",
@@ -47,6 +52,12 @@ function CanvasBackground(props) {
     );
   }, [props.analyser]);
 
+  useEffect(() => {
+    if(context.current){
+      scroller.current = new ScrollText(context.current, props.scrollText);  
+    }
+  }, [props.scrollText]);
+
   const animate = (time) => {
     if (visible) {
       var cW = context.current.canvas.width;
@@ -59,11 +70,14 @@ function CanvasBackground(props) {
         spectr.current.animate();
       }
       if (oscilo.current) {
-        oscilo.current.animate();
+        // oscilo.current.animate();
       }
 
       if (rasts.current) {
         rasts.current.animate(time);
+      }
+      if (scroller.current) {
+        scroller.current.animate(true);
       }
     }
 

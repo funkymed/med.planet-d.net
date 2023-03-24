@@ -108,7 +108,7 @@ function ModuleButton(props) {
   }, [mod]);
 
   return show ? (
-    <li>
+    <li data-text={props.text}>
       <button data-filename={mod?.filename} onClick={play}>
         {mod?.filters?.first ? (
           <i title={TITLE_FIRST} className="icon first"></i>

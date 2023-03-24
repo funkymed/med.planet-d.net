@@ -52,6 +52,7 @@ function Years(props) {
               best={bestFilter}
               chiptune={chiptuneFilter}
               query={queryFilter}
+              text={mod.text}
               callbackAnalyser={props.callbackAnalyser}
             />
           );

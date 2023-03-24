@@ -1,3 +1,42 @@
+import shader from "shader";
+
+function drawLines(ctx, cW, cH, lineColor, nbLines, vertical) {
+  const start = vertical ? cW / nbLines : cH / nbLines;
+  const until = vertical ? cW - 1 : cH - 1;
+  const seperator = vertical ? cW / nbLines : cH / nbLines;
+
+  for (let r = start; r < until; r += seperator) {
+    ctx.beginPath();
+
+    if (vertical) {
+      ctx.moveTo(r, 0);
+      ctx.lineTo(r, cW);
+    } else {
+      ctx.moveTo(0, r);
+      ctx.lineTo(cW, r);
+    }
+    ctx.strokeStyle = shader(lineColor, -0.5);
+    ctx.stroke();
+  }
+
+  ctx.beginPath();
+  ctx.strokeStyle = shader(lineColor, 0.5)+"33";
+  if (vertical) {
+    ctx.moveTo(cW / 2, 0);
+    ctx.lineTo(cW / 2, cH);
+  } else {
+    // ctx.moveTo(0, cH/2);
+    // ctx.lineTo(cW, cH/2);
+  }
+  ctx.stroke();
+}
+
+function gridContext(ctx, cW, cH, lineColor) {
+  ctx.fillStyle = lineColor + "55";
+  ctx.fillRect(0, 0, cW, cH);
+  drawLines(ctx, cW, cH, lineColor, 6, false);
+  drawLines(ctx, cW, cH, lineColor, 32, true);
+}
 export default class Oscilloscope {
   ctx;
   oscillocolor;
@@ -11,25 +50,32 @@ export default class Oscilloscope {
     this.opacity = opacity;
     this.analyser = analyser;
   }
+
   animate(clear) {
     if (!this.analyser) return false;
     var cW = this.ctx.canvas.width;
     var cH = this.ctx.canvas.height;
-    if (clear) {
-      this.ctx.clearRect(0, 0, cW, cH);
-    }
-    if (this.color) {
-      this.ctx.fillStyle =
-        "rgba(" + this.color + ", " + (this.opacity ? this.opacity : 1) + ")";
-      this.ctx.fillRect(0, 0, cW, cH);
-    }
+    
+    // if (clear) {
+    //   // this.ctx.clearRect(0, 0, cW, cH);
+    // }
+    
+    const color = "#aa55aa";
+    gridContext(this.ctx, cW, cH, color);
+
+    // if (this.color) {
+    //   this.ctx.fillStyle =
+    //     "rgba(" + this.color + ", " + (this.opacity ? this.opacity : 1) + ")";
+    //   this.ctx.fillRect(0, 0, cW, cH);
+    // }
+
     var i,
       fb = this.analyser.frequencyBinCount;
     var freqByteData = new Uint8Array(fb);
     this.analyser.getByteTimeDomainData(freqByteData);
     this.ctx.fillStyle = this.oscillocolor;
     this.ctx.lineWidth = 2;
-    this.ctx.strokeStyle = "#FFFFFF50";
+    this.ctx.strokeStyle = shader(color, 0.15);
     for (i = 0; i < fb; i++) {
       var value_old = freqByteData[i - 1];
 

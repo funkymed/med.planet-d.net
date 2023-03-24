@@ -22,6 +22,7 @@ function App() {
   const [listMods, setListMods] = useState([]);
   const [chiptune, setChiptune] = useState(false);
   const [player, setPlayer] = useState(false);
+  const [scrollText, setScrollText] = useState(false);
   const requestRef = useRef();
   const currentBtn = useRef();
 
@@ -46,7 +47,7 @@ function App() {
   function callbackAnalyser(_player, filename, _currentBtn) {
     var file = filename.split("/").pop();
 
-    _player.analyser.smoothingTimeConstant = 0.75;
+    _player.analyser.smoothingTimeConstant = 0.25;
     _player.analyser.fftSize = 2048;
     _player.analyser.minDecibels = -90;
 
@@ -54,6 +55,12 @@ function App() {
     if (_player.title.trim() !== "") {
       title = `${_player.title} - ${file}`;
     }
+
+    setScrollText(
+      _currentBtn.attributes.getNamedItem("data-text")
+        ? _currentBtn.attributes.getNamedItem("data-text").value
+        : ""
+    );
 
     setTitleCallback(`Now Playing : ${title}`);
     setAnalyser(_player.analyser);
@@ -83,7 +90,7 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <CanvasBackground analyser={analyser} />
+        <CanvasBackground analyser={analyser} scrollText={scrollText} />
         <Switch>
           <Route path="/:track">
             <Loader player={player} callbackAnalyser={callbackAnalyser} />
@@ -95,6 +102,7 @@ function App() {
             setTitleCallback={setTitleCallback}
             callbackFilter={callbackFilter}
             player={player}
+            analyser={analyser}
           />
           <div id="block">
             <div id="tracks">

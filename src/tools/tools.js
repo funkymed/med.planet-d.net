@@ -62,6 +62,7 @@ export function getList(modules) {
       size: modules[f].size,
       name: d[2].toLowerCase(),
       filters: modules[f]?.filters,
+      text: modules[f]?.text,
     });
   }
 
