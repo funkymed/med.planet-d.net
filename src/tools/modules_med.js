@@ -3,14 +3,18 @@ const modules_med = [
     filename: "tracks/1999/Alexkidd.xm",
     size: "27,000 bytes",
     filters: { love: true },
-    text: "composed for alexkidd we founded mandarine then i stupidly leaved to joined condense     but life is full of surprised and i returned to this group later          check out our demo     and say hello on pouet for us",
+    text: "composed for alexkidd we founded mandarine then i stupidly leaved to joined condense     but life is full of surprises and i returned to this group later          check out our demos        and say hello on pouet for us",
   },
-  { filename: "tracks/1999/BRAZIL.XM", size: "1.84MB" },
+  {
+    filename: "tracks/1999/BRAZIL.XM",
+    size: "1.84MB",
+    text: "presented at the arf party          the original sample in it came from a cd given by my brasilian cousin but i forgot the name sorry  ",
+  },
   {
     filename: "tracks/1999/Batman_love_my_dog!.xm",
     size: "1.39MB",
     filters: { second: true, best: true, love: true },
-    text: "second place at the ltp three       at this time i was doing my army time         i wasn t expected this result and i was really happy",
+    text: "second place at the ltp3       at this time i was doing my army time         i wasn t expected this result and i was really happy",
   },
   {
     filename: "tracks/1999/CHEWIE.XM",
@@ -136,7 +140,7 @@ const modules_med = [
     filename: "tracks/2000/analogik_poisson.xm",
     size: "9,673 bytes",
     filters: { chiptune: true },
-    text: "presented at the ltp four",
+    text: "presented at the ltp4",
   },
   {
     filename: "tracks/2000/analogik_zougi.mod",
@@ -148,7 +152,7 @@ const modules_med = [
     filename: "tracks/2000/condense_BAME1.xm",
     size: "668,000 bytes",
     filters: { best: true },
-    text: "i was really proud of this track and this demo       we wanted to do a huge hommage to our favorite demo the arte      moby was my main influence in the demoscene music",
+    text: "i was really proud of this track and this demo       we wanted to do a huge tribute to our favorite demo the arte      moby was my main influence in the demoscene music",
   },
   {
     filename: "tracks/2000/condense_BAME2.xm",
@@ -175,19 +179,19 @@ const modules_med = [
     filename: "tracks/2000/med_houche_les_galouix.xm",
     size: "244,000 bytes",
     filters: { second: true },
-    text: "presented at the ltp four"
+    text: "presented at the ltp four",
   },
   {
     filename: "tracks/2000/med_inMyHouse.xm",
     size: "1.72MB",
     filters: { first: true },
-    text: "presented at the buenzli in two thousand          win the first place       what a surprised for me"
+    text: "presented at the buenzli in 2000          win the first place       what a surprised for me",
   },
   {
     filename: "tracks/2000/med_jeanrenedisco.XM",
     size: "1.13MB",
     filters: { third: true },
-    text: "third at the vip two thousand      i loved to go to this party      and i was always welcome by everybody"
+    text: "third at the vip 2000      i loved to go to this party      and i was always welcome by everybody",
   },
   {
     filename: "tracks/2000/med_lovecow.xm",
@@ -199,25 +203,41 @@ const modules_med = [
     filename: "tracks/2000/med_menu.XM",
     size: "20,373 bytes",
     filters: { chiptune: true },
+    text: "composed for a bomberman game like",
   },
   {
     filename: "tracks/2000/med_odesay.xm",
     size: "804,000 bytes",
     filters: { second: true, best: true },
+    text: "second at the takeover 2000       this track had many life     it end up to be part of a project for alambik       named stan and standwich      ",
   },
   {
     filename: "tracks/2000/med_patate_funky.xm",
     size: "652,000 bytes",
     filters: { third: true, best: true, love: true },
+    text: "third at the vip party in 2000",
   },
-  { filename: "tracks/2000/med_shaggy.XM", size: "771,000 bytes" },
-  { filename: "tracks/2000/med_soulg.XM", size: "622,200 bytes" },
-  { filename: "tracks/2000/med_winner.XM", size: "16,175 bytes" },
+  {
+    filename: "tracks/2000/med_shaggy.XM",
+    size: "771,000 bytes",
+    text: "this track was made for an aborted project with the group popsy team",
+  },
+  {
+    filename: "tracks/2000/med_soulg.XM",
+    size: "622,200 bytes",
+    text: "presented at the vip party in 2000",
+  },
+  {
+    filename: "tracks/2000/med_winner.XM",
+    size: "16,175 bytes",
+    text: "composed for a bomberman game like",
+  },
   { filename: "tracks/2000/med_zen2K.XM", size: "699,000 bytes" },
   {
     filename: "tracks/2000/vitaminic_FIGHT22.XM",
     size: "771,000 bytes",
     filters: { best: true },
+    text: "this track was selected to be part of the vitaminic cd        back in the day it was dope to be part of this label      it was one of the first online label",
   },
   { filename: "tracks/2001/analogik_2VOICES.XM", size: "63,300 bytes" },
   { filename: "tracks/2001/analogik_2VOICES2.XM", size: "45,555 bytes" },
@@ -261,17 +281,23 @@ const modules_med = [
     size: "718,000 bytes",
     filters: { second: true },
   },
-  { filename: "tracks/2001/jecoute_daddyremix2001.xm", size: "1.14MB" },
+  {
+    filename: "tracks/2001/jecoute_daddyremix2001.xm",
+    size: "1.14MB",
+    text: "released on the label jecoute      this label was really a great ones         the quality of the production and the members were the best for me",
+  },
   {
     filename: "tracks/2001/mutantInc_upermarch.xm",
     size: "36,400 bytes",
     filters: { first: true },
+    text: "first place at the vip 2001            we did this demo with redribbon and fab during the party place   ",
   },
   { filename: "tracks/2001/razor_raz2.xm", size: "37,741 bytes" },
   {
     filename: "tracks/2001/sucky-boy.xm",
     size: "833,000 bytes",
     filters: { best: true },
+    text: "unreleased track in the demoscene",
   },
   { filename: "tracks/2001/tvnet_ADVERTIS.XM", size: "21,500 bytes" },
   { filename: "tracks/2001/tvnet_ART.XM", size: "27,800 bytes" },
@@ -430,6 +456,7 @@ const modules_med = [
     filename: "tracks/2002/scenemusic_intro.xm",
     size: "10,430 bytes",
     filters: { chiptune: true },
+    text: "composed for the radio scenemusic",
   },
   {
     filename: "tracks/2003/jecoute_Le_chemin_Mauve.xm",
@@ -440,7 +467,7 @@ const modules_med = [
   {
     filename: "tracks/2003/med_sexy_potatoes_2.xm",
     size: "1.06MB",
-    text: "this is a joke track      the idea came from loftstory a french tv reality show       i am not realy proud of that today but back in the day it was really fun    shake out the kenza lol track from redribbon",
+    text: "this is a joke track      the idea came from loftstory a french tv reality show       i am not realy proud of that today but back in the day it was really fun    shake out the kenzalol track from redribbon",
   },
   { filename: "tracks/1993/CAPONE.MOD", size: "33,244 bytes" },
   { filename: "tracks/1993/DREAM.MOD", size: "64,984 bytes" },
@@ -475,6 +502,7 @@ const modules_med = [
     filename: "tracks/1996/HUBERT.XM",
     size: "214,501 bytes",
     filters: { love: true },
+    text: "i composed that track in tribute for hubert which teach me many things in music",
   },
   {
     filename: "tracks/1996/INFAME-TRAHISON.MOD",
@@ -515,10 +543,19 @@ const modules_med = [
     filters: { love: true },
   },
   { filename: "tracks/1999/GROSSEF.XM", size: "225KB" },
-  { filename: "tracks/1997/non-reglo97.mod", size: "311KB" },
+  {
+    filename: "tracks/1997/non-reglo97.mod",
+    size: "311KB",
+    text: "a track for my old music group hkm",
+  },
   // { filename: "tracks/1996/travailler-med-v2.0.mod", size: "285KB" },
   // { filename: "tracks/1996/non-reglo-mix-funky.mod", size: "180KB" },
-  { filename: "tracks/1999/RAISON.XM", size: "8.4MB", filters: { love: true } },
+  {
+    filename: "tracks/1999/RAISON.XM",
+    size: "8.4MB",
+    filters: { love: true },
+    text: "i usually composed track with high quality samples      and then i compressed it by hand by resampled them and removed all the unused sample      this track is his original format",
+  },
 ];
 
 export default modules_med;

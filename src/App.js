@@ -53,14 +53,37 @@ function App() {
 
     let title = file;
     if (_player.title.trim() !== "") {
-      title = `${_player.title} - ${file}`;
+      title = `${(_player.title ?? file)}`;
     }
 
-    setScrollText(
+    let scroll_text = `${
       _currentBtn.attributes.getNamedItem("data-text")
         ? _currentBtn.attributes.getNamedItem("data-text").value
         : ""
-    );
+    }`;
+
+    if (scroll_text === "") {
+      switch (filename.substr(13, filename.length).split("_")[0]) {
+        case "lgf":
+          scroll_text = "composed for the group logofactory";
+          break;
+        case "condense":
+          scroll_text = "composed for the group condense";
+          break;
+        case "analogik":
+          scroll_text = "composed for the label analogik     i created this label with kenet        we had great members as nagz  xerxes  willbe  wayfinder  traven  jashiin  edzes redribbon  unaware  skybax  dna-groove  dualtrax and many others     from all over the world      we wanted to make music in chiptune format but in great sound quality ";
+          break;
+        case "jecoute":
+          scroll_text = "composed for the label jecoute";
+          break;
+        case "tvnet":
+          scroll_text =
+            "composed for the company tvnet also knowed as alambik     in two thousand during four years i was the main composer of the company";
+          break;
+      }
+    }
+
+    setScrollText(`now playing ${(_player.title ?? file).toLowerCase()}    ${scroll_text}`);
 
     setTitleCallback(`Now Playing : ${title}`);
     setAnalyser(_player.analyser);

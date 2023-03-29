@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import Oscilloscope from "./Oscilloscope";
 import Spectrum from "./Spectrum2";
 import ScrollText from "./ScrollText";
-// import Starfield from "./Starfield";
+import Starfield from "./Starfield";
 import { getInnerSize, hextoRGB } from "../tools/tools";
 import Rasters from "./Rasters";
 
@@ -16,7 +16,7 @@ function CanvasBackground(props) {
   const scroller = useRef();
   const oscilo = useRef();
   const spectr = useRef();
-  // const stars = useRef();
+  const stars = useRef();
 
   const [visible, setVisible] = useState(true);
 
@@ -24,6 +24,7 @@ function CanvasBackground(props) {
     size.current = getInnerSize();
     context.current.canvas.width = size.current.width;
     context.current.canvas.height = size.current.height;
+    context.current.globalCompositeOperation = "luminosity";
     if (rasts.current) {
       rasts.current.updateSize(context.current);
     }
@@ -31,8 +32,6 @@ function CanvasBackground(props) {
 
   useEffect(() => {
     analyser.current = props.analyser;
-
-    
 
     oscilo.current = new Oscilloscope(
       context.current,
@@ -46,15 +45,18 @@ function CanvasBackground(props) {
       context.current,
       hextoRGB("#222222"),
       hextoRGB("#333333"),
-      1,
+      .1,
       (size.current.width / 256) * 92,
       analyser.current
     );
   }, [props.analyser]);
 
   useEffect(() => {
-    if(context.current){
-      scroller.current = new ScrollText(context.current, props.scrollText);  
+    if (context.current) {
+      scroller.current = new ScrollText(context.current, props.scrollText);
+    }
+    if (stars.current) {
+      stars.current.forcePush({ key: " " });
     }
   }, [props.scrollText]);
 
@@ -62,12 +64,13 @@ function CanvasBackground(props) {
     if (visible) {
       var cW = context.current.canvas.width;
       var cH = context.current.canvas.height;
+      
       context.current.clearRect(0, 0, cW, cH);
-      /*if (stars.current) {
-        stars.current.animate();
-      }*/
+      if (stars.current) {
+        stars.current.animate(time);
+      }
       if (spectr.current) {
-        spectr.current.animate();
+        // spectr.current.animate();
       }
       if (oscilo.current) {
         // oscilo.current.animate();
@@ -99,7 +102,7 @@ function CanvasBackground(props) {
     document.addEventListener("visibilitychange", cleanUpVisible, false);
     requestRef.current = requestAnimationFrame(animate);
     rasts.current = new Rasters(context.current);
-    //stars.current = new Starfield(context.current);
+    stars.current = new Starfield(context.current);
     return function cleanup() {
       cancelAnimationFrame(requestRef.current);
       document.removeEventListener("visibilitychange", cleanUpVisible);

@@ -195,8 +195,11 @@ canvas {
   left: 0;
   top: 0;
   z-index: 1;
-  background: url("./images/test4.png") #123;
-  animation: animatedBackground 120s linear infinite;
+  // background: url("./images/test4.png") #123;
+  // background: #123;
+  background: rgb(1,4,5);
+background: linear-gradient(0deg, rgba(1,4,5,1) 0%, rgba(16,45,41,1) 18%, rgba(0,0,0,1) 50%, rgba(50,16,103,1) 85%, rgba(29,128,150,1) 100%);
+  // animation: animatedBackground 120s linear infinite;
 }
 
 ul {

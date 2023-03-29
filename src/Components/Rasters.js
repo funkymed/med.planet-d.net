@@ -4,7 +4,11 @@ export default class Rasters {
   TMPrasterCTX;
   ctx;
   colorRaster = [
-    "#FF5500", "#FF55FF", "#00BBFF", "#00BB00", "#BBBB00",
+    "#FF5500",
+    "#FF55FF",
+    "#00BBFF",
+    "#00BB00",
+    "#BBBB00",
     // "#FF5500", "#FF55FF", "#00BBFF", "#00BB00", "#BBBB00",
     // "#FF5500", "#FF55FF", "#00BBFF", "#00BB00", "#BBBB00",
     // "#FF5500", "#FF55FF", "#00BBFF", "#00BB00", "#BBBB00",
@@ -63,7 +67,7 @@ export default class Rasters {
       this.ctx.drawImage(
         this.TMPrasterCTX.canvas,
         0,
-        this.cnv.height / 2 + (Math.sin(this.phase / 10) * this.cnv.height) / 3
+        this.cnv.height / 2 + (Math.sin(Math.cos(this.phase / 40)*10) * this.cnv.height) / 3
       );
 
       this.rasters.sort(function (a, b) {
