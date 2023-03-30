@@ -24,7 +24,7 @@ function CanvasBackground(props) {
     size.current = getInnerSize();
     context.current.canvas.width = size.current.width;
     context.current.canvas.height = size.current.height;
-    context.current.globalCompositeOperation = "luminosity";
+    // context.current.globalCompositeOperation = "luminosity";
     if (rasts.current) {
       rasts.current.updateSize(context.current);
     }
@@ -70,7 +70,7 @@ function CanvasBackground(props) {
         stars.current.animate(time);
       }
       if (spectr.current) {
-        // spectr.current.animate();
+        spectr.current.animate();
       }
       if (oscilo.current) {
         // oscilo.current.animate();

@@ -35,7 +35,7 @@ export default class Starfield {
   }
 
   forcePush(e) {
-    if (e.key == " " || e.code == "Space" || e.keyCode == 32) {
+    if (e.key === " " || e.code === "Space" || e.keyCode === 32) {
       this.force = 10;
     }
   }
@@ -43,7 +43,7 @@ export default class Starfield {
   update(time) {
     const canvas = this.canvasTMP;
 
-    const centerX = canvas.width ;
+    const centerX = canvas.width;
     const centerY = canvas.height;
 
     for (let i = 0; i < this.stars.length; i++) {

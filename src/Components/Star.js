@@ -52,31 +52,28 @@ export default class Star {
   }
 
   draw() {
+    let colorFill = "#FFFFFF";
     if (this.force > 1) {
       switch (Math.floor(Math.random() * 3)) {
         case 1:
-          this.context.fillStyle = "#FF0000";
-          this.context.strokeStyle = "#FF0000";
+          colorFill = "#FF0000";
           break;
         case 2:
-          this.context.fillStyle = "#FFFF00";
-          this.context.strokeStyle = "#FFFF00";
+          colorFill = "#FFFF00";
           break;
         case 3:
-          this.context.fillStyle = "#FFAAFF";
-          this.context.strokeStyle = "#FFAAFF";
+          colorFill = "#FFAAFF";
           break;
         default:
-          this.context.fillStyle = "#00BBFF";
-          this.context.strokeStyle = "#00BBFF";
+          colorFill = "#00BBFF";
           break;
       }
-    } else {
-      this.context.fillStyle = "#FFFFFF";
-      this.context.strokeStyle = "#FFFFFF";
     }
 
-    this.context.lineWidth = 4;
+    this.context.fillStyle = colorFill;
+    this.context.strokeStyle = colorFill;
+
+    this.context.lineWidth = 1;
     this.context.lineWidth = this.z;
     this.context.beginPath();
     this.context.moveTo(this.x, this.y);

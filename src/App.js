@@ -47,13 +47,17 @@ function App() {
   function callbackAnalyser(_player, filename, _currentBtn) {
     var file = filename.split("/").pop();
 
-    _player.analyser.smoothingTimeConstant = 0.25;
-    _player.analyser.fftSize = 2048;
     _player.analyser.minDecibels = -90;
+    _player.analyser.maxDecibels = -10;
+    _player.analyser.smoothingTimeConstant = 0.85;
+
+    // _player.analyser.smoothingTimeConstant = 1;
+    // _player.analyser.fftSize = 2048;
+    // _player.analyser.minDecibels = -90;
 
     let title = file;
     if (_player.title.trim() !== "") {
-      title = `${(_player.title ?? file)}`;
+      title = `${_player.title ?? file}`;
     }
 
     let scroll_text = `${
@@ -62,28 +66,31 @@ function App() {
         : ""
     }`;
 
-    if (scroll_text === "") {
-      switch (filename.substr(13, filename.length).split("_")[0]) {
-        case "lgf":
-          scroll_text = "composed for the group logofactory";
-          break;
-        case "condense":
-          scroll_text = "composed for the group condense";
-          break;
-        case "analogik":
-          scroll_text = "composed for the label analogik     i created this label with kenet        we had great members as nagz  xerxes  willbe  wayfinder  traven  jashiin  edzes redribbon  unaware  skybax  dna-groove  dualtrax and many others     from all over the world      we wanted to make music in chiptune format but in great sound quality ";
-          break;
-        case "jecoute":
-          scroll_text = "composed for the label jecoute";
-          break;
-        case "tvnet":
-          scroll_text =
-            "composed for the company tvnet also knowed as alambik     in two thousand during four years i was the main composer of the company";
-          break;
-      }
+    switch (filename.substr(13, filename.length).split("_")[0]) {
+      case "lgf":
+        scroll_text = "composed for the group logofactory";
+        break;
+      case "condense":
+        scroll_text = "composed for the group condense";
+        break;
+      case "analogik":
+        scroll_text =
+          "composed for the label analogik     i created this label with kenet        we had great members as nagz  xerxes  willbe  wayfinder  traven  jashiin  edzes redribbon  unaware  skybax  dna-groove  dualtrax and many others     from all over the world      we wanted to make music in chiptune format but in great sound quality ";
+        break;
+      case "jecoute":
+        scroll_text = "composed for the label jecoute";
+        break;
+      case "tvnet":
+        scroll_text =
+          "composed for the company tvnet also knowed as alambik     in two thousand during four years i was the main composer of the company";
+        break;
+      default:
+        break;
     }
 
-    setScrollText(`now playing ${(_player.title ?? file).toLowerCase()}    ${scroll_text}`);
+    setScrollText(
+      `now playing ${(_player.title ?? file).toLowerCase()}    ${scroll_text}`
+    );
 
     setTitleCallback(`Now Playing : ${title}`);
     setAnalyser(_player.analyser);

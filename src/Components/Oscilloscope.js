@@ -20,7 +20,7 @@ function drawLines(ctx, cW, cH, lineColor, nbLines, vertical) {
   }
 
   ctx.beginPath();
-  ctx.strokeStyle = shader(lineColor, 0.5)+"33";
+  ctx.strokeStyle = shader(lineColor, 0.5)+"FF";
   if (vertical) {
     ctx.moveTo(cW / 2, 0);
     ctx.lineTo(cW / 2, cH);
@@ -32,7 +32,7 @@ function drawLines(ctx, cW, cH, lineColor, nbLines, vertical) {
 }
 
 function gridContext(ctx, cW, cH, lineColor) {
-  ctx.fillStyle = lineColor + "55";
+  ctx.fillStyle = lineColor + "FF";
   ctx.fillRect(0, 0, cW, cH);
   drawLines(ctx, cW, cH, lineColor, 6, false);
   drawLines(ctx, cW, cH, lineColor, 32, true);

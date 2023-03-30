@@ -23,10 +23,9 @@ export default class Spectrum2 {
     const size = getInnerSize();
     var gradient = ctx.createLinearGradient(0, 0, size.width, size.height);
 
-    const opacity = "99";
-    gradient.addColorStop(0, `#0022FF${opacity}`);
-    gradient.addColorStop(0.5, `#33AA33${opacity}`);
-    gradient.addColorStop(1, `#AA3300${opacity}`);
+    gradient.addColorStop(0, `#00000033`);
+    gradient.addColorStop(0.5, `#AA550055`);
+    gradient.addColorStop(1, `#00000033`);
 
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, size.width, size.height);
@@ -40,8 +39,8 @@ export default class Spectrum2 {
 
     this.linesCtx = this.linesCanvas.getContext("2d");
     this.drawGradiant(this.linesCtx);
-    const stroke = 2;
-    for (let yy = 0; yy < size.height; yy += stroke * 4) {
+    const stroke = 1;
+    for (let yy = 0; yy < size.height; yy += stroke * 2) {
       this.linesCtx.clearRect(0, yy, size.width, stroke);
     }
   }
@@ -50,7 +49,6 @@ export default class Spectrum2 {
     if (!this.analyser) return false;
     var cW = this.ctx.canvas.width;
     var cH = this.ctx.canvas.height;
-
 
     this.nbBar = this.nbBar ? this.nbBar : 256;
     let SPACER_WIDTH = Math.round(cW / this.nbBar) + 1,
@@ -77,8 +75,8 @@ export default class Spectrum2 {
       const sourceW = BAR_WIDTH ? BAR_WIDTH : SPACER_WIDTH;
       const sourceH = magnitude ? -magnitude : 0.00001;
 
-      const destX = sourceX;// - this.ctx.canvas.width / 2;
-      const destY = sourceY;// - this.ctx.canvas.height / 2;
+      const destX = sourceX; // - this.ctx.canvas.width / 2;
+      const destY = sourceY; // - this.ctx.canvas.height / 2;
 
       this.ctx.drawImage(
         this.linesCanvas,

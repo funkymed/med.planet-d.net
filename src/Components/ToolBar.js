@@ -3,41 +3,41 @@ import BtnAbout from "./ToolBar/BtnAbout";
 import BtnStop from "./ToolBar/BtnStop";
 import Filter from "./ToolBar/Filter";
 import { useEffect, useRef } from "react";
-import Oscilloscope from "./Oscilloscope";
-import { getInnerSize } from "../tools/tools";
+// import Oscilloscope from "./Oscilloscope";
+// import { getInnerSize } from "../tools/tools";
 
 export default function ToolBar(props) {
   const analyser = useRef(props.analyser);
-  const context = useRef();
+  // const context = useRef();
   const oscilo = useRef();
-  const canvasBG = useRef(null);
+  // const canvasBG = useRef(null);
   const requestRef = useRef();
 
   useEffect(() => {
     analyser.current = props.analyser;
-    oscilo.current = new Oscilloscope(
-      context.current,
-      "#cccccc",
-      false,
-      1,
-      analyser.current
-    );
+    // oscilo.current = new Oscilloscope(
+    //   context.current,
+    //   "#cccccc",
+    //   false,
+    //   1,
+    //   analyser.current
+    // );
   }, [props.analyser]);
 
   const animate = (time) => {
-    var cW = context.current.canvas.width;
-    var cH = context.current.canvas.height;
-    context.current.clearRect(0, 0, cW, cH);
+    // var cW = context.current.canvas.width;
+    // var cH = context.current.canvas.height;
+    // context.current.clearRect(0, 0, cW, cH);
 
     if (oscilo.current) {
-      oscilo.current.animate();
+      // oscilo.current.animate();
     }
 
     requestRef.current = requestAnimationFrame(animate);
   };
 
   useEffect(() => {
-    context.current = canvasBG.current.getContext("2d");
+    // context.current = canvasBG.current.getContext("2d");
     // const size = getInnerSize();
     // canvasBG.current.width = size.width / 3;
 
@@ -57,7 +57,7 @@ export default function ToolBar(props) {
         <Filter callback={props.callbackFilter} />
       </div>
       <div className="floatR" id="control">
-        <canvas
+        {/* <canvas
           ref={canvasBG}
           className="floatL"
           width={300}
@@ -69,7 +69,7 @@ export default function ToolBar(props) {
             background: "black",
             borderRadius: 15,
           }}
-        />
+        /> */}
         <BtnAbout />
         <BtnStop
           setTitleCallback={props.setTitleCallback}
