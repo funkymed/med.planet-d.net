@@ -9,6 +9,8 @@ import Loader from "./Components/Loader";
 import { DEFAULT_TITLE } from "./tools/const";
 import Years from "./Components/Year";
 import modules_med from "./tools/modules_med";
+import { AudioContextUnblocker } from 'audio-context-unblocker'
+
 
 function App() {
   const [titleMusic, setTitleMusic] = useState(DEFAULT_TITLE);
@@ -47,9 +49,15 @@ function App() {
   function callbackAnalyser(_player, filename, _currentBtn) {
     var file = filename.split("/").pop();
 
+    if(window?.neoart?.audioContext){
+      new AudioContextUnblocker(window.neoart.audioContext);
+    }
+    
+    
     _player.analyser.minDecibels = -90;
     _player.analyser.maxDecibels = -10;
     _player.analyser.smoothingTimeConstant = 0.85;
+    
 
     // _player.analyser.smoothingTimeConstant = 1;
     // _player.analyser.fftSize = 2048;

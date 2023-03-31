@@ -7,7 +7,6 @@ export default class Star {
   starsMinSpeed = 0.0001;
   starsMaxSpeed = 0.01;
   starsSpeed = 0.01;
-  phase = 0;
   force;
   constructor(context, starsSpeed) {
     this.canvas = context.canvas;

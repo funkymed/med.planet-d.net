@@ -3,6 +3,7 @@ import Oscilloscope from "./Oscilloscope";
 import Spectrum from "./Spectrum2";
 import ScrollText from "./ScrollText";
 import Starfield from "./Starfield";
+import Smoke from "./Smoke";
 import { getInnerSize, hextoRGB } from "../tools/tools";
 import Rasters from "./Rasters";
 
@@ -17,6 +18,7 @@ function CanvasBackground(props) {
   const oscilo = useRef();
   const spectr = useRef();
   const stars = useRef();
+  const smoke = useRef();
 
   const [visible, setVisible] = useState(true);
 
@@ -66,6 +68,12 @@ function CanvasBackground(props) {
       var cH = context.current.canvas.height;
       
       context.current.clearRect(0, 0, cW, cH);
+      
+      
+      if (smoke.current) {
+        smoke.current.update();
+        smoke.current.draw(time);
+      }
       if (stars.current) {
         stars.current.animate(time);
       }
@@ -103,6 +111,7 @@ function CanvasBackground(props) {
     requestRef.current = requestAnimationFrame(animate);
     rasts.current = new Rasters(context.current);
     stars.current = new Starfield(context.current);
+    smoke.current = new Smoke(context.current)
     return function cleanup() {
       cancelAnimationFrame(requestRef.current);
       document.removeEventListener("visibilitychange", cleanUpVisible);

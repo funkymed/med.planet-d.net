@@ -3,7 +3,7 @@ import Star from "./Star";
 // Source : https://codepen.io/chingy/pen/dyyRBwy
 
 export default class Starfield {
-  fps = 120;
+  fps = 60;
   interval;
   lastTime;
   currentTime = 0;
