@@ -2,6 +2,7 @@ import { getInnerSize } from "../tools/tools";
 
 export default class ScrollText {
   ctx;
+  outputCtx;
   text;
   wiggle = 30;
   counter = 100;
@@ -13,9 +14,12 @@ export default class ScrollText {
   x = [];
   char = [];
   sizeScreen;
+  lastFrameTime = 0;
+  frameInterval = 1000 / 60;
   constructor(ctx, txt) {
     // txt = " 0123456789 abcdefghijklmnopqrstuvwxyz";
-    this.ctx = ctx;
+    this.outputCtx = ctx;
+    this.ctx = this.createCanvasTmp();
     this.bitmap = new Image();
     this.bitmap.src = "./images/font11.png";
     this.bitmap.style.filter = "hue-rotate(180deg)";
@@ -45,7 +49,14 @@ export default class ScrollText {
     return posChar;
   }
 
-  animate(clear) {
+  createCanvasTmp() {
+    const TMPCanvas = document.createElement("canvas");
+    TMPCanvas.width = this.outputCtx.canvas.width;
+    TMPCanvas.height = this.outputCtx.canvas.height;
+    return TMPCanvas.getContext("2d");
+  }
+
+  updateScrollText() {
     for (let n = 0; n < this.letters; n++) {
       let y =
         this.sizeScreen.height -
@@ -77,5 +88,15 @@ export default class ScrollText {
     }
     if (this.counter > 200 && this.wiggle < 30) this.wiggle += 0.1;
     this.counter++;
+  }
+
+  animate(timestamp) {
+    if (timestamp - this.lastFrameTime >= this.frameInterval) {
+      this.lastFrameTime = timestamp;
+      this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+      this.updateScrollText();
+    }
+
+    this.outputCtx.drawImage(this.ctx.canvas, 0, 0);
   }
 }

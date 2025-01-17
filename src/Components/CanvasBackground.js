@@ -88,7 +88,7 @@ function CanvasBackground(props) {
         rasts.current.animate(time);
       }
       if (scroller.current) {
-        scroller.current.animate(true);
+        scroller.current.animate(time);
       }
     }
 
