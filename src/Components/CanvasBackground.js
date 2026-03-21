@@ -19,6 +19,9 @@ function CanvasBackground(props) {
   const smoke = useRef();
 
   const [visible, setVisible] = useState(true);
+  const reducedMotion = useRef(
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  );
 
   function resizeCanvas() {
     size.current = getInnerSize();
@@ -60,21 +63,23 @@ function CanvasBackground(props) {
       context.current.clearRect(0, 0, cW, cH);
       
       
-      if (smoke.current) {
-        smoke.current.update();
-        smoke.current.draw(time);
-      }
-      if (stars.current) {
-        stars.current.animate(time);
+      if (!reducedMotion.current) {
+        if (smoke.current) {
+          smoke.current.update();
+          smoke.current.draw(time);
+        }
+        if (stars.current) {
+          stars.current.animate(time);
+        }
+        if (rasts.current) {
+          rasts.current.animate(time);
+        }
+        if (scroller.current) {
+          scroller.current.animate(time);
+        }
       }
       if (spectr.current) {
         spectr.current.animate();
-      }
-      if (rasts.current) {
-        rasts.current.animate(time);
-      }
-      if (scroller.current) {
-        scroller.current.animate(time);
       }
     }
 
@@ -111,7 +116,7 @@ function CanvasBackground(props) {
 
   return (
     <canvas
-      // style={{ border: "5px red solid" }}
+      aria-hidden="true"
       ref={canvasBG}
       width={size.width}
       height={size.height}

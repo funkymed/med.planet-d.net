@@ -113,6 +113,10 @@ h2 {
   &.selected {
     background: #959;
   }
+  &:focus-visible {
+    outline: 2px solid #6af;
+    outline-offset: 2px;
+  }
 }
 
 #loader {
@@ -251,6 +255,12 @@ ul {
         opacity: 1;
       }
 
+      &:focus-visible {
+        outline: 2px solid #6af;
+        outline-offset: -2px;
+        opacity: 1;
+      }
+
       &.active {
         color: #fff;
         display: block;
@@ -281,8 +291,9 @@ ul {
     background: #acacac;
     color: white;
     padding: 5px;
-    &:focus {
-      outline: none;
+    &:focus-visible {
+      outline: 2px solid #6af;
+      outline-offset: 2px;
     }
   }
 }

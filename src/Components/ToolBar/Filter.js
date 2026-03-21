@@ -40,9 +40,10 @@ export default function Filter(props) {
               data-filter={item.icon}
               className="btn"
               onClick={toggleSelected}
+              aria-label={`Filter : ${item.title.toLowerCase()}`}
               title={`Filter : ${item.title.toLowerCase()}`}
             >
-              <i className={`icon big ${item.icon}`} />
+              <i className={`icon big ${item.icon}`} aria-hidden="true" />
             </button>
           );
         })}

@@ -111,25 +111,25 @@ function ModuleButton(props) {
     <li data-text={props.text}>
       <button data-filename={mod?.filename} onClick={play}>
         {mod?.filters?.first ? (
-          <i title={TITLE_FIRST} className="icon first"></i>
+          <i title={TITLE_FIRST} className="icon first" aria-hidden="true"></i>
         ) : null}
         {mod?.filters?.second ? (
-          <i title={TITLE_SECOND} className="icon second"></i>
+          <i title={TITLE_SECOND} className="icon second" aria-hidden="true"></i>
         ) : null}
         {mod?.filters?.third ? (
-          <i title={TITLE_THIRD} className="icon third"></i>
+          <i title={TITLE_THIRD} className="icon third" aria-hidden="true"></i>
         ) : null}
         {mod?.filters?.best ? (
-          <i title={TITLE_BEST} className="icon best"></i>
+          <i title={TITLE_BEST} className="icon best" aria-hidden="true"></i>
         ) : null}
         {mod?.filters?.love ? (
-          <i title={TITLE_LOVE} className="icon love"></i>
+          <i title={TITLE_LOVE} className="icon love" aria-hidden="true"></i>
         ) : null}
         {mod?.filters?.chiptune ? (
-          <i title={TITLE_CHIPTUNE} className="icon chiptune"></i>
+          <i title={TITLE_CHIPTUNE} className="icon chiptune" aria-hidden="true"></i>
         ) : null}
         {mod.name}
-        <div className="floatR">{mod.size}</div>
+        <span className="floatR">{mod.size}</span>
       </button>
     </li>
   ) : null;

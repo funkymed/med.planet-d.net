@@ -6,6 +6,8 @@
   height: 100vh;
   top: 0;
   left: 0;
+  z-index: 2000;
+  overscroll-behavior: contain;
 }
 
 .box {
@@ -20,10 +22,12 @@
   padding: 20px;
   border: 1px solid #999;
   overflow: auto;
+  &:focus {
+    outline: none;
+  }
 }
 
-.close-icon {
-  content: "x";
+button.close-icon {
   cursor: pointer;
   position: fixed;
   right: calc(15% - 30px);
@@ -36,4 +40,13 @@
   text-align: center;
   border: 1px solid #A00;
   font-size: 20px;
+  color: white;
+  padding: 0;
+  &:hover {
+    background: #FF3333;
+  }
+  &:focus-visible {
+    outline: 2px solid #FF5555;
+    outline-offset: 2px;
+  }
 }

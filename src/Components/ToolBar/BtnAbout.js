@@ -27,7 +27,7 @@ export default function BtnAbout() {
 
   return (
     <div className="floatL">
-      <button id="stop" className="btn " onClick={togglePopup}>
+      <button id="about" className="btn" onClick={togglePopup}>
         About
       </button>
       {isOpen && (
@@ -57,7 +57,7 @@ export default function BtnAbout() {
                 {legend.map(function (item) {
                   return (
                     <div key={item.icon}>
-                      <i className={`icon ${item.icon} shadowed`}></i>{" "}
+                      <i className={`icon ${item.icon} shadowed`} aria-hidden="true"></i>{" "}
                       {item.title}
                       <br />
                       <div className="clearfix"></div>
