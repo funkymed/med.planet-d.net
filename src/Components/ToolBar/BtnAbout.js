@@ -7,6 +7,7 @@ import {
   TITLE_SECOND,
   TITLE_THIRD,
 } from "../../tools/const";
+import modules_med from "../../tools/modules_med";
 const Popup = React.lazy(() => import("../Popup"));
 
 const legend = [
@@ -17,6 +18,15 @@ const legend = [
   { title: TITLE_LOVE, icon: "love" },
   { title: TITLE_BEST, icon: "best" },
 ];
+
+// Count tracks per filter category
+const filterCounts = {};
+legend.forEach(item => {
+  filterCounts[item.icon] = modules_med.filter(
+    mod => mod.filters && mod.filters[item.icon]
+  ).length;
+});
+const totalTracks = modules_med.length;
 
 export default function BtnAbout() {
   const [isOpen, setIsOpen] = useState(false);
@@ -50,7 +60,7 @@ export default function BtnAbout() {
               <p>Stay here all the time you want, enjoy and relax.</p>
 
               <br />
-              <b>Legend</b>
+              <b>Legend</b> <span style={{color: "var(--text-muted)", fontSize: "0.8em"}}>({totalTracks} tracks)</span>
               <br />
               <br />
               <p>
@@ -58,7 +68,7 @@ export default function BtnAbout() {
                   return (
                     <div key={item.icon}>
                       <i className={`icon ${item.icon} shadowed`} aria-hidden="true"></i>{" "}
-                      {item.title}
+                      {item.title} <span style={{color: "var(--neon-blue)", fontSize: "0.8em"}}>({filterCounts[item.icon]})</span>
                       <br />
                       <div className="clearfix"></div>
                     </div>

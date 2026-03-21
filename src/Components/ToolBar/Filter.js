@@ -38,12 +38,12 @@ export default function Filter(props) {
             <button
               key={i}
               data-filter={item.icon}
-              className="btn"
+              className="btn filter-btn"
               onClick={toggleSelected}
               aria-label={`Filter : ${item.title.toLowerCase()}`}
-              title={`Filter : ${item.title.toLowerCase()}`}
             >
               <i className={`icon big ${item.icon}`} aria-hidden="true" />
+              <span className="filter-tooltip">{item.title}</span>
             </button>
           );
         })}
