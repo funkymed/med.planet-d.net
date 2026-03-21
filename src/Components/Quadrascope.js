@@ -76,6 +76,7 @@ export default class Quadrascope {
         const len = chan.length;
         const end = ptr + len;
         const stride = Math.max(1, chan.audper >> 6);
+        const vol = chan.audvol * 0.015625; // /64, range 0-1
 
         for (let s = 0; s < scopeSize; s++) {
           let pos = loc + s * stride;
@@ -83,7 +84,7 @@ export default class Quadrascope {
             pos = ptr + ((pos - ptr) % len);
           }
           if (pos >= 0 && pos < memory.length) {
-            wave[s] = (memory[pos] | 0) * 0.0078125;
+            wave[s] = (memory[pos] | 0) * 0.0078125 * vol;
           } else {
             wave[s] = 0;
           }
@@ -94,6 +95,7 @@ export default class Quadrascope {
         const data = chan.sample.data;
         const len = data.length;
         const pos = chan.pointer || chan.index || 0;
+        const vol = chan.volume || 0; // 0-1
 
         for (let s = 0; s < scopeSize; s++) {
           let p = pos + s;
@@ -101,7 +103,7 @@ export default class Quadrascope {
             p = p % len;
             if (p < 0) p += len;
           }
-          wave[s] = data[p] || 0;
+          wave[s] = (data[p] || 0) * vol;
         }
       }
       // Silent
@@ -259,9 +261,10 @@ export default class Quadrascope {
     }
 
     // Waveforms - dots + vertical connectors (step waveform)
+    const dotSize = this.expanded ? 2 : 1;
     ctx.fillStyle = "#44ff88";
     ctx.strokeStyle = "#44ff88";
-    ctx.lineWidth = 1;
+    ctx.lineWidth = this.expanded ? 1 : 0.5;
     for (let i = 0; i < count; i++) {
       const wave = this._waveforms[i];
       const col = i % layout.cols;
@@ -272,7 +275,7 @@ export default class Quadrascope {
       const h = layout.cellH;
       const midY = y + h / 2;
       const scaleX = w / scopeSize;
-      const scaleY = h * 0.425;
+      const scaleY = h * 0.8;
       const yMin = y + 2;
       const yMax = y + h - 2;
 
@@ -304,7 +307,7 @@ export default class Quadrascope {
         let py = midY - wave[s] * scaleY;
         if (py < yMin) py = yMin;
         else if (py > yMax) py = yMax;
-        ctx.fillRect(px, py, 2, 2);
+        ctx.fillRect(px, py, dotSize, dotSize);
       }
     }
   }
