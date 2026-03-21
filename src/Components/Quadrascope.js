@@ -59,7 +59,7 @@ export default class Quadrascope {
   }
 
   _readWaveforms(mixer) {
-    if (!mixer) return;
+    if (!mixer || !mixer.channels || !mixer.channels[0]) return;
     const scopeSize = this.scopeSize;
     const memory = mixer.memory;
     let chan = mixer.channels[0];
@@ -146,6 +146,8 @@ export default class Quadrascope {
   _getLayout() {
     const canvasW = this.ctx.canvas.width;
     const canvasH = this.ctx.canvas.height;
+    if (!canvasW || !canvasH) return { rows: 1, cols: 4, cellW: 100, cellH: 70 };
+
     const count = this.channelCount || 4;
     const key = `${canvasW}_${canvasH}_${count}`;
 
@@ -166,21 +168,22 @@ export default class Quadrascope {
 
     const canvasW = ctx.canvas.width;
     const canvasH = ctx.canvas.height;
+    if (!canvasW || !canvasH) return;
 
     ctx.fillStyle = "#0a0a12";
     ctx.fillRect(0, 0, canvasW, canvasH);
 
-    // Always read waveforms for scopes and VU
-    if (this.mode !== MODE_SPECTRUM && player && player.mixer) {
+    if (this.mode !== MODE_SPECTRUM && this.mode !== MODE_BARS &&
+        player && player.mixer && player.mixer.channels) {
       this._readWaveforms(player.mixer);
     }
 
     if (this.mode === MODE_SCOPES) {
       this._drawScopes(canvasW, canvasH);
-    } else if (this.mode === MODE_SPECTRUM) {
+    } else if (this.mode === MODE_SPECTRUM && player && player.analyser) {
       this._readSpectrum(player);
       this._drawSpectrum(canvasW, canvasH);
-    } else if (this.mode === MODE_BARS) {
+    } else if (this.mode === MODE_BARS && player && player.analyser) {
       this._readSpectrum(player);
       this._drawBars(canvasW, canvasH);
     } else if (this.mode === MODE_VU) {
@@ -223,7 +226,7 @@ export default class Quadrascope {
     }
     ctx.stroke();
 
-    // Waveforms - individual dots (ProTracker style)
+    // Waveforms - dots (ProTracker style)
     ctx.fillStyle = "#44ff88";
     for (let i = 0; i < count; i++) {
       const wave = this._waveforms[i];

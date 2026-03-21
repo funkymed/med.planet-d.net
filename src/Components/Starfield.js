@@ -79,46 +79,40 @@ export default class Starfield {
     }
   }
 
-  // Batched draw: 1 path for all white stars, then colored groups
+  // Pre-allocated array for colored stars indices
+  _coloredIndices = new Uint16Array(1500);
+  _coloredCount = 0;
+
   draw() {
     const ctx = this.contextTMP;
     const stars = this.stars;
     const forceActive = this.force > 1;
 
-    // Draw all stars as simple lines in a single batched approach
-    // Group by line width ranges to minimize state changes
     ctx.strokeStyle = "#FFFFFF";
     ctx.lineWidth = 1;
     ctx.beginPath();
 
-    let coloredStars = null;
-    if (forceActive) {
-      coloredStars = [];
-    }
+    this._coloredCount = 0;
 
     for (let i = 0; i < stars.length; i++) {
       const star = stars[i];
 
       if (forceActive && star.z > 0.005) {
-        // Collect stars that need color for a second pass
-        coloredStars.push(star);
+        this._coloredIndices[this._coloredCount++] = i;
         continue;
       }
 
-      // White star - add to batch path
       ctx.moveTo(star.x, star.y);
       ctx.lineTo(star.origX, star.origY);
     }
     ctx.stroke();
 
-    // Second pass: colored stars during force (much fewer)
-    if (coloredStars && coloredStars.length > 0) {
-      // Group by random color - just use 1 color for all for speed
+    if (this._coloredCount > 0) {
       ctx.strokeStyle = FORCE_COLORS[(Math.random() * 4) | 0];
       ctx.lineWidth = 2;
       ctx.beginPath();
-      for (let i = 0; i < coloredStars.length; i++) {
-        const star = coloredStars[i];
+      for (let i = 0; i < this._coloredCount; i++) {
+        const star = stars[this._coloredIndices[i]];
         ctx.moveTo(star.x, star.y);
         ctx.lineTo(star.origX, star.origY);
       }

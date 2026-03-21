@@ -89,7 +89,6 @@ function CanvasBackground(props) {
 
     return () => {
       unsubscribe("canvas-bg");
-      observer.disconnect();
       document.removeEventListener("visibilitychange", handleVisibility);
       window.removeEventListener("resize", resizeCanvas);
       if (stars.current) {

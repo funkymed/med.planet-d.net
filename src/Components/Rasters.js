@@ -50,12 +50,13 @@ export default class Rasters {
       const minY = 10;
       const maxY = 89;
 
+      const halfLen = this.rasters.length / 2;
       for (let x = 0; x < this.rasters.length; x++) {
         const raster = this.rasters[x];
 
         const posY =
           50 -
-          Math.sin(this.phase + raster.order * (this.rasters.length / 2)) * 40;
+          Math.sin(this.phase + raster.order * halfLen) * 40;
 
         const oldZ = raster.zindex;
         if (Math.floor(posY) <= minY) {
