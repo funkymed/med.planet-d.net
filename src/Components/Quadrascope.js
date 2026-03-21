@@ -206,36 +206,62 @@ export default class Quadrascope {
     const layout = this._getLayout();
     const scopeSize = this.scopeSize;
 
-    // Borders + labels
-    ctx.font = "10px monospace";
     ctx.lineWidth = 1;
-    ctx.strokeStyle = "rgba(100,100,180,0.2)";
 
     for (let i = 0; i < count; i++) {
       const col = i % layout.cols;
       const row = Math.floor(i / layout.cols);
       const x = col * layout.cellW;
       const y = row * layout.cellH;
-      ctx.strokeRect(x + 0.5, y + 0.5, layout.cellW - 1, layout.cellH - 1);
+      const w = layout.cellW;
+      const h = layout.cellH;
+      const midY = y + h / 2;
+
+      // Grid - vertical lines (8 divisions)
+      ctx.strokeStyle = "rgba(77,159,255,0.06)";
+      ctx.beginPath();
+      for (let g = 1; g < 8; g++) {
+        const gx = x + (w / 8) * g;
+        ctx.moveTo(gx, y);
+        ctx.lineTo(gx, y + h);
+      }
+      // Grid - horizontal lines (4 divisions)
+      for (let g = 1; g < 4; g++) {
+        const gy = y + (h / 4) * g;
+        ctx.moveTo(x, gy);
+        ctx.lineTo(x + w, gy);
+      }
+      ctx.stroke();
+
+      // Center line (brighter)
+      ctx.strokeStyle = "rgba(77,159,255,0.12)";
+      ctx.beginPath();
+      ctx.moveTo(x, midY);
+      ctx.lineTo(x + w, midY);
+      ctx.stroke();
+
+      // Center cross marks (small ticks at center)
+      ctx.strokeStyle = "rgba(77,159,255,0.15)";
+      ctx.beginPath();
+      const cx = x + w / 2;
+      ctx.moveTo(cx, midY - 6);
+      ctx.lineTo(cx, midY + 6);
+      ctx.stroke();
+
+      // Border
+      ctx.strokeStyle = "rgba(100,100,180,0.2)";
+      ctx.strokeRect(x + 0.5, y + 0.5, w - 1, h - 1);
+
+      // Channel number
+      ctx.font = "10px monospace";
       ctx.fillStyle = "rgba(77,159,255,0.4)";
       ctx.fillText(i + 1, x + 3, y + 12);
     }
 
-    // Center lines - single path
-    ctx.strokeStyle = "rgba(77,159,255,0.08)";
-    ctx.beginPath();
-    for (let i = 0; i < count; i++) {
-      const col = i % layout.cols;
-      const row = Math.floor(i / layout.cols);
-      const x = col * layout.cellW;
-      const midY = row * layout.cellH + layout.cellH / 2;
-      ctx.moveTo(x, midY);
-      ctx.lineTo(x + layout.cellW, midY);
-    }
-    ctx.stroke();
-
-    // Waveforms - individual dots (ProTracker style)
+    // Waveforms - dots + vertical connectors (step waveform)
     ctx.fillStyle = "#44ff88";
+    ctx.strokeStyle = "#44ff88";
+    ctx.lineWidth = 1;
     for (let i = 0; i < count; i++) {
       const wave = this._waveforms[i];
       const col = i % layout.cols;
@@ -250,6 +276,29 @@ export default class Quadrascope {
       const yMin = y + 2;
       const yMax = y + h - 2;
 
+      let prevPy = midY;
+      ctx.beginPath();
+      for (let s = 0; s < scopeSize; s++) {
+        const px = x + s * scaleX;
+        let py = midY - wave[s] * scaleY;
+        if (py < yMin) py = yMin;
+        else if (py > yMax) py = yMax;
+
+        if (s > 0) {
+          // Vertical line from previous Y to current Y (step shape)
+          ctx.moveTo(px, prevPy);
+          ctx.lineTo(px, py);
+          // Horizontal line to next sample
+          ctx.lineTo(px + scaleX, py);
+        } else {
+          ctx.moveTo(px, py);
+          ctx.lineTo(px + scaleX, py);
+        }
+        prevPy = py;
+      }
+      ctx.stroke();
+
+      // Dots on top
       for (let s = 0; s < scopeSize; s++) {
         const px = x + s * scaleX;
         let py = midY - wave[s] * scaleY;
