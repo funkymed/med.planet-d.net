@@ -18,8 +18,9 @@ export default class Star {
   }
 
   reset() {
-    const hw = this.canvas.width / 2;
-    const hh = this.canvas.height / 2;
+    // Spawn area larger than canvas to cover drift movement
+    const hw = this.canvas.width;
+    const hh = this.canvas.height;
     this.x = -hw + Math.random() * hw * 2;
     this.y = -hh + Math.random() * hh * 2;
     this.z = 0;

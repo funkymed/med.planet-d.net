@@ -8,12 +8,16 @@ export default class Starfield {
   lastTime;
   currentTime = 0;
   ctx;
-  starsCount = 1500;
+  starsCount = 3000;
   stars = [];
   contextTMP;
   canvasTMP;
   force = 1;
   _boundForcePush;
+  _time = -5; // Start centered, drift begins after a few seconds
+  _rollTarget = 0;
+  _rollCurrent = 0;
+  _rollNext = 0; // timestamp for next roll event
 
   constructor(ctx) {
     this.ctx = ctx;
@@ -26,11 +30,6 @@ export default class Starfield {
 
     this.lastTime = performance.now();
     this.interval = 1000 / this.fps;
-
-    this.contextTMP.translate(
-      this.canvasTMP.width / 2,
-      this.canvasTMP.height / 2
-    );
 
     // Pre-allocate all stars
     for (let i = 0; i < this.starsCount; i++) {
@@ -53,8 +52,9 @@ export default class Starfield {
 
   update() {
     const canvas = this.canvasTMP;
-    const centerX = canvas.width;
-    const centerY = canvas.height;
+    // Wider bounds to account for vanishing point drift
+    const centerX = canvas.width * 1.5;
+    const centerY = canvas.height * 1.5;
     const stars = this.stars;
     const force = this.force;
 
@@ -65,8 +65,8 @@ export default class Starfield {
       if (
         star.x - star.z > centerX ||
         star.x + star.z < -centerX ||
-        star.y - star.z > centerY / 2 ||
-        star.y + star.z < -centerY / 2
+        star.y - star.z > centerY ||
+        star.y + star.z < -centerY
       ) {
         star.reset();
       }
@@ -79,14 +79,11 @@ export default class Starfield {
     }
   }
 
-  // Batched draw: 1 path for all white stars, then colored groups
   draw() {
     const ctx = this.contextTMP;
     const stars = this.stars;
     const forceActive = this.force > 1;
 
-    // Draw all stars as simple lines in a single batched approach
-    // Group by line width ranges to minimize state changes
     ctx.strokeStyle = "#FFFFFF";
     ctx.lineWidth = 1;
     ctx.beginPath();
@@ -100,20 +97,16 @@ export default class Starfield {
       const star = stars[i];
 
       if (forceActive && star.z > 0.005) {
-        // Collect stars that need color for a second pass
         coloredStars.push(star);
         continue;
       }
 
-      // White star - add to batch path
       ctx.moveTo(star.x, star.y);
       ctx.lineTo(star.origX, star.origY);
     }
     ctx.stroke();
 
-    // Second pass: colored stars during force (much fewer)
     if (coloredStars && coloredStars.length > 0) {
-      // Group by random color - just use 1 color for all for speed
       ctx.strokeStyle = FORCE_COLORS[(Math.random() * 4) | 0];
       ctx.lineWidth = 2;
       ctx.beginPath();
@@ -140,19 +133,51 @@ export default class Starfield {
     this.currentTime = timestamp || performance.now();
     const delta = this.currentTime - this.lastTime;
 
+    this._time += 0.004;
+    const t = this._time;
+
     if (delta > this.interval) {
+      // Ease in: no drift at start, full drift after _time > 0
+      const ease = t <= 0 ? 0 : Math.min(1, t * 0.2);
+      const driftX = (Math.sin(t * 0.7) * 350 + Math.sin(t * 1.9) * 150 + Math.cos(t * 0.3) * 200) * ease;
+      const driftY = (Math.cos(t * 0.5) * 250 + Math.sin(t * 1.3) * 100 + Math.sin(t * 0.2) * 150) * ease;
+
+      const ctx = this.contextTMP;
+      const hw = this.canvasTMP.width / 2;
+      const hh = this.canvasTMP.height / 2;
+
+      // Clear with identity transform (full canvas)
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.clearRect(0, 0, this.canvasTMP.width, this.canvasTMP.height);
+
+      // Set vanishing point with drift
+      ctx.translate(hw + driftX, hh + driftY);
+
       this.update();
-      this.clear();
       this.draw();
       this.lastTime = this.currentTime - (delta % this.interval);
     }
 
-    this.ctx.drawImage(
-      this.canvasTMP,
-      0,
-      0,
-      this.ctx.canvas.width,
-      this.ctx.canvas.height
-    );
+    // Roll: sudden burst then settle, repeats every few minutes
+    const now = this.currentTime;
+    if (now > this._rollNext) {
+      // Pick a new roll angle: random between -15 and +15 degrees
+      this._rollTarget = (Math.random() - 0.5) * 0.5;
+      // Next roll in 2-4 minutes
+      this._rollNext = now + 120000 + Math.random() * 120000;
+    }
+    // Ease toward target (fast attack ~0.5s, then holds)
+    this._rollCurrent += (this._rollTarget - this._rollCurrent) * 0.02;
+    const roll = this._rollCurrent;
+
+    const destCtx = this.ctx;
+    const cW = destCtx.canvas.width;
+    const cH = destCtx.canvas.height;
+
+    destCtx.save();
+    destCtx.translate(cW / 2, cH / 2);
+    destCtx.rotate(roll);
+    destCtx.drawImage(this.canvasTMP, -cW / 2, -cH / 2, cW, cH);
+    destCtx.restore();
   }
 }
