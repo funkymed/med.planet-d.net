@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import Oscilloscope from "./Oscilloscope";
 import Spectrum from "./Spectrum2";
 import ScrollText from "./ScrollText";
 import Starfield from "./Starfield";
@@ -15,7 +14,6 @@ function CanvasBackground(props) {
   const analyser = useRef(props.analyser);
   const rasts = useRef();
   const scroller = useRef();
-  const oscilo = useRef();
   const spectr = useRef();
   const stars = useRef();
   const smoke = useRef();
@@ -34,14 +32,6 @@ function CanvasBackground(props) {
 
   useEffect(() => {
     analyser.current = props.analyser;
-
-    oscilo.current = new Oscilloscope(
-      context.current,
-      "#cccccc",
-      false,
-      1,
-      analyser.current
-    );
 
     spectr.current = new Spectrum(
       context.current,
@@ -80,10 +70,6 @@ function CanvasBackground(props) {
       if (spectr.current) {
         spectr.current.animate();
       }
-      if (oscilo.current) {
-        // oscilo.current.animate();
-      }
-
       if (rasts.current) {
         rasts.current.animate(time);
       }
@@ -116,6 +102,9 @@ function CanvasBackground(props) {
       cancelAnimationFrame(requestRef.current);
       document.removeEventListener("visibilitychange", cleanUpVisible);
       window.removeEventListener("resize", resizeCanvas);
+      if (stars.current) {
+        stars.current.destroy();
+      }
     };
     // eslint-disable-next-line
   }, []);

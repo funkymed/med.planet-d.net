@@ -9,6 +9,8 @@ export default class Spectrum2 {
   analyser;
   linesCtx;
   linesCanvas;
+  freqByteData;
+  cachedSize;
   constructor(ctx, speccolor, color, opacity, nbBar, analyser) {
     this.ctx = ctx;
     this.speccolor = speccolor;
@@ -16,11 +18,19 @@ export default class Spectrum2 {
     this.opacity = opacity;
     this.nbBar = nbBar;
     this.analyser = analyser;
+    this.cachedSize = getInnerSize();
+    if (analyser) {
+      this.freqByteData = new Uint8Array(analyser.frequencyBinCount);
+    }
     this.createLines();
   }
 
+  updateSize() {
+    this.cachedSize = getInnerSize();
+  }
+
   drawGradiant(ctx) {
-    const size = getInnerSize();
+    const size = this.cachedSize;
     var gradient = ctx.createLinearGradient(0, 0, size.width, size.height);
 
     gradient.addColorStop(0, `#00000033`);
@@ -32,7 +42,7 @@ export default class Spectrum2 {
   }
 
   createLines() {
-    const size = getInnerSize();
+    const size = this.cachedSize;
     this.linesCanvas = document.createElement("canvas");
     this.linesCanvas.width = size.width;
     this.linesCanvas.height = size.height;
@@ -57,13 +67,15 @@ export default class Spectrum2 {
       fb = this.analyser.frequencyBinCount;
 
     BAR_WIDTH = BAR_WIDTH < 1 ? 1 : BAR_WIDTH;
-    const freqByteData = new Uint8Array(fb);
+    if (!this.freqByteData || this.freqByteData.length !== fb) {
+      this.freqByteData = new Uint8Array(fb);
+    }
 
-    this.analyser.getByteFrequencyData(freqByteData);
+    this.analyser.getByteFrequencyData(this.freqByteData);
 
     this.ctx.fillStyle = "rgba(" + this.speccolor + ",.8) ";
     for (let i = 0; i < cW; i += BAR_WIDTH) {
-      let magnitude = freqByteData[count];
+      let magnitude = this.freqByteData[count];
       magnitude = (magnitude / 256) * (cH - 50);
       const r = Math.round(Math.sin(count / this.nbBar) * 256);
       const v = 64;

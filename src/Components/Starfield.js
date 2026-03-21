@@ -15,6 +15,7 @@ export default class Starfield {
   canvasTMP;
   force = 1;
 
+  _boundForcePush;
   constructor(ctx) {
     this.ctx = ctx;
 
@@ -24,14 +25,19 @@ export default class Starfield {
     this.canvasTMP.width = this.ctx.canvas.width;
     this.canvasTMP.height = this.ctx.canvas.height;
 
-    this.lastTime = new Date().getTime();
+    this.lastTime = performance.now();
     this.interval = 1000 / this.fps;
 
     this.contextTMP.translate(
       this.canvasTMP.width / 2,
       this.canvasTMP.height / 2
     );
-    document.addEventListener("keyup", this.forcePush.bind(this));
+    this._boundForcePush = this.forcePush.bind(this);
+    document.addEventListener("keyup", this._boundForcePush);
+  }
+
+  destroy() {
+    document.removeEventListener("keyup", this._boundForcePush);
   }
 
   forcePush(e) {
@@ -86,8 +92,8 @@ export default class Starfield {
     );
   }
 
-  animate() {
-    this.currentTime = new Date().getTime();
+  animate(timestamp) {
+    this.currentTime = timestamp || performance.now();
     const delta = this.currentTime - this.lastTime;
 
     if (delta > this.interval) {

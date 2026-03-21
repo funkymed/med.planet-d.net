@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import {
   TITLE_BEST,
   TITLE_CHIPTUNE,
@@ -7,7 +7,7 @@ import {
   TITLE_SECOND,
   TITLE_THIRD,
 } from "../../tools/const";
-import Popup from "../Popup";
+const Popup = React.lazy(() => import("../Popup"));
 
 const legend = [
   { title: TITLE_FIRST, icon: "first" },
@@ -31,6 +31,7 @@ export default function BtnAbout() {
         About
       </button>
       {isOpen && (
+        <Suspense fallback={null}>
         <Popup
           btnClose={true}
           content={
@@ -55,7 +56,7 @@ export default function BtnAbout() {
               <p>
                 {legend.map(function (item) {
                   return (
-                    <div>
+                    <div key={item.icon}>
                       <i className={`icon ${item.icon} shadowed`}></i>{" "}
                       {item.title}
                       <br />
@@ -74,6 +75,7 @@ export default function BtnAbout() {
           }
           handleClose={togglePopup}
         />
+        </Suspense>
       )}
     </div>
   );

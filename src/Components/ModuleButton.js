@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   TITLE_BEST,
@@ -112,41 +112,27 @@ function ModuleButton(props) {
       <button data-filename={mod?.filename} onClick={play}>
         {mod?.filters?.first ? (
           <i title={TITLE_FIRST} className="icon first"></i>
-        ) : (
-          ""
-        )}
+        ) : null}
         {mod?.filters?.second ? (
           <i title={TITLE_SECOND} className="icon second"></i>
-        ) : (
-          ""
-        )}
+        ) : null}
         {mod?.filters?.third ? (
           <i title={TITLE_THIRD} className="icon third"></i>
-        ) : (
-          ""
-        )}
+        ) : null}
         {mod?.filters?.best ? (
           <i title={TITLE_BEST} className="icon best"></i>
-        ) : (
-          ""
-        )}
+        ) : null}
         {mod?.filters?.love ? (
           <i title={TITLE_LOVE} className="icon love"></i>
-        ) : (
-          ""
-        )}
+        ) : null}
         {mod?.filters?.chiptune ? (
           <i title={TITLE_CHIPTUNE} className="icon chiptune"></i>
-        ) : (
-          ""
-        )}
+        ) : null}
         {mod.name}
         <div className="floatR">{mod.size}</div>
       </button>
     </li>
-  ) : (
-    ""
-  );
+  ) : null;
 }
 
-export default ModuleButton;
+export default React.memo(ModuleButton);

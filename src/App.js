@@ -156,7 +156,7 @@ function App() {
                     third={third}
                     best={best}
                     chiptune={chiptune}
-                    callbackAnalyser={callbackAnalyser.bind(this)}
+                    callbackAnalyser={callbackAnalyser}
                   />
                 );
               })}

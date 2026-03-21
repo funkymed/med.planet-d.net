@@ -9,7 +9,6 @@ import {
 } from "../../tools/const";
 
 export default function Filter(props) {
-  //const [query, setQuery] = useState();
   const [filters, setFilters] = useState([
     { icon: "first", title: TITLE_FIRST, actived: false },
     { icon: "second", title: TITLE_SECOND, actived: false },
@@ -19,36 +18,18 @@ export default function Filter(props) {
     { icon: "chiptune", title: TITLE_CHIPTUNE, actived: false },
   ]);
 
-  function update() {
-    props.callback(null, filters); // props.callback(query, filters);
-  }
-/*
-  function onChange(e) {
-    setQuery(e.target.value);
-    update();
-  }
-*/
-  function togglerFilter(icon, activated) {
-    const filtR = filters;
-    for (let filter in filtR) {
-      if (filtR[filter].icon === icon) {
-        filtR[filter].actived = activated;
-      }
-    }
-    setFilters(filtR);
-  }
-
   const toggleSelected = (e) => {
     e.target.classList.toggle("selected");
-    if (e.target.classList.contains("selected")) {
-      togglerFilter(e.target.dataset.filter, true);
-    } else {
-      togglerFilter(e.target.dataset.filter, false);
-    }
-    update();
+    const icon = e.target.dataset.filter;
+    const activated = e.target.classList.contains("selected");
+
+    const newFilters = filters.map(f =>
+      f.icon === icon ? { ...f, actived: activated } : f
+    );
+    setFilters(newFilters);
+    props.callback(null, newFilters);
   };
 
-  //<input onChange={onChange} value={query} />
   return (
     <>
       <div>
