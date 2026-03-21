@@ -33,7 +33,9 @@ const Popup = (props) => {
         >
           x
         </button>
-        {props.content}
+        <div className="box-content">
+          {props.content}
+        </div>
       </div>
     </div>
   );

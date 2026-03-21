@@ -16,6 +16,7 @@ export default class Rasters {
   rasters = [];
   order = 0;
   rH = 20;
+  _dirty = false;
   constructor(ctx) {
     this.ctx = ctx;
     this.cnv = ctx.canvas;
@@ -56,11 +57,13 @@ export default class Rasters {
           50 -
           Math.sin(this.phase + raster.order * (this.rasters.length / 2)) * 40;
 
+        const oldZ = raster.zindex;
         if (Math.floor(posY) <= minY) {
           raster.zindex = 2;
         } else if (Math.ceil(posY) >= maxY) {
           raster.zindex = 1;
         }
+        if (raster.zindex !== oldZ) this._dirty = true;
 
         this.TMPrasterCTX.drawImage(raster.canvas, 0, posY, this.cnv.width, 20);
       }
@@ -70,9 +73,12 @@ export default class Rasters {
         this.cnv.height / 2 + (Math.sin(Math.cos(this.phase / 40)*10) * this.cnv.height) / 3
       );
 
-      this.rasters.sort(function (a, b) {
-        return a.zindex - b.zindex;
-      });
+      if (this._dirty) {
+        this.rasters.sort(function (a, b) {
+          return a.zindex - b.zindex;
+        });
+        this._dirty = false;
+      }
     }
   }
 

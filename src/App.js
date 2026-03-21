@@ -15,31 +15,29 @@ import { AudioContextUnblocker } from 'audio-context-unblocker'
 function App() {
   const [titleMusic, setTitleMusic] = useState(DEFAULT_TITLE);
   const [analyser, setAnalyser] = useState(null);
-  const [query, setQuery] = useState(null);
-  const [first, setFirst] = useState(false);
-  const [second, setSecond] = useState(false);
-  const [third, setThird] = useState(false);
-  const [best, setBest] = useState(false);
-  const [love, setLove] = useState(false);
+  const [filters, setFilters] = useState({
+    query: null, first: false, second: false, third: false,
+    best: false, love: false, chiptune: false,
+  });
   const [listMods, setListMods] = useState([]);
-  const [chiptune, setChiptune] = useState(false);
   const [player, setPlayer] = useState(false);
   const [scrollText, setScrollText] = useState(false);
-  const requestRef = useRef();
   const currentBtn = useRef();
 
   function loadList() {
     setListMods(getList(modules_med));
   }
 
-  function callbackFilter(query, filters) {
-    setQuery(query);
-    setFirst(filters ? filters[0].actived : false);
-    setSecond(filters ? filters[1].actived : false);
-    setThird(filters ? filters[2].actived : false);
-    setLove(filters ? filters[3].actived : false);
-    setBest(filters ? filters[4].actived : false);
-    setChiptune(filters ? filters[5].actived : false);
+  function callbackFilter(query, filterArr) {
+    setFilters({
+      query: query,
+      first: filterArr ? filterArr[0].actived : false,
+      second: filterArr ? filterArr[1].actived : false,
+      third: filterArr ? filterArr[2].actived : false,
+      love: filterArr ? filterArr[3].actived : false,
+      best: filterArr ? filterArr[4].actived : false,
+      chiptune: filterArr ? filterArr[5].actived : false,
+    });
   }
 
   function setTitleCallback(str) {
@@ -109,26 +107,24 @@ function App() {
   }
 
   useEffect(() => {
-    const animate = (time) => {
+    loadList();
+  }, []);
+
+  useEffect(() => {
+    if (!player) return;
+    const interval = setInterval(() => {
       if (player && currentBtn.current) {
         const percent = Math.round((player.order / (player.length - 1)) * 100);
         currentBtn.current.style.backgroundSize = `${percent}% auto`;
       }
-      requestRef.current = requestAnimationFrame(animate);
-    };
-
-    loadList();
-    requestRef.current = requestAnimationFrame(animate);
-
-    return function cleanup() {
-      cancelAnimationFrame(requestRef.current);
-    };
+    }, 500);
+    return () => clearInterval(interval);
   }, [player]);
 
   return (
     <Router>
       <div className="App">
-        <CanvasBackground analyser={analyser} scrollText={scrollText} />
+        <CanvasBackground scrollText={scrollText} />
         <Routes>
           <Route path="/*" element={<Loader player={player} callbackAnalyser={callbackAnalyser} />} />
         </Routes>
@@ -149,13 +145,13 @@ function App() {
                     year={item.year}
                     mods={item.mods}
                     tracker={false}
-                    query={query}
-                    love={love}
-                    first={first}
-                    second={second}
-                    third={third}
-                    best={best}
-                    chiptune={chiptune}
+                    query={filters.query}
+                    love={filters.love}
+                    first={filters.first}
+                    second={filters.second}
+                    third={filters.third}
+                    best={filters.best}
+                    chiptune={filters.chiptune}
                     callbackAnalyser={callbackAnalyser}
                   />
                 );

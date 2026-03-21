@@ -1,22 +1,22 @@
 import { useEffect, useRef, useState } from "react";
-import Spectrum from "./Spectrum2";
 import ScrollText from "./ScrollText";
 import Starfield from "./Starfield";
-import Smoke from "./Smoke";
-import { getInnerSize, hextoRGB } from "../tools/tools";
+import { getInnerSize } from "../tools/tools";
 import Rasters from "./Rasters";
+import { subscribe, unsubscribe } from "../tools/renderLoop";
 
 function CanvasBackground(props) {
-  const requestRef = useRef();
   const context = useRef();
+  const scrollCtx = useRef();
   const canvasBG = useRef(null);
+  const canvasScroll = useRef(null);
   const size = useRef(getInnerSize());
-  const analyser = useRef(props.analyser);
   const rasts = useRef();
   const scroller = useRef();
-  const spectr = useRef();
   const stars = useRef();
-  const smoke = useRef();
+  const quadExpanded = useRef(false);
+  const canvasW = useRef(0);
+  const canvasH = useRef(0);
 
   const [visible, setVisible] = useState(true);
   const reducedMotion = useRef(
@@ -25,49 +25,56 @@ function CanvasBackground(props) {
 
   function resizeCanvas() {
     size.current = getInnerSize();
-    context.current.canvas.width = size.current.width;
-    context.current.canvas.height = size.current.height;
-    // context.current.globalCompositeOperation = "luminosity";
+    const w = size.current.width;
+    const h = size.current.height;
+    canvasW.current = w;
+    canvasH.current = h;
+
+    context.current.canvas.width = w;
+    context.current.canvas.height = h;
+    scrollCtx.current.canvas.width = w;
+    scrollCtx.current.canvas.height = h;
+
     if (rasts.current) {
       rasts.current.updateSize(context.current);
     }
   }
 
   useEffect(() => {
-    analyser.current = props.analyser;
-
-    spectr.current = new Spectrum(
-      context.current,
-      hextoRGB("#222222"),
-      hextoRGB("#333333"),
-      .1,
-      (size.current.width / 256) * 92,
-      analyser.current
-    );
-  }, [props.analyser]);
-
-  useEffect(() => {
-    if (context.current) {
-      scroller.current = new ScrollText(context.current, props.scrollText);
+    if (scrollCtx.current) {
+      scroller.current = new ScrollText(scrollCtx.current, props.scrollText);
     }
     if (stars.current) {
       stars.current.forcePush({ key: " " });
     }
   }, [props.scrollText]);
 
-  const animate = (time) => {
-    if (visible) {
-      var cW = context.current.canvas.width;
-      var cH = context.current.canvas.height;
-      
-      context.current.clearRect(0, 0, cW, cH);
-      
-      
+  useEffect(() => {
+    context.current = canvasBG.current.getContext("2d");
+    scrollCtx.current = canvasScroll.current.getContext("2d");
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+
+    const handleVisibility = () => setVisible(!document.hidden);
+    document.addEventListener("visibilitychange", handleVisibility, false);
+
+    const observer = new MutationObserver(() => {
+      quadExpanded.current = document.body.classList.contains("quadrascope-expanded");
+    });
+    observer.observe(document.body, { attributes: true, attributeFilter: ["class"] });
+
+    rasts.current = new Rasters(context.current);
+    stars.current = new Starfield(context.current);
+
+    subscribe("canvas-bg", (time) => {
+      if (!visible || quadExpanded.current) return;
+
+      const ctx = context.current;
+      const sCtx = scrollCtx.current;
+      ctx.clearRect(0, 0, canvasW.current, canvasH.current);
+      sCtx.clearRect(0, 0, canvasW.current, canvasH.current);
+
       if (!reducedMotion.current) {
-        if (smoke.current) {
-          smoke.current.update();
-          smoke.current.draw(time);
-        }
         if (stars.current) {
           stars.current.animate(time);
         }
@@ -78,34 +85,12 @@ function CanvasBackground(props) {
           scroller.current.animate(time);
         }
       }
-      if (spectr.current) {
-        spectr.current.animate();
-      }
-    }
+    });
 
-    requestRef.current = requestAnimationFrame(animate);
-  };
-  function cleanUpVisible() {
-    if (document.hidden) {
-      setVisible(false);
-    } else {
-      setVisible(true);
-    }
-  }
-
-  useEffect(() => {
-    context.current = canvasBG.current.getContext("2d");
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
-    // save cpu
-    document.addEventListener("visibilitychange", cleanUpVisible, false);
-    requestRef.current = requestAnimationFrame(animate);
-    rasts.current = new Rasters(context.current);
-    stars.current = new Starfield(context.current);
-    smoke.current = new Smoke(context.current)
-    return function cleanup() {
-      cancelAnimationFrame(requestRef.current);
-      document.removeEventListener("visibilitychange", cleanUpVisible);
+    return () => {
+      unsubscribe("canvas-bg");
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", handleVisibility);
       window.removeEventListener("resize", resizeCanvas);
       if (stars.current) {
         stars.current.destroy();
@@ -115,12 +100,22 @@ function CanvasBackground(props) {
   }, []);
 
   return (
-    <canvas
-      aria-hidden="true"
-      ref={canvasBG}
-      width={size.width}
-      height={size.height}
-    />
+    <>
+      <canvas
+        id="canvas-bg"
+        aria-hidden="true"
+        ref={canvasBG}
+        width={size.current.width}
+        height={size.current.height}
+      />
+      <canvas
+        id="canvas-scrolltext"
+        aria-hidden="true"
+        ref={canvasScroll}
+        width={size.current.width}
+        height={size.current.height}
+      />
+    </>
   );
 }
 
