@@ -160,7 +160,7 @@ function App() {
         key={i}
         year={item.year}
         mods={item.mods}
-        tracker={false}
+
         query={filters.query}
         love={filters.love}
         first={filters.first}

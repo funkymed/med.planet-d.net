@@ -17,7 +17,6 @@ export default class ScrollText {
   lastFrameTime = 0;
   frameInterval = 1000 / 60;
   constructor(ctx, txt) {
-    // txt = " 0123456789 abcdefghijklmnopqrstuvwxyz";
     this.outputCtx = ctx;
     this.ctx = this.createCanvasTmp();
     this.bitmap = new Image();

@@ -9,9 +9,6 @@ export default class Rasters {
     "#00BBFF",
     "#00BB00",
     "#BBBB00",
-    // "#FF5500", "#FF55FF", "#00BBFF", "#00BB00", "#BBBB00",
-    // "#FF5500", "#FF55FF", "#00BBFF", "#00BB00", "#BBBB00",
-    // "#FF5500", "#FF55FF", "#00BBFF", "#00BB00", "#BBBB00",
   ];
   rasters = [];
   order = 0;

@@ -12,7 +12,6 @@ function Years(props) {
             <ModuleButton
               mod={mod}
               key={i}
-              tracker={props.tracker}
               first={first}
               second={second}
               third={third}
