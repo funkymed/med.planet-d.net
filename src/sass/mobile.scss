@@ -1,0 +1,293 @@
+/* Mobile layout - max 768px */
+@media (max-width: 768px) {
+
+  body {
+    margin: 0;
+  }
+
+  /* ===== HEADER ===== */
+  #mobile-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1001;
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 8px 12px;
+    box-sizing: border-box;
+  }
+
+  #mobile-title {
+    color: #fff;
+    font-size: 22px;
+    text-shadow: 0 0 6px rgba(202, 228, 225, 0.98),
+      0 0 20px rgba(30, 132, 242, 0.6);
+  }
+
+  #mobile-nowplaying {
+    color: var(--text-muted);
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 50px;
+  }
+
+  #mobile-stop {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 4px 10px;
+    font-size: 13px;
+    border: 1px solid rgba(77, 159, 255, 0.25);
+    background: var(--bg-surface);
+    color: var(--text-muted);
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: "vp-pixel", monospace;
+    &:active {
+      background: var(--bg-dark);
+    }
+  }
+
+  /* ===== CONTENT ===== */
+  #mobile-content {
+    position: fixed;
+    top: 55px;
+    left: 0;
+    right: 0;
+    bottom: 56px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #mobile-content:has(#mobile-scope-page) {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ===== TRACKS PAGE ===== */
+  #mobile-tracks-page {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  #mobile-filters {
+    order: 2;
+    flex-shrink: 0;
+    background: var(--glass);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 6px 0;
+    border-top: 1px solid var(--glass-border);
+    > div {
+      display: flex;
+      justify-content: space-evenly;
+    }
+    .btn {
+      flex: 1;
+      padding: 4px 0;
+      margin-top: 0;
+      border-radius: 0;
+      border: none;
+      border-right: 1px solid var(--glass-border);
+      display: flex;
+      justify-content: center;
+      &:last-child {
+        border-right: none;
+      }
+    }
+    .icon.big {
+      width: 28px;
+      height: 28px;
+    }
+    .filter-tooltip {
+      display: none;
+    }
+  }
+
+  #mobile-tracks {
+    order: 1;
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  #mobile-tracks {
+    padding: 8px;
+
+    h2 {
+      font-size: 22px;
+      margin-top: 10px;
+    }
+
+    ul {
+      padding-left: 0;
+    }
+
+    li button {
+      padding: 8px 6px;
+      font-size: 16px;
+    }
+
+    .floatR {
+      display: none;
+    }
+
+    .icon {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  /* Content needs flex for tracks page */
+  #mobile-content:has(#mobile-tracks-page) {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* ===== SCOPE PAGE ===== */
+  #mobile-scope-page {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+  }
+
+  .mobile #mobile-scope-page #quadrascope-container {
+    position: static !important;
+    width: 100% !important;
+    height: 100% !important;
+    transform: none !important;
+  }
+
+  .mobile #mobile-scope-page #quadrascope,
+  .mobile #mobile-scope-page #quadrascope.expanded {
+    position: static !important;
+    top: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    height: 100% !important;
+    border: none !important;
+    border-radius: 0 !important;
+    z-index: auto !important;
+    background: none !important;
+    display: block;
+  }
+
+  /* ===== ABOUT PAGE ===== */
+  #mobile-about {
+    padding: 16px;
+
+    h2 {
+      font-size: 22px;
+      color: var(--neon-magenta);
+      margin-top: 16px;
+      margin-bottom: 8px;
+      text-shadow: none;
+      border-bottom: none;
+    }
+
+    p {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    b {
+      color: var(--neon-magenta);
+    }
+
+    .mobile-count {
+      color: var(--neon-blue);
+      font-size: 0.8em;
+    }
+  }
+
+  .mobile-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin: 8px 0;
+  }
+
+  .mobile-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--text-muted);
+
+    .icon {
+      width: 24px;
+      height: 24px;
+      float: none;
+      flex-shrink: 0;
+    }
+  }
+
+  /* ===== TAB BAR ===== */
+  #mobile-tabbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    height: 56px;
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid var(--glass-border);
+  }
+
+  .mobile-tab {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-family: "vp-pixel", monospace;
+    font-size: 11px;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.15s ease;
+
+    &.active {
+      color: var(--neon-blue);
+    }
+
+    &:active {
+      color: var(--neon-magenta);
+    }
+  }
+
+  .mobile-tab-icon {
+    font-size: 20px;
+    line-height: 1;
+  }
+
+  .mobile-tab-label {
+    font-size: 10px;
+  }
+
+  /* ===== HIDE DESKTOP ELEMENTS ===== */
+  .mobile #toolbar,
+  .mobile #canvas-bg,
+  .mobile #canvas-scrolltext,
+  .mobile #primary-block,
+  .mobile #timer {
+    display: none !important;
+  }
+}

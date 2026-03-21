@@ -10,6 +10,11 @@ import { DEFAULT_TITLE } from "./tools/const";
 import Years from "./Components/Year";
 import modules_med from "./tools/modules_med";
 import { AudioContextUnblocker } from 'audio-context-unblocker'
+import MobileTabBar from "./Components/MobileTabBar";
+import MobileHeader from "./Components/MobileHeader";
+import MobileAbout from "./Components/MobileAbout";
+import Filter from "./Components/ToolBar/Filter";
+import QuadrascopeView from "./Components/QuadrascopeView";
 
 
 function App() {
@@ -22,7 +27,15 @@ function App() {
   const [listMods, setListMods] = useState([]);
   const [player, setPlayer] = useState(false);
   const [scrollText, setScrollText] = useState(false);
+  const [mobileTab, setMobileTab] = useState("tracks");
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const currentBtn = useRef();
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   function loadList() {
     setListMods(getList(modules_med));
@@ -50,16 +63,12 @@ function App() {
     if(window?.neoart?.audioContext){
       new AudioContextUnblocker(window.neoart.audioContext);
     }
-    
-    
+
+
     _player.analyser.minDecibels = -90;
     _player.analyser.maxDecibels = -10;
     _player.analyser.smoothingTimeConstant = 0.85;
-    
 
-    // _player.analyser.smoothingTimeConstant = 1;
-    // _player.analyser.fftSize = 2048;
-    // _player.analyser.minDecibels = -90;
 
     let title = file;
     if (_player.title.trim() !== "") {
@@ -121,6 +130,74 @@ function App() {
     return () => clearInterval(interval);
   }, [player]);
 
+  const trackList = listMods.map(function (item, i) {
+    return (
+      <Years
+        key={i}
+        year={item.year}
+        mods={item.mods}
+        tracker={false}
+        query={filters.query}
+        love={filters.love}
+        first={filters.first}
+        second={filters.second}
+        third={filters.third}
+        best={filters.best}
+        chiptune={filters.chiptune}
+        callbackAnalyser={callbackAnalyser}
+      />
+    );
+  });
+
+  // ===== MOBILE =====
+  if (isMobile) {
+    return (
+      <Router>
+        <div className="App mobile">
+          <Routes>
+            <Route path="/*" element={<Loader player={player} callbackAnalyser={callbackAnalyser} />} />
+          </Routes>
+
+          <MobileHeader
+            title={titleMusic}
+            player={player}
+            setTitleCallback={setTitleCallback}
+          />
+
+          <div id="mobile-content">
+            {mobileTab === "tracks" && (
+              <div id="mobile-tracks-page">
+                <div id="mobile-filters">
+                  <Filter callback={callbackFilter} />
+                </div>
+                <div id="mobile-tracks">
+                  {trackList}
+                </div>
+              </div>
+            )}
+
+            {mobileTab === "scope" && (
+              <div id="mobile-scope-page">
+                <QuadrascopeView
+                  player={player}
+                  expanded={true}
+                  onToggleExpanded={() => {}}
+                />
+              </div>
+            )}
+
+            {mobileTab === "about" && (
+              <MobileAbout />
+            )}
+          </div>
+
+          <MobileTabBar active={mobileTab} onSelect={setMobileTab} />
+        </div>
+      </Router>
+    );
+  }
+
+  // ===== DESKTOP =====
   return (
     <Router>
       <div className="App">
@@ -138,24 +215,7 @@ function App() {
           />
           <div id="block">
             <div id="tracks">
-              {listMods.map(function (item, i) {
-                return (
-                  <Years
-                    key={i}
-                    year={item.year}
-                    mods={item.mods}
-                    tracker={false}
-                    query={filters.query}
-                    love={filters.love}
-                    first={filters.first}
-                    second={filters.second}
-                    third={filters.third}
-                    best={filters.best}
-                    chiptune={filters.chiptune}
-                    callbackAnalyser={callbackAnalyser}
-                  />
-                );
-              })}
+              {trackList}
             </div>
             <div id="instruments"></div>
           </div>

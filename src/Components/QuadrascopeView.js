@@ -77,20 +77,35 @@ export default function QuadrascopeView({ player, expanded, onToggleExpanded }) 
 
     if (scopeRef.current) scopeRef.current.expanded = expanded;
 
+    let ro;
+
     if (expanded) {
-      const toolbar = document.getElementById("toolbar");
-      const toolbarH = toolbar ? toolbar.offsetHeight : 101;
       canvas.style.width = "";
       canvas.style.height = "";
       if (containerRef.current) containerRef.current.style.left = "";
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight - toolbarH;
       document.body.classList.add("quadrascope-expanded");
+
+      const resizeCanvas = () => {
+        const rect = canvas.getBoundingClientRect();
+        if (rect.width > 0 && rect.height > 0) {
+          canvas.width = Math.round(rect.width);
+          canvas.height = Math.round(rect.height);
+        }
+      };
+
+      ro = new ResizeObserver(resizeCanvas);
+      ro.observe(canvas);
+      resizeCanvas();
+      requestAnimationFrame(resizeCanvas);
     } else {
       canvas.height = SMALL_H;
       document.body.classList.remove("quadrascope-expanded");
       requestAnimationFrame(positionContainer);
     }
+
+    return () => {
+      if (ro) ro.disconnect();
+    };
   }, [expanded, positionContainer]);
 
   useEffect(() => {

@@ -152,8 +152,19 @@ export default class Quadrascope {
     if (this._cachedLayout && this._cachedKey === key) return this._cachedLayout;
 
     let rows, cols;
-    if (count <= 4) { rows = 1; cols = count; }
-    else { rows = 2; cols = Math.ceil(count / 2); }
+    const isPortrait = canvasH > canvasW;
+
+    if (isPortrait) {
+      // Portrait: stack vertically
+      if (count <= 4) { cols = 1; rows = count; }
+      else if (count <= 8) { cols = 2; rows = Math.ceil(count / 2); }
+      else { cols = 4; rows = Math.ceil(count / 4); }
+    } else {
+      // Landscape: spread horizontally
+      if (count <= 4) { rows = 1; cols = count; }
+      else if (count <= 8) { rows = 2; cols = Math.ceil(count / 2); }
+      else { rows = 2; cols = Math.ceil(count / 2); }
+    }
 
     this._cachedLayout = { rows, cols, cellW: canvasW / cols, cellH: canvasH / rows };
     this._cachedKey = key;
@@ -257,13 +268,11 @@ export default class Quadrascope {
 
     const barCount = Math.min(data.length, 128);
     const barW = canvasW / barCount;
-    const midY = canvasH / 2;
 
     for (let i = 0; i < barCount; i++) {
-      const magnitude = (data[i] / 256) * midY;
+      const magnitude = (data[i] / 256) * (canvasH - 4);
       ctx.fillStyle = SPECTRUM_COLORS[i];
-      ctx.fillRect(i * barW, midY - magnitude, barW - 1, magnitude);
-      ctx.fillRect(i * barW, midY, barW - 1, magnitude * 0.5);
+      ctx.fillRect(i * barW, canvasH - magnitude, barW - 1, magnitude);
     }
   }
 

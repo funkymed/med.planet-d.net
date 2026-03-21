@@ -15,9 +15,6 @@ export default class Starfield {
   force = 1;
   _boundForcePush;
   _time = -5; // Start centered, drift begins after a few seconds
-  _rollTarget = 0;
-  _rollCurrent = 0;
-  _rollNext = 0; // timestamp for next roll event
 
   constructor(ctx) {
     this.ctx = ctx;
@@ -158,26 +155,12 @@ export default class Starfield {
       this.lastTime = this.currentTime - (delta % this.interval);
     }
 
-    // Roll: sudden burst then settle, repeats every few minutes
-    const now = this.currentTime;
-    if (now > this._rollNext) {
-      // Pick a new roll angle: random between -15 and +15 degrees
-      this._rollTarget = (Math.random() - 0.5) * 0.5;
-      // Next roll in 2-4 minutes
-      this._rollNext = now + 120000 + Math.random() * 120000;
-    }
-    // Ease toward target (fast attack ~0.5s, then holds)
-    this._rollCurrent += (this._rollTarget - this._rollCurrent) * 0.02;
-    const roll = this._rollCurrent;
-
-    const destCtx = this.ctx;
-    const cW = destCtx.canvas.width;
-    const cH = destCtx.canvas.height;
-
-    destCtx.save();
-    destCtx.translate(cW / 2, cH / 2);
-    destCtx.rotate(roll);
-    destCtx.drawImage(this.canvasTMP, -cW / 2, -cH / 2, cW, cH);
-    destCtx.restore();
+    this.ctx.drawImage(
+      this.canvasTMP,
+      0,
+      0,
+      this.ctx.canvas.width,
+      this.ctx.canvas.height
+    );
   }
 }
