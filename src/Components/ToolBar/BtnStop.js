@@ -1,8 +1,8 @@
 import { DEFAULT_TITLE } from "../../tools/const";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function BtnStop(props) {
-  let history = useHistory();
+  let navigate = useNavigate();
   function stop() {
     if (props.player) {
       const buttons = document.querySelectorAll("li > button");
@@ -12,7 +12,7 @@ export default function BtnStop(props) {
         button.closest("li").className = "";
       }
       props.player.stop();
-      history.push("/");
+      navigate("/");
       props.setTitleCallback(DEFAULT_TITLE);
     }
   }

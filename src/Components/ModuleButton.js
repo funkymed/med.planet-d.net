@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   TITLE_BEST,
   TITLE_CHIPTUNE,
@@ -19,12 +19,12 @@ function ModuleButton(props) {
   const [bestIcon, setBestIcon] = useState(false);
   const [loveIcon, setLoveIcon] = useState(false);
   const [chiptuneIcon, setChiptuneIcon] = useState(false);
-  let history = useHistory();
+  let navigate = useNavigate();
 
   function play(evt) {
     evt.preventDefault();
     const filename = evt.target.attributes.getNamedItem("data-filename").value;
-    history.push(`/${filename}`);
+    navigate(`/${filename}`);
   }
 
   function updateFilter(_props) {

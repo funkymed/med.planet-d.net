@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { HashRouter as Router, Switch, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import "./sass/app.scss";
 import { getList } from "./tools/tools";
 import CanvasBackground from "./Components/CanvasBackground";
@@ -129,11 +129,9 @@ function App() {
     <Router>
       <div className="App">
         <CanvasBackground analyser={analyser} scrollText={scrollText} />
-        <Switch>
-          <Route path="/:track">
-            <Loader player={player} callbackAnalyser={callbackAnalyser} />
-          </Route>
-        </Switch>
+        <Routes>
+          <Route path="/*" element={<Loader player={player} callbackAnalyser={callbackAnalyser} />} />
+        </Routes>
         <div id="primary-block">
           <ToolBar
             title={titleMusic}
