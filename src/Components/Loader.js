@@ -45,8 +45,6 @@ export default function Loader(props) {
 
         player = FlodPlayer.load(bytes);
         player.loopSong = true;
-        // Smaller buffer = more frequent audloc updates for scopes
-        // 8192 = 185ms updates, 2048 = 46ms updates (~21fps)
         player.mixer.bufferSize = 2048;
         player.play();
 

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   TITLE_BEST,
   TITLE_CHIPTUNE,
@@ -8,38 +7,27 @@ import {
   TITLE_THIRD,
 } from "../../tools/const";
 
-export default function Filter(props) {
-  const [filters, setFilters] = useState([
-    { icon: "first", title: TITLE_FIRST, actived: false },
-    { icon: "second", title: TITLE_SECOND, actived: false },
-    { icon: "third", title: TITLE_THIRD, actived: false },
-    { icon: "love", title: TITLE_LOVE, actived: false },
-    { icon: "best", title: TITLE_BEST, actived: false },
-    { icon: "chiptune", title: TITLE_CHIPTUNE, actived: false },
-  ]);
+const FILTER_DEFS = [
+  { icon: "first", title: TITLE_FIRST },
+  { icon: "second", title: TITLE_SECOND },
+  { icon: "third", title: TITLE_THIRD },
+  { icon: "love", title: TITLE_LOVE },
+  { icon: "best", title: TITLE_BEST },
+  { icon: "chiptune", title: TITLE_CHIPTUNE },
+];
 
-  const toggleSelected = (e) => {
-    e.target.classList.toggle("selected");
-    const icon = e.target.dataset.filter;
-    const activated = e.target.classList.contains("selected");
-
-    const newFilters = filters.map(f =>
-      f.icon === icon ? { ...f, actived: activated } : f
-    );
-    setFilters(newFilters);
-    props.callback(null, newFilters);
-  };
-
+export default function Filter({ activeFilters, onToggle }) {
   return (
     <>
       <div>
-        {filters.map(function (item, i) {
+        {FILTER_DEFS.map(function (item) {
+          const isActive = activeFilters[item.icon] || false;
           return (
             <button
-              key={i}
+              key={item.icon}
               data-filter={item.icon}
-              className="btn filter-btn"
-              onClick={toggleSelected}
+              className={`btn filter-btn${isActive ? " selected" : ""}`}
+              onClick={() => onToggle(item.icon)}
               aria-label={`Filter : ${item.title.toLowerCase()}`}
             >
               <i className={`icon big ${item.icon}`} aria-hidden="true" />

@@ -18,7 +18,7 @@ export default function ToolBar(props) {
         <Title title={props.title} />
       </div>
       <div id="filters">
-        <Filter callback={props.callbackFilter} />
+        <Filter activeFilters={props.activeFilters} onToggle={props.onToggleFilter} />
       </div>
       <div className="floatR" id="control">
         <button
